@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: scap-compiler
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+app:
+  aws:
+    region: us-east-1
+    endpoint: http://localhost:4566
+    access-key: test
+    secret-key: test
+    raw-content-bucket: scap-raw-content
+    compiled-template-bucket: scap-compiled-templates
+    compile-queue-url: http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/scap-compile-jobs
