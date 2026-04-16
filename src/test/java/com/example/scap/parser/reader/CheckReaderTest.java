@@ -3,6 +3,7 @@ package com.example.scap.parser.reader;
 import com.example.scap.model.parsed.xccdf.ParsedCheckNode;
 import com.example.scap.model.parsed.xccdf.ParsedCheckReference;
 import com.example.scap.model.parsed.xccdf.ParsedComplexCheck;
+import com.example.scap.parser.reader.xccdf.CheckReader;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.junit.jupiter.api.Test;

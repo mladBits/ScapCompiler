@@ -1,10 +1,7 @@
 package com.example.scap.parser;
 
 import com.example.scap.model.parsed.xccdf.*;
-import com.example.scap.parser.reader.BenchmarkReader;
-import com.example.scap.parser.reader.CheckReader;
-import com.example.scap.parser.reader.ProfileReader;
-import com.example.scap.parser.reader.RuleReader;
+import com.example.scap.parser.reader.xccdf.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -22,7 +19,13 @@ class XccdfParserImplTest {
         try (final InputStream in = getClass().getClassLoader().getResourceAsStream(resourceName)) {
             assertNotNull(in);
 
-            final XccdfParser parser = new XccdfParserImpl(new BenchmarkReader(new ProfileReader(), new RuleReader(new CheckReader())));
+            final RuleReader ruleReader = new RuleReader(new CheckReader());
+            final XccdfParser parser = new XccdfParserImpl(
+                    new BenchmarkReader(
+                            new ProfileReader(),
+                            ruleReader,
+                            new GroupReader(ruleReader)));
+
             final ParsedXccdfBenchmark parsedXccdfBenchmark = parser.parse(in);
             assertEquals("xccdf_mil.disa.stig_benchmark_Microsoft_Windows_11_STIG", parsedXccdfBenchmark.getBenchmarkId());
             assertEquals("Microsoft Windows 11 STIG SCAP Benchmark", parsedXccdfBenchmark.getTitle());
@@ -31,11 +34,16 @@ class XccdfParserImplTest {
             final ParsedXccdfProfile profile = parsedXccdfBenchmark.getProfiles().getFirst();
             assertEquals("xccdf_mil.disa.stig_profile_MAC-1_Classified", profile.getProfileId());
             assertEquals("I - Mission Critical Classified", profile.getTitle());
-            assertEquals(223, profile.getSelectedRuleIds().size());
+            assertEquals(223, profile.getSelectedIdRefs().size());
 
-            assertEquals(223, parsedXccdfBenchmark.getRules().size());
+            assertEquals(0, parsedXccdfBenchmark.getRules().size());
+            assertEquals(223, parsedXccdfBenchmark.getGroups().size());
 
-            final ParsedXccdfRule rule = parsedXccdfBenchmark.getRules().getFirst();
+            final ParsedXccdfGroup group = parsedXccdfBenchmark.getGroups().getFirst();
+            assertEquals("xccdf_mil.disa.stig_group_V-253254", group.getGroupId());
+            assertEquals("SRG-OS-000480-GPOS-00227", group.getTitle());
+
+            final ParsedXccdfRule rule = group.getRules().getFirst();
             assertEquals("xccdf_mil.disa.stig_rule_SV-253254r991589_rule", rule.getRuleId());
             assertEquals("Domain-joined systems must use Windows 11 Enterprise Edition 64-bit version.", rule.getTitle());
             assertEquals(1, rule.getCheckReferences().size());

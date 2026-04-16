@@ -1,4 +1,4 @@
-package com.example.scap.parser.reader;
+package com.example.scap.parser.reader.xccdf;
 
 import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
 import org.codehaus.stax2.XMLStreamReader2;
@@ -31,7 +31,7 @@ public class ProfileReader {
                         final String selected = reader.getAttributeValue(null, "selected");
 
                         if (idref != null && Boolean.parseBoolean(selected)) {
-                            profile.getSelectedRuleIds().add(idref);
+                            profile.getSelectedIdRefs().add(idref);
                         }
                     }
                     default -> {

@@ -13,6 +13,7 @@ public class ParsedXccdfBenchmark {
     private String title;
     private String description;
     private List<ParsedXccdfProfile> profiles = new ArrayList<>();
+    private List<ParsedXccdfGroup> groups = new ArrayList<>();
     private List<ParsedXccdfRule> rules = new ArrayList<>();
     private List<ParsedXccdfValue> values;
 }

@@ -25,7 +25,7 @@ public class TemplateCompileService {
             final byte[] ovalBytes
     ) {
        // final XccdfParser.ParsedXccdf xccdf = xccdfParser.parse(xccdfBytes);
-        final OvalParser.ParsedOval oval = ovalParser.parse(ovalBytes);
+        //final OvalParser.ParsedOval oval = ovalParser.parse(ovalBytes);
         //final List<VariableDefinition> variables = variableNormalizer.normalize(xccdf, oval);
 
         //final CompiledTemplate template = templateCompiler.compile(key, variables);

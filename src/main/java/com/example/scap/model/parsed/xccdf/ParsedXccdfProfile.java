@@ -9,5 +9,5 @@ import java.util.List;
 public class ParsedXccdfProfile {
     private String profileId;
     private String title;
-    private List<String> selectedRuleIds = new ArrayList<>();
+    private List<String> selectedIdRefs = new ArrayList<>();
 }

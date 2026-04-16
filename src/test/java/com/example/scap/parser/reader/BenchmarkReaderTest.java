@@ -3,6 +3,7 @@ package com.example.scap.parser.reader;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfRule;
+import com.example.scap.parser.reader.xccdf.*;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BenchmarkReaderTest {
     private static final XMLInputFactory2 FACTORY = (XMLInputFactory2) XMLInputFactory2.newInstance();
-    private final BenchmarkReader benchmarkReader = new BenchmarkReader(new ProfileReader(), new RuleReader(new CheckReader()));
+    private static final RuleReader ruleReader = new RuleReader(new CheckReader());
+    private static final BenchmarkReader benchmarkReader = new BenchmarkReader(
+            new ProfileReader(), ruleReader, new GroupReader(ruleReader));
 
     @Test
     void readBenchmark_shouldParseIdTitleProfilesAndRules() throws Exception {
@@ -62,7 +65,7 @@ class BenchmarkReaderTest {
         ParsedXccdfProfile firstProfile = benchmark.getProfiles().getFirst();
         assertEquals("profile-1", firstProfile.getProfileId());
         assertEquals("Profile One", firstProfile.getTitle());
-        assertEquals(List.of("rule-1", "rule-3"), firstProfile.getSelectedRuleIds());
+        assertEquals(List.of("rule-1", "rule-3"), firstProfile.getSelectedIdRefs());
 
         assertEquals(2, benchmark.getRules().size());
         ParsedXccdfRule firstRule = benchmark.getRules().getFirst();

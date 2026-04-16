@@ -1,7 +1,7 @@
 package com.example.scap.parser;
 
 import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
-import com.example.scap.parser.reader.BenchmarkReader;
+import com.example.scap.parser.reader.xccdf.BenchmarkReader;
 import lombok.RequiredArgsConstructor;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;

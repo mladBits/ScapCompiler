@@ -1,6 +1,7 @@
 package com.example.scap.parser.reader;
 
 import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
+import com.example.scap.parser.reader.xccdf.ProfileReader;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class ProfileReaderTest {
 
         assertEquals("profile-1", profile.getProfileId());
         assertEquals("Level 1 Server", profile.getTitle());
-        assertEquals(List.of("rule-1", "rule-3"), profile.getSelectedRuleIds());
+        assertEquals(List.of("rule-1", "rule-3"), profile.getSelectedIdRefs());
     }
 
     @Test
@@ -59,7 +60,7 @@ class ProfileReaderTest {
 
         assertEquals("profile-2", profile.getProfileId());
         assertNull(profile.getTitle());
-        assertEquals(List.of("rule-10"), profile.getSelectedRuleIds());
+        assertEquals(List.of("rule-10"), profile.getSelectedIdRefs());
     }
 
     @Test
@@ -77,7 +78,7 @@ class ProfileReaderTest {
 
         assertEquals("profile-3", profile.getProfileId());
         assertEquals("Empty Profile", profile.getTitle());
-        assertTrue(profile.getSelectedRuleIds().isEmpty());
+        assertTrue(profile.getSelectedIdRefs().isEmpty());
     }
 
     @Test
@@ -98,7 +99,7 @@ class ProfileReaderTest {
 
         assertEquals("profile-4", profile.getProfileId());
         assertEquals("Expected Title", profile.getTitle());
-        assertEquals(List.of("rule-20"), profile.getSelectedRuleIds());
+        assertEquals(List.of("rule-20"), profile.getSelectedIdRefs());
     }
 
     @Test
@@ -135,7 +136,7 @@ class ProfileReaderTest {
 
         assertEquals("profile-6", profile.getProfileId());
         assertEquals("Profile With Bad Select", profile.getTitle());
-        assertTrue(profile.getSelectedRuleIds().isEmpty());
+        assertTrue(profile.getSelectedIdRefs().isEmpty());
     }
 
     @Test
@@ -153,7 +154,7 @@ class ProfileReaderTest {
         ParsedXccdfProfile profile = profileReader.readProfile(reader);
 
         assertEquals("profile-7", profile.getProfileId());
-        assertTrue(profile.getSelectedRuleIds().isEmpty());
+        assertTrue(profile.getSelectedIdRefs().isEmpty());
     }
 
     @Test
@@ -171,7 +172,7 @@ class ProfileReaderTest {
         ParsedXccdfProfile profile = profileReader.readProfile(reader);
 
         assertEquals("profile-8", profile.getProfileId());
-        assertTrue(profile.getSelectedRuleIds().isEmpty());
+        assertTrue(profile.getSelectedIdRefs().isEmpty());
     }
 
     @Test

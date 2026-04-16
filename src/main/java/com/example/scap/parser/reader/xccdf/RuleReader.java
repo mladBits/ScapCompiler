@@ -1,4 +1,4 @@
-package com.example.scap.parser.reader;
+package com.example.scap.parser.reader.xccdf;
 
 import com.example.scap.model.parsed.xccdf.ParsedXccdfRule;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,7 @@
-package com.example.scap.parser.reader;
+package com.example.scap.parser.reader.xccdf;
 
 import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
+import com.example.scap.model.parsed.xccdf.ParsedXccdfGroup;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfRule;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import javax.xml.stream.XMLStreamException;
 public class BenchmarkReader {
     private final ProfileReader profileReader;
     private final RuleReader ruleReader;
+    private final GroupReader groupReader;
 
     public ParsedXccdfBenchmark readBenchmark(final XMLStreamReader2 reader)
             throws XMLStreamException {
@@ -39,6 +41,10 @@ public class BenchmarkReader {
                     case "Rule" -> {
                         final ParsedXccdfRule rule = ruleReader.readRule(reader);
                         benchmark.getRules().add(rule);
+                    }
+                    case "Group" -> {
+                        final ParsedXccdfGroup group = groupReader.readGroup(reader);
+                        benchmark.getGroups().add(group);
                     }
                 }
             } else if (event == XMLStreamConstants.END_ELEMENT && reader.getLocalName().equals("Benchmark")) {
