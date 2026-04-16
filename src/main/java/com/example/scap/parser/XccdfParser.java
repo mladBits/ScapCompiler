@@ -1,22 +1,9 @@
 package com.example.scap.parser;
 
-import java.util.List;
+import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
+
+import java.io.InputStream;
 
 public interface XccdfParser {
-    ParsedXccdf parse(byte[] xmlBytes);
-
-    record ParsedXccdf(
-            String benchmarkId,
-            List<String> profileIds,
-            List<ParsedValue> values
-    ) {
-    }
-
-    record ParsedValue(
-            String id,
-            String title,
-            String type,
-            String defaultValue
-    ) {
-    }
+    ParsedXccdfBenchmark parse(InputStream inputStream);
 }
