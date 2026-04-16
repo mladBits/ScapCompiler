@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BenchmarkReaderTest {
     private static final XMLInputFactory2 FACTORY = (XMLInputFactory2) XMLInputFactory2.newInstance();
-    private final BenchmarkReader benchmarkReader = new BenchmarkReader(new ProfileReader(), new RuleReader());
+    private final BenchmarkReader benchmarkReader = new BenchmarkReader(new ProfileReader(), new RuleReader(new CheckReader()));
 
     @Test
     void readBenchmark_shouldParseIdTitleProfilesAndRules() throws Exception {

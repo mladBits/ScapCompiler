@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 
-
 @Component
 public class ProfileReader {
-
     public ParsedXccdfProfile readProfile(final XMLStreamReader2 reader)
             throws XMLStreamException {
         final ParsedXccdfProfile profile = new ParsedXccdfProfile();
