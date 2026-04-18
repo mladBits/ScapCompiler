@@ -3,7 +3,6 @@ package com.example.scap.model.resolved.xccdf;
 import com.example.scap.model.parsed.xccdf.ParsedCheckNode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 

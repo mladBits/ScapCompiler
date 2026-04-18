@@ -2,9 +2,7 @@ package com.example.scap.parser;
 
 
 import com.example.scap.model.parsed.oval.ParsedOval;
-import com.example.scap.parser.reader.oval.OvalDefinitionReader;
-import com.example.scap.parser.reader.oval.OvalDefinitionsReader;
-import com.example.scap.parser.reader.oval.OvalReader;
+import com.example.scap.parser.reader.oval.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -21,10 +19,13 @@ class OvalParserImplTest {
         try (final InputStream in = getClass().getClassLoader().getResourceAsStream(resourceName)) {
             assertNotNull(in);
 
-            final OvalReader ovalReader = new OvalReader(new OvalDefinitionsReader(new OvalDefinitionReader()));
+            final OvalReader ovalReader = new OvalReader(new OvalDefinitionsReader(
+                    new OvalDefinitionReader(new OvalCriteriaReader())),
+                    new OvalTestReader());
             final OvalParser ovalParser = new OvalParserImpl(ovalReader);
-            ParsedOval parsedOval = ovalParser.parse(in);
-            int x = 1;
+            final ParsedOval parsedOval = ovalParser.parse(in);
+            assertEquals(451, parsedOval.getDefinitions().size());
+            assertEquals(297, parsedOval.getTests().size());
         }
     }
 

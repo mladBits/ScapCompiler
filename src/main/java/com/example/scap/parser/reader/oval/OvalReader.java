@@ -1,9 +1,6 @@
 package com.example.scap.parser.reader.oval;
 
 import com.example.scap.model.parsed.oval.ParsedOval;
-import com.example.scap.model.parsed.xccdf.ParsedXccdfGroup;
-import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
-import com.example.scap.model.parsed.xccdf.ParsedXccdfRule;
 import lombok.RequiredArgsConstructor;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.springframework.stereotype.Component;
@@ -15,6 +12,7 @@ import javax.xml.stream.XMLStreamException;
 @RequiredArgsConstructor
 public class OvalReader {
     private final OvalDefinitionsReader ovalDefinitionsReader;
+    private final OvalTestReader ovalTestReader;
 
     public ParsedOval readOval(final XMLStreamReader2 reader)
             throws XMLStreamException {
@@ -26,6 +24,7 @@ public class OvalReader {
 
                 switch (localName) {
                     case "definitions" -> parsedOval.setDefinitions(ovalDefinitionsReader.readDefinitions(reader));
+                    case "tests" -> parsedOval.setTests(ovalTestReader.readTest(reader));
                 }
             } else if (event == XMLStreamConstants.END_ELEMENT && reader.getLocalName().equals("oval_definitions")) {
                 return parsedOval;

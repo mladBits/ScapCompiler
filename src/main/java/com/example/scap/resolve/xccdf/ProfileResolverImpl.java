@@ -10,11 +10,7 @@ import com.example.scap.model.resolved.xccdf.ResolvedProfile;
 import com.example.scap.model.resolved.xccdf.ResolvedXccdfRule;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class ProfileResolverImpl implements ProfileResolver {

@@ -2,7 +2,6 @@ package com.example.scap.parser;
 
 import com.example.scap.model.parsed.oval.ParsedOval;
 import com.example.scap.parser.reader.oval.OvalReader;
-
 import lombok.RequiredArgsConstructor;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
