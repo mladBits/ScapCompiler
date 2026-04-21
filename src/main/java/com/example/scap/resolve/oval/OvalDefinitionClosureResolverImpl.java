@@ -5,6 +5,7 @@ import com.example.scap.model.parsed.oval.ParsedOvalDefinition;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
 import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -13,14 +14,14 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+@Component
 @RequiredArgsConstructor
 public class OvalDefinitionClosureResolverImpl implements OvalDefinitionClosureResolver {
-    private final OvalIndex ovalIndex;
     private final OvalCriteriaTestRefCollector testRefCollector;
     private final OvalDefinitionRefCollector definitionRefCollector;
 
     @Override
-    public ResolvedOvalEvaluationSlice resolve(final Collection<String> startingDefinitionIds) {
+    public ResolvedOvalEvaluationSlice resolve(final OvalIndex ovalIndex, final Collection<String> startingDefinitionIds) {
         final Set<String> visitedDefinitionIds = new LinkedHashSet<>();
         final Set<String> referencedTestIds = new LinkedHashSet<>();
         final Queue<String> pendingDefinitionIds = new ArrayDeque<>(startingDefinitionIds);

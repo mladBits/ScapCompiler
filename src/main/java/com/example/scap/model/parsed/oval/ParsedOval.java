@@ -8,4 +8,6 @@ import java.util.List;
 public class ParsedOval {
     private List<ParsedOvalDefinition> definitions;
     private List<ParsedOvalTest> tests;
+    private List<ParsedOvalObject> objects;
+    private List<ParsedOvalState> states;
 }

@@ -9,6 +9,8 @@ public class OvalIndexBuilder {
         final OvalIndex index = new OvalIndex();
         oval.getDefinitions().forEach(definition -> index.getDefinitionById().put(definition.getId(), definition));
         oval.getTests().forEach(test -> index.getTestById().put(test.getId(), test));
+        oval.getObjects().forEach(object -> index.getObjectById().put(object.getObjectId(), object));
+        oval.getStates().forEach(state -> index.getStateById().put(state.getStateId(), state));
         return index;
     }
 }

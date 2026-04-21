@@ -4,11 +4,13 @@ import com.example.scap.model.parsed.oval.ParsedOvalCriteria;
 import com.example.scap.model.parsed.oval.ParsedOvalCriteriaNode;
 import com.example.scap.model.parsed.oval.ParsedOvalCriterion;
 import com.example.scap.model.parsed.oval.ParsedOvalExtendedDefinition;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Component
 public class OvalDefinitionRefCollector {
     public Set<String> collect(final ParsedOvalCriteriaNode node) {
         final Set<String> collected = new LinkedHashSet<>();

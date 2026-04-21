@@ -5,6 +5,6 @@ import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
 
 import java.util.Collection;
 
-public interface OvalDefinitionClosureResolver {
+public interface OvalEvaluationSliceResolver {
     ResolvedOvalEvaluationSlice resolve(OvalIndex ovalIndex, Collection<String> startingDefinitionIds);
 }

@@ -38,9 +38,9 @@ class OvalDefinitionClosureResolverImplTest {
         index.getTestById().put(test2.getId(), test2);
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
-        ResolvedOvalEvaluationSlice slice = resolver.resolve(List.of("oval:def:1"));
+        ResolvedOvalEvaluationSlice slice = resolver.resolve(index, List.of("oval:def:1"));
 
         assertEquals(List.of("oval:def:1"),
                 slice.getDefinitions().stream().map(ParsedOvalDefinition::getId).toList());
@@ -78,9 +78,9 @@ class OvalDefinitionClosureResolverImplTest {
         index.getTestById().put(test3.getId(), test3);
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
-        ResolvedOvalEvaluationSlice slice = resolver.resolve(List.of("oval:def:1"));
+        ResolvedOvalEvaluationSlice slice = resolver.resolve(index, List.of("oval:def:1"));
 
         assertEquals(
                 List.of("oval:def:1", "oval:def:2", "oval:def:3"),
@@ -117,9 +117,9 @@ class OvalDefinitionClosureResolverImplTest {
         index.getTestById().put(test2.getId(), test2);
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
-        ResolvedOvalEvaluationSlice slice = resolver.resolve(List.of("oval:def:1", "oval:def:2"));
+        ResolvedOvalEvaluationSlice slice = resolver.resolve(index, List.of("oval:def:1", "oval:def:2"));
 
         assertEquals(
                 List.of("oval:def:1", "oval:def:2"),
@@ -137,11 +137,11 @@ class OvalDefinitionClosureResolverImplTest {
         OvalIndex index = new OvalIndex();
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> resolver.resolve(List.of("oval:def:missing"))
+                () -> resolver.resolve(index, List.of("oval:def:missing"))
         );
 
         assertEquals("OVAL definition not found: oval:def:missing", ex.getMessage());
@@ -157,11 +157,11 @@ class OvalDefinitionClosureResolverImplTest {
         index.getDefinitionById().put(def1.getId(), def1);
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> resolver.resolve(List.of("oval:def:1"))
+                () -> resolver.resolve(index, List.of("oval:def:1"))
         );
 
         assertEquals("OVAL definition not found: oval:def:missing", ex.getMessage());
@@ -177,11 +177,11 @@ class OvalDefinitionClosureResolverImplTest {
         index.getDefinitionById().put(def1.getId(), def1);
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> resolver.resolve(List.of("oval:def:1"))
+                () -> resolver.resolve(index, List.of("oval:def:1"))
         );
 
         assertEquals("OVAL test not found: oval:test:missing", ex.getMessage());
@@ -195,9 +195,9 @@ class OvalDefinitionClosureResolverImplTest {
         index.getDefinitionById().put(def1.getId(), def1);
 
         OvalDefinitionClosureResolverImpl resolver =
-                new OvalDefinitionClosureResolverImpl(index, testRefCollector, definitionRefCollector);
+                new OvalDefinitionClosureResolverImpl(testRefCollector, definitionRefCollector);
 
-        ResolvedOvalEvaluationSlice slice = resolver.resolve(List.of("oval:def:1"));
+        ResolvedOvalEvaluationSlice slice = resolver.resolve(index, List.of("oval:def:1"));
 
         assertEquals(1, slice.getDefinitions().size());
         assertEquals("oval:def:1", slice.getDefinitions().getFirst().getId());

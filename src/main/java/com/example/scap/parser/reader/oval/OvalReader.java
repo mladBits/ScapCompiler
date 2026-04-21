@@ -13,6 +13,8 @@ import javax.xml.stream.XMLStreamException;
 public class OvalReader {
     private final OvalDefinitionsReader ovalDefinitionsReader;
     private final OvalTestReader ovalTestReader;
+    private final OvalObjectReader ovalObjectReader;
+    private final OvalStateReader ovalStateReader;
 
     public ParsedOval readOval(final XMLStreamReader2 reader)
             throws XMLStreamException {
@@ -25,6 +27,8 @@ public class OvalReader {
                 switch (localName) {
                     case "definitions" -> parsedOval.setDefinitions(ovalDefinitionsReader.readDefinitions(reader));
                     case "tests" -> parsedOval.setTests(ovalTestReader.readTest(reader));
+                    case "objects" -> parsedOval.setObjects(ovalObjectReader.readObject(reader));
+                    case "states" -> parsedOval.setStates(ovalStateReader.readState(reader));
                 }
             } else if (event == XMLStreamConstants.END_ELEMENT && reader.getLocalName().equals("oval_definitions")) {
                 return parsedOval;

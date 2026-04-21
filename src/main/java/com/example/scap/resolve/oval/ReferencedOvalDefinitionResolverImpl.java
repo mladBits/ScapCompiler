@@ -1,5 +1,6 @@
 package com.example.scap.resolve.oval;
 
+import com.example.scap.index.OvalIndex;
 import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import com.example.scap.model.resolved.xccdf.ResolvedCheckReference;
 import com.example.scap.model.resolved.xccdf.ResolvedRuleOvalRefs;
@@ -16,13 +17,13 @@ public class ReferencedOvalDefinitionResolverImpl implements ReferencedOvalDefin
     private final OvalDefinitionClosureResolver closureResolver;
 
     @Override
-    public ResolvedOvalEvaluationSlice resolve(final List<ResolvedRuleOvalRefs> ruleRefs) {
+    public ResolvedOvalEvaluationSlice resolve(final OvalIndex ovalIndex, final List<ResolvedRuleOvalRefs> ruleRefs) {
         final Set<String> startingDefinitionIds = ruleRefs.stream()
                 .flatMap(ruleRef -> ruleRef.getReferences().stream())
                 .map(ResolvedCheckReference::getName)
                 .filter(name -> name != null && !name.isBlank())
                 .collect(Collectors.toUnmodifiableSet());
 
-        return closureResolver.resolve(startingDefinitionIds);
+        return closureResolver.resolve(ovalIndex, startingDefinitionIds);
     }
 }

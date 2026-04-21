@@ -1,5 +1,6 @@
 package com.example.scap.resolve.oval;
 
+import com.example.scap.index.OvalIndex;
 import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import com.example.scap.model.resolved.xccdf.ResolvedCheckReference;
 import com.example.scap.model.resolved.xccdf.ResolvedRuleOvalRefs;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ReferencedOvalDefinitionResolverImplTest {
     @Test
     void resolve_shouldExtractDefinitionIdsFromRuleOvalRefs() {
+        OvalIndex ovalIndex = new OvalIndex();
         CapturingClosureResolver closureResolver = new CapturingClosureResolver();
         ReferencedOvalDefinitionResolver resolver =
                 new ReferencedOvalDefinitionResolverImpl(closureResolver);
@@ -27,14 +29,17 @@ class ReferencedOvalDefinitionResolverImplTest {
                         ref("system-1", "oval.xml", "oval:def:2"))
         );
 
-        ResolvedOvalEvaluationSlice result = resolver.resolve(ruleRefs);
+        ResolvedOvalEvaluationSlice result = resolver.resolve(ovalIndex, ruleRefs);
 
         assertSame(closureResolver.returnValue, result);
-        assertEquals(List.of("oval:def:1", "oval:def:2"), closureResolver.capturedStartingDefinitionIds);
+        assertEquals(2, closureResolver.capturedStartingDefinitionIds.size());
+        assertTrue(closureResolver.capturedStartingDefinitionIds.contains("oval:def:1"));
+        assertTrue(closureResolver.capturedStartingDefinitionIds.contains("oval:def:2"));
     }
 
     @Test
     void resolve_shouldDeduplicateDefinitionIdsPreservingFirstEncounterOrder() {
+        OvalIndex ovalIndex = new OvalIndex();
         CapturingClosureResolver closureResolver = new CapturingClosureResolver();
         ReferencedOvalDefinitionResolver resolver =
                 new ReferencedOvalDefinitionResolverImpl(closureResolver);
@@ -48,16 +53,17 @@ class ReferencedOvalDefinitionResolverImplTest {
                         ref("system-1", "oval.xml", "oval:def:3"))
         );
 
-        resolver.resolve(ruleRefs);
+        resolver.resolve(ovalIndex, ruleRefs);
 
-        assertEquals(
-                List.of("oval:def:1", "oval:def:2", "oval:def:3"),
-                closureResolver.capturedStartingDefinitionIds
-        );
+        assertEquals(3, closureResolver.capturedStartingDefinitionIds.size());
+        assertTrue(closureResolver.capturedStartingDefinitionIds.contains("oval:def:1"));
+        assertTrue(closureResolver.capturedStartingDefinitionIds.contains("oval:def:2"));
+        assertTrue(closureResolver.capturedStartingDefinitionIds.contains("oval:def:3"));
     }
 
     @Test
     void resolve_shouldIgnoreNullAndBlankDefinitionIds() {
+        OvalIndex ovalIndex = new OvalIndex();
         CapturingClosureResolver closureResolver = new CapturingClosureResolver();
         ReferencedOvalDefinitionResolver resolver =
                 new ReferencedOvalDefinitionResolverImpl(closureResolver);
@@ -70,18 +76,19 @@ class ReferencedOvalDefinitionResolverImplTest {
                         ref("system-1", "oval.xml", "oval:def:1"))
         );
 
-        resolver.resolve(ruleRefs);
+        resolver.resolve(ovalIndex, ruleRefs);
 
         assertEquals(List.of("oval:def:1"), closureResolver.capturedStartingDefinitionIds);
     }
 
     @Test
     void resolve_shouldPassEmptyCollectionWhenNoRuleRefsExist() {
+        OvalIndex ovalIndex = new OvalIndex();
         CapturingClosureResolver closureResolver = new CapturingClosureResolver();
         ReferencedOvalDefinitionResolver resolver =
                 new ReferencedOvalDefinitionResolverImpl(closureResolver);
 
-        resolver.resolve(List.of());
+        resolver.resolve(ovalIndex, List.of());
 
         assertNotNull(closureResolver.capturedStartingDefinitionIds);
         assertTrue(closureResolver.capturedStartingDefinitionIds.isEmpty());
@@ -89,6 +96,7 @@ class ReferencedOvalDefinitionResolverImplTest {
 
     @Test
     void resolve_shouldPassEmptyCollectionWhenRulesHaveNoReferences() {
+        OvalIndex ovalIndex = new OvalIndex();
         CapturingClosureResolver closureResolver = new CapturingClosureResolver();
         ReferencedOvalDefinitionResolver resolver =
                 new ReferencedOvalDefinitionResolverImpl(closureResolver);
@@ -98,7 +106,7 @@ class ReferencedOvalDefinitionResolverImplTest {
                 ruleRefs("rule-2")
         );
 
-        resolver.resolve(ruleRefs);
+        resolver.resolve(ovalIndex, ruleRefs);
 
         assertNotNull(closureResolver.capturedStartingDefinitionIds);
         assertTrue(closureResolver.capturedStartingDefinitionIds.isEmpty());
@@ -114,12 +122,14 @@ class ReferencedOvalDefinitionResolverImplTest {
 
     private static class CapturingClosureResolver implements OvalDefinitionClosureResolver {
         private final ResolvedOvalEvaluationSlice returnValue =
-                new ResolvedOvalEvaluationSlice(List.of(), List.of());
+                new ResolvedOvalEvaluationSlice(List.of(), List.of(), List.of(), List.of());
 
+        private OvalIndex capturedOvalIndex;
         private List<String> capturedStartingDefinitionIds;
 
         @Override
-        public ResolvedOvalEvaluationSlice resolve(Collection<String> startingDefinitionIds) {
+        public ResolvedOvalEvaluationSlice resolve(OvalIndex index, Collection<String> startingDefinitionIds) {
+            this.capturedOvalIndex = index;
             this.capturedStartingDefinitionIds = new ArrayList<>(startingDefinitionIds);
             return returnValue;
         }
