@@ -24,10 +24,6 @@ public class OvalCriteriaTestRefCollector {
 
     private void collectInto(final ParsedOvalCriteriaNode node, final Set<String> testRefs) {
         switch (node) {
-            case null -> {
-            }
-            case ParsedOvalExtendedDefinition extendedDefinition -> {
-            }
             case ParsedOvalCriterion criterion -> {
                 final String testRef = criterion.getTestRef();
                 if (testRef != null && !testRef.isBlank())
@@ -36,7 +32,7 @@ public class OvalCriteriaTestRefCollector {
             case ParsedOvalCriteria criteria ->
                     criteria.getChildren()
                             .forEach(childNode -> collectInto(childNode, testRefs));
-            default -> {
+            case null, default -> {
             }
         }
 

@@ -28,9 +28,6 @@ public class OvalDefinitionRefCollector {
 
     private void collectInto(final ParsedOvalCriteriaNode node, final Set<String> collected) {
         switch (node) {
-            case null -> {
-                return;
-            }
             case ParsedOvalExtendedDefinition extendedDefinition -> {
                 final String definitionRef = extendedDefinition.getDefinitionRef();
                 if (definitionRef != null && !definitionRef.isBlank()) {
@@ -44,9 +41,8 @@ public class OvalDefinitionRefCollector {
             }
             case ParsedOvalCriterion criterion -> {
                 // not relevant for definition ref collection
-                return;
             }
-            default -> {
+            case null, default -> {
             }
         }
 
