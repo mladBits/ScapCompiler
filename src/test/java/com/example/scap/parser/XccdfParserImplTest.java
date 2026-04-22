@@ -24,7 +24,8 @@ class XccdfParserImplTest {
                     new BenchmarkReader(
                             new ProfileReader(),
                             ruleReader,
-                            new GroupReader(ruleReader)));
+                            new GroupReader(ruleReader),
+                            new ValueReader()));
 
             final ParsedXccdfBenchmark parsedXccdfBenchmark = parser.parse(in);
             assertEquals("xccdf_mil.disa.stig_benchmark_Microsoft_Windows_11_STIG", parsedXccdfBenchmark.getBenchmarkId());

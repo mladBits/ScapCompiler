@@ -29,12 +29,14 @@ public class OvalCriteriaReader {
                     case "criterion" -> {
                         final ParsedOvalCriterion criterion = new ParsedOvalCriterion();
                         criterion.setTestRef(reader.getAttributeValue(null, "test_ref"));
+                        criterion.setIsNegated(Boolean.parseBoolean(reader.getAttributeValue(null, "negate")));
                         parsedOvalCriteria.getChildren().add(criterion);
                     }
                     case "criteria" -> parsedOvalCriteria.getChildren().add(readCriteria(reader));
                     case "extend_definition" -> {
                         final ParsedOvalExtendedDefinition extendedDefinition = new ParsedOvalExtendedDefinition();
                         extendedDefinition.setDefinitionRef(reader.getAttributeValue(null, "definition_ref"));
+                        extendedDefinition.setIsNegated(Boolean.parseBoolean(reader.getAttributeValue(null, "negate")));
                         parsedOvalCriteria.getChildren().add(extendedDefinition);
                     }
                 }

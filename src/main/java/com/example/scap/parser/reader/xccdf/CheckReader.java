@@ -1,5 +1,6 @@
 package com.example.scap.parser.reader.xccdf;
 
+import com.example.scap.model.parsed.xccdf.ParsedCheckExport;
 import com.example.scap.model.parsed.xccdf.ParsedCheckNode;
 import com.example.scap.model.parsed.xccdf.ParsedCheckReference;
 import com.example.scap.model.parsed.xccdf.ParsedComplexCheck;
@@ -31,6 +32,11 @@ public class CheckReader {
                 if ("check-content-ref".equals(localName)) {
                     parsedCheckReference.setHref(reader.getAttributeValue(null, "href"));
                     parsedCheckReference.setName(reader.getAttributeValue(null, "name"));
+                } else if ("check-export".equals(localName)) {
+                    final ParsedCheckExport checkExport = new ParsedCheckExport();
+                    checkExport.setExportName(reader.getAttributeValue(null, "export-name"));
+                    checkExport.setValueId(reader.getAttributeValue(null, "value-id"));
+                    parsedCheckReference.getCheckExports().add(checkExport);
                 }
             } else if (event == XMLStreamConstants.END_ELEMENT && "check".equals(reader.getLocalName())) {
                 return parsedCheckReference;

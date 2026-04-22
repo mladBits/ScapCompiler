@@ -2295,6 +2295,15 @@
         <xccdf:select idref="xccdf_mil.disa.stig_rule_SV-253472r958518_rule" selected="false" />
         <xccdf:select idref="xccdf_mil.disa.stig_rule_SV-253357r958518_rule" selected="false" />
     </xccdf:Profile>
+    <xccdf:Value id="xccdf_mil.disa.stig_value_1" type="string" operator="equals">
+        <title>Test Value</title>
+        <value>100</value>
+    </xccdf:Value>
+    <xccdf:Value id="xccdf_mil.disa.stig_value_2" type="string" operator="equals">
+        <title>Test Value</title>
+        <value/>
+        <default>10000</default>
+    </xccdf:Value>
     <xccdf:Group id="xccdf_mil.disa.stig_group_V-253254">
         <xccdf:title>SRG-OS-000480-GPOS-00227</xccdf:title>
         <xccdf:description>&lt;GroupDescription&gt;&lt;/GroupDescription&gt;</xccdf:description>

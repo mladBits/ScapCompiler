@@ -3,7 +3,6 @@ package com.example.scap.resolve.oval;
 import com.example.scap.model.parsed.oval.ParsedOvalCriteria;
 import com.example.scap.model.parsed.oval.ParsedOvalCriteriaNode;
 import com.example.scap.model.parsed.oval.ParsedOvalCriterion;
-import com.example.scap.model.parsed.oval.ParsedOvalExtendedDefinition;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

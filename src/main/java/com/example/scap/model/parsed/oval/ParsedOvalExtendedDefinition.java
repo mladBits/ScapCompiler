@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ParsedOvalExtendedDefinition implements ParsedOvalCriteriaNode {
     private String definitionRef;
+    private Boolean isNegated;
 }

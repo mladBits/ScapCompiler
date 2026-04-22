@@ -17,7 +17,7 @@ public class OvalDefinitionReader {
             throws XMLStreamException {
         final ParsedOvalDefinition definition = new ParsedOvalDefinition();
         definition.setId(reader.getAttributeValue(null, "id"));
-        definition.setClazz(reader.getAttributeValue(null, "class"));
+        definition.setDefClass(reader.getAttributeValue(null, "class"));
 
         while (reader.hasNext()) {
             final int event = reader.next();

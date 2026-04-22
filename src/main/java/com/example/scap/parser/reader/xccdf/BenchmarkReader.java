@@ -1,9 +1,6 @@
 package com.example.scap.parser.reader.xccdf;
 
-import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
-import com.example.scap.model.parsed.xccdf.ParsedXccdfGroup;
-import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
-import com.example.scap.model.parsed.xccdf.ParsedXccdfRule;
+import com.example.scap.model.parsed.xccdf.*;
 import lombok.RequiredArgsConstructor;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.springframework.stereotype.Component;
@@ -17,6 +14,7 @@ public class BenchmarkReader {
     private final ProfileReader profileReader;
     private final RuleReader ruleReader;
     private final GroupReader groupReader;
+    private final ValueReader valueReader;
 
     public ParsedXccdfBenchmark readBenchmark(final XMLStreamReader2 reader)
             throws XMLStreamException {
@@ -37,6 +35,10 @@ public class BenchmarkReader {
                     case "Profile" -> {
                         final ParsedXccdfProfile profile = profileReader.readProfile(reader);
                         benchmark.getProfiles().add(profile);
+                    }
+                    case "Value" -> {
+                        final ParsedXccdfValue value = valueReader.readVariable(reader);
+                        benchmark.getValues().add(value);
                     }
                     case "Rule" -> {
                         final ParsedXccdfRule rule = ruleReader.readRule(reader);

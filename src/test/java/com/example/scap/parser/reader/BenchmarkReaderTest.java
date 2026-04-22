@@ -24,7 +24,7 @@ class BenchmarkReaderTest {
     private static final XMLInputFactory2 FACTORY = (XMLInputFactory2) XMLInputFactory2.newInstance();
     private static final RuleReader ruleReader = new RuleReader(new CheckReader());
     private static final BenchmarkReader benchmarkReader = new BenchmarkReader(
-            new ProfileReader(), ruleReader, new GroupReader(ruleReader));
+            new ProfileReader(), ruleReader, new GroupReader(ruleReader), new ValueReader());
 
     @Test
     void readBenchmark_shouldParseIdTitleProfilesAndRules() throws Exception {

@@ -1,12 +1,14 @@
 package com.example.scap.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
-public record CompileTemplateRequest(
-        @NotBlank String benchmarkId,
-        @NotBlank String profileId,
-        @NotBlank String contentVersion,
-        @NotBlank String xccdfStorageKey,
-        @NotBlank String ovalStorageKey
-) {
+import java.util.HashMap;
+import java.util.Map;
+
+@Data
+public class CompileTemplateRequest {
+    private String benchmarkId;
+    private String profileId;
+
+    private Map<String, String> variables = new HashMap<>();
 }

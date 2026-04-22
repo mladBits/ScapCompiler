@@ -1,14 +1,13 @@
 package com.example.scap.model.parsed.xccdf;
 
-import java.util.List;
+import lombok.Data;
 
-public record ParsedXccdfValue(
-        String valueId,
-        String title,
-        String type,
-        String defaultValue,
-        List<String> allowedValues,
-        Integer minInt,
-        Integer maxInt
-) {
+@Data
+public class ParsedXccdfValue {
+    private String id;
+    private String title;
+    private String type;
+    private String defaultValue;
+    private String value;
+    private String operator;
 }

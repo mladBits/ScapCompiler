@@ -15,5 +15,5 @@ public class ParsedXccdfBenchmark {
     private List<ParsedXccdfProfile> profiles = new ArrayList<>();
     private List<ParsedXccdfGroup> groups = new ArrayList<>();
     private List<ParsedXccdfRule> rules = new ArrayList<>();
-    private List<ParsedXccdfValue> values;
+    private List<ParsedXccdfValue> values = new ArrayList<>();
 }

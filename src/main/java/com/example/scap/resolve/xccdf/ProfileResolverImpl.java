@@ -9,9 +9,11 @@ import com.example.scap.model.parsed.xccdf.ParsedXccdfRule;
 import com.example.scap.model.resolved.xccdf.ResolvedProfile;
 import com.example.scap.model.resolved.xccdf.ResolvedXccdfRule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 @RequiredArgsConstructor
 public class ProfileResolverImpl implements ProfileResolver {
 

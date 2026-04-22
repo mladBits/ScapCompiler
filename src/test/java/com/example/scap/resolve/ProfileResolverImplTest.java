@@ -6,11 +6,7 @@ import com.example.scap.model.resolved.xccdf.ResolvedProfile;
 import com.example.scap.model.resolved.xccdf.ResolvedXccdfRule;
 import com.example.scap.parser.XccdfParser;
 import com.example.scap.parser.XccdfParserImpl;
-import com.example.scap.parser.reader.xccdf.BenchmarkReader;
-import com.example.scap.parser.reader.xccdf.CheckReader;
-import com.example.scap.parser.reader.xccdf.GroupReader;
-import com.example.scap.parser.reader.xccdf.ProfileReader;
-import com.example.scap.parser.reader.xccdf.RuleReader;
+import com.example.scap.parser.reader.xccdf.*;
 import com.example.scap.resolve.xccdf.ProfileResolver;
 import com.example.scap.resolve.xccdf.ProfileResolverImpl;
 import org.junit.jupiter.api.Test;
@@ -204,7 +200,8 @@ class ProfileResolverImplTest {
                     new BenchmarkReader(
                             new ProfileReader(),
                             ruleReader,
-                            new GroupReader(ruleReader)));
+                            new GroupReader(ruleReader),
+                            new ValueReader()));
 
             final ParsedXccdfBenchmark parsedXccdfBenchmark = parser.parse(in);
             final XccdfBenchmarkIndexBuilder indexBuilder = new XccdfBenchmarkIndexBuilder();

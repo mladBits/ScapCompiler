@@ -11,8 +11,5 @@ import java.util.List;
 public interface OvalTestDependencyResolver {
     Result resolve(OvalIndex ovalIndex, Collection<ParsedOvalTest> tests);
 
-    record Result(
-            List<ParsedOvalObject> objects,
-            List<ParsedOvalState> states
-    ){}
+    record Result(List<ParsedOvalObject> objects, List<ParsedOvalState> states){}
 }

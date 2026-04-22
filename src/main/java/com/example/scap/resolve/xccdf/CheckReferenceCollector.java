@@ -4,12 +4,14 @@ import com.example.scap.model.parsed.xccdf.ParsedCheckNode;
 import com.example.scap.model.parsed.xccdf.ParsedCheckReference;
 import com.example.scap.model.parsed.xccdf.ParsedComplexCheck;
 import com.example.scap.model.resolved.xccdf.ResolvedCheckReference;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Component
 public class CheckReferenceCollector {
     public List<ResolvedCheckReference> collect(final ParsedCheckNode node) {
         final Set<ResolvedCheckReference> collected = new HashSet<>();

@@ -4,9 +4,11 @@ import com.example.scap.model.resolved.xccdf.ResolvedProfile;
 import com.example.scap.model.resolved.xccdf.ResolvedRuleOvalRefs;
 import com.example.scap.model.resolved.xccdf.ResolvedXccdfRule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class RuleOvalReferenceResolverImpl implements RuleOvalReferenceResolver {
     private final CheckReferenceCollector checkReferenceCollector;
