@@ -1,8 +1,6 @@
 package com.example.scap.oval.windows.registry;
 
 import com.example.scap.model.parsed.oval.ParsedOvalObject;
-import com.example.scap.model.parsed.oval.ParsedOvalState;
-import com.example.scap.model.parsed.oval.ParsedOvalTest;
 import com.example.scap.oval.CompiledObjectPlan;
 import com.example.scap.oval.EntitySelector;
 import com.example.scap.oval.ObjectCompilationResult;
@@ -13,11 +11,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class RegistryCheckCompiler extends CheckCompilerBase<CompiledRegistryCheck> {
+public class RegistryCheckCompiler extends CheckCompilerBase {
 
     @Override
     protected String supportedTestType() {
@@ -52,21 +49,5 @@ public class RegistryCheckCompiler extends CheckCompilerBase<CompiledRegistryChe
                         .objectType(object.getObjectType())
                         .tasks(new ArrayList<>(List.of(task)))
                         .build());
-    }
-
-    @Override
-    protected Optional<CompiledRegistryCheck> compileResolved(
-            final OvalCheckCompileContext context,
-            final ParsedOvalTest test,
-            final List<ParsedOvalState> states,
-            final ObjectCompilationResult objectResult) {
-
-        final CompiledRegistryCheck check = new CompiledRegistryCheck();
-        check.setTestId(test.getId());
-        check.setObjectId(test.getObjectRef());
-        check.setCheck(test.getCheck());
-        check.setCheckExistence(test.getCheckExistence());
-
-        return Optional.of(check);
     }
 }

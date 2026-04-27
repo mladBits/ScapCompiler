@@ -5,8 +5,8 @@ import com.example.scap.api.dto.CompileTemplateResponse;
 import com.example.scap.content.ContentPackageLoader;
 import com.example.scap.index.OvalIndex;
 import com.example.scap.index.OvalIndexBuilder;
-import com.example.scap.index.XccdfBenchmarkIndex;
-import com.example.scap.index.XccdfBenchmarkIndexBuilder;
+import com.example.scap.index.XccdfIndex;
+import com.example.scap.index.XccdfIndexBuilder;
 import com.example.scap.model.compiled.CompiledTemplateRule;
 import com.example.scap.model.compiled.ExecutionTemplate;
 import com.example.scap.model.compiled.variables.LocalVariablePlanCompiler;
@@ -49,7 +49,7 @@ public class TemplateCompileService {
     private final XccdfParser xccdfParser;
     private final OvalParser ovalParser;
 
-    private final XccdfBenchmarkIndexBuilder xccdfIndexBuilder;
+    private final XccdfIndexBuilder xccdfIndexBuilder;
     private final OvalIndexBuilder ovalIndexBuilder;
 
     private final ProfileResolver profileResolver;
@@ -74,7 +74,7 @@ public class TemplateCompileService {
         final ParsedOval ovalDefinitions = ovalParser.parse(oval);
 
         // Indexes are per content package, not singleton services.
-        final XccdfBenchmarkIndex xccdfIndex = xccdfIndexBuilder.build(benchmark);
+        final XccdfIndex xccdfIndex = xccdfIndexBuilder.build(benchmark);
         final OvalIndex ovalIndex = ovalIndexBuilder.build(ovalDefinitions);
 
         final ResolvedProfile resolvedProfile = profileResolver.resolve(benchmark, request.getProfileId());

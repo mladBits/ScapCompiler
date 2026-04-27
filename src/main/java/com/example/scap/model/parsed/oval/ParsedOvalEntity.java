@@ -18,7 +18,7 @@ public class ParsedOvalEntity {
         final EntitySelector entitySelector = new EntitySelector();
         entitySelector.setField(name);
         entitySelector.setDatatype(attributes.getOrDefault("datatype", "string"));
-        entitySelector.setOperator(attributes.getOrDefault("operator", "equals"));
+        entitySelector.setOperation(attributes.getOrDefault("operator", "equals"));
 
         if (attributes.getOrDefault("nil", "false").equals("true")) {
             entitySelector.setValue("nil", null);

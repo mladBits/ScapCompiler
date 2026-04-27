@@ -1,6 +1,6 @@
 package com.example.scap.resolve;
 
-import com.example.scap.index.XccdfBenchmarkIndexBuilder;
+import com.example.scap.index.XccdfIndexBuilder;
 import com.example.scap.model.parsed.xccdf.*;
 import com.example.scap.model.resolved.xccdf.ResolvedProfile;
 import com.example.scap.model.resolved.xccdf.ResolvedXccdfRule;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProfileResolverImplTest {
     private static final String resourceName = "xccdf.xml";
-    private final ProfileResolver resolver = new ProfileResolverImpl(new XccdfBenchmarkIndexBuilder());
+    private final ProfileResolver resolver = new ProfileResolverImpl(new XccdfIndexBuilder());
 
     @Test
     void resolve_shouldResolveDirectRuleSelection() {
@@ -204,7 +204,7 @@ class ProfileResolverImplTest {
                             new ValueReader()));
 
             final ParsedXccdfBenchmark parsedXccdfBenchmark = parser.parse(in);
-            final XccdfBenchmarkIndexBuilder indexBuilder = new XccdfBenchmarkIndexBuilder();
+            final XccdfIndexBuilder indexBuilder = new XccdfIndexBuilder();
             final ProfileResolver resolver = new ProfileResolverImpl(indexBuilder);
             final ResolvedProfile resolvedProfile = resolver.resolve(parsedXccdfBenchmark, profileId);
             assertEquals("xccdf_mil.disa.stig_benchmark_Microsoft_Windows_11_STIG", resolvedProfile.getBenchmarkId());

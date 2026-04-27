@@ -5,9 +5,9 @@ import com.example.scap.model.parsed.xccdf.ParsedXccdfGroup;
 import org.springframework.stereotype.Component;
 
 @Component
-public class XccdfBenchmarkIndexBuilder {
-    public XccdfBenchmarkIndex build(final ParsedXccdfBenchmark benchmark) {
-        final XccdfBenchmarkIndex index = new XccdfBenchmarkIndex();
+public class XccdfIndexBuilder {
+    public XccdfIndex build(final ParsedXccdfBenchmark benchmark) {
+        final XccdfIndex index = new XccdfIndex();
 
         benchmark.getGroups().forEach(group -> indexGroup(group, index));
         benchmark.getRules().forEach(rule -> index.getRulesById().put(rule.getRuleId(), rule));
@@ -17,7 +17,7 @@ public class XccdfBenchmarkIndexBuilder {
         return index;
     }
 
-    private void indexGroup(final ParsedXccdfGroup group, final XccdfBenchmarkIndex index) {
+    private void indexGroup(final ParsedXccdfGroup group, final XccdfIndex index) {
         index.getGroupsById().put(group.getGroupId(), group);
         group.getRules()
                 .forEach(parsedXccdfRule ->

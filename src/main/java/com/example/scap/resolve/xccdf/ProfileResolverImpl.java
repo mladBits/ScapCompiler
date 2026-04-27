@@ -1,7 +1,7 @@
 package com.example.scap.resolve.xccdf;
 
-import com.example.scap.index.XccdfBenchmarkIndex;
-import com.example.scap.index.XccdfBenchmarkIndexBuilder;
+import com.example.scap.index.XccdfIndex;
+import com.example.scap.index.XccdfIndexBuilder;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfGroup;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfProfile;
@@ -17,7 +17,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ProfileResolverImpl implements ProfileResolver {
 
-    private final XccdfBenchmarkIndexBuilder indexBuilder;
+    private final XccdfIndexBuilder indexBuilder;
 
     @Override
     public ResolvedProfile resolve(final ParsedXccdfBenchmark benchmark, final String profileId) {
@@ -31,7 +31,7 @@ public class ProfileResolverImpl implements ProfileResolver {
         }
 
         final ParsedXccdfProfile profile = profileOpt.get();
-        final XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        final XccdfIndex index = indexBuilder.build(benchmark);
         final Set<String> resolvedRuleIds = new LinkedHashSet<>();
 
         profile.getSelectedIdRefs().forEach(idRef -> resolveIdRef(idRef, index, resolvedRuleIds));
@@ -62,7 +62,7 @@ public class ProfileResolverImpl implements ProfileResolver {
     }
 
     private void resolveIdRef(final String idRef,
-                              final XccdfBenchmarkIndex index,
+                              final XccdfIndex index,
                               final Set<String> resolvedRuleIds) {
         if (index.getRulesById().containsKey(idRef)) {
             resolvedRuleIds.add(idRef);

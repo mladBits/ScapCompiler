@@ -1,7 +1,7 @@
 package com.example.scap.variables;
 
 import com.example.scap.index.OvalIndex;
-import com.example.scap.index.XccdfBenchmarkIndex;
+import com.example.scap.index.XccdfIndex;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalConstantVariable;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalExternalVariable;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalVariable;
@@ -27,7 +27,7 @@ public class OvalVariableBindingResolver {
             final ParsedXccdfBenchmark benchmark,
             final ResolvedProfile resolvedProfile,
             final List<ResolvedRuleOvalRefs> ruleOvalRefs,
-            final XccdfBenchmarkIndex xccdfBenchmarkIndex,
+            final XccdfIndex xccdfBenchmarkIndex,
             final OvalIndex ovalIndex,
             final Map<String, List<String>> requestVariables) {
         final ResolvedVariableBindings bindings = new ResolvedVariableBindings();

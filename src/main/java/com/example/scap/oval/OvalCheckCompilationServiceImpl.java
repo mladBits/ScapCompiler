@@ -17,7 +17,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class OvalCheckCompilationServiceImpl implements OvalCheckCompilationService {
-    private final List<OvalCheckCompiler<? extends CompiledOvalCheck>> compilers;
+    private final List<OvalCheckCompiler> compilers;
 
     @Override
     public OvalCheckCompilationResult compile(
@@ -25,12 +25,14 @@ public class OvalCheckCompilationServiceImpl implements OvalCheckCompilationServ
             final ResolvedOvalEvaluationSlice slice,
             final ResolvedVariableBindings bindings,
             final LocalVariableCompilationResult localVariables) {
+
         final OvalCheckCompileContext context =
                 new OvalCheckCompileContext(
                         ovalIndex,
                         slice,
                         bindings,
                         localVariables,
+                        new HashMap<>(),
                         new HashMap<>());
 
         final OvalCheckCompilationResult result = new OvalCheckCompilationResult();
@@ -48,14 +50,16 @@ public class OvalCheckCompilationServiceImpl implements OvalCheckCompilationServ
                 log.error(e.getLocalizedMessage());
             }
         }
+
         result.getObjects().putAll(context.getObjects());
+        result.getStates().putAll(context.getStates());
         return result;
     }
 
     private Optional<CompiledOvalCheck> compileOne(
             final OvalCheckCompileContext context,
             final ParsedOvalTest test) {
-        for (final OvalCheckCompiler<? extends CompiledOvalCheck> compiler : compilers) {
+        for (final OvalCheckCompiler compiler : compilers) {
             if (compiler.supports(test)) {
                 return compiler.compile(context, test)
                         .map(check -> (CompiledOvalCheck) check);

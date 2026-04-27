@@ -19,7 +19,7 @@ public class OvalDefinitionPlanCompilerImpl implements OvalDefinitionPlanCompile
             final OvalCheckCompilationResult checkCompilationResult) {
         final Set<String> compiledTestIds = new HashSet<>(
                 checkCompilationResult.getCompiledChecks().stream()
-                        .map(CompiledOvalCheck::testId)
+                        .map(CompiledOvalCheck::getTestId)
                         .toList()
         );
 

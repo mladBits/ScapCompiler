@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class EntitySelector {
     private String field;
-    private String operator;
+    private String operation;
     private String datatype;
     private Expression expression;
 

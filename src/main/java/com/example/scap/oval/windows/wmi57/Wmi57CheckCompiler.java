@@ -1,8 +1,6 @@
 package com.example.scap.oval.windows.wmi57;
 
 import com.example.scap.model.parsed.oval.ParsedOvalObject;
-import com.example.scap.model.parsed.oval.ParsedOvalState;
-import com.example.scap.model.parsed.oval.ParsedOvalTest;
 import com.example.scap.oval.CompiledObjectPlan;
 import com.example.scap.oval.EntitySelector;
 import com.example.scap.oval.ObjectCompilationResult;
@@ -13,11 +11,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class Wmi57CheckCompiler extends CheckCompilerBase<CompiledWmi57Check> {
+public class Wmi57CheckCompiler extends CheckCompilerBase {
     private static final String NAMESPACE_ENTITY = "namespace";
     private static final String WQL_ENTITY = "wql";
 
@@ -49,18 +46,6 @@ public class Wmi57CheckCompiler extends CheckCompilerBase<CompiledWmi57Check> {
                         .objectType(object.getObjectType())
                         .tasks(new ArrayList<>(List.of(wmi57CollectionTask)))
                         .build());
-    }
-
-    @Override
-    protected Optional<CompiledWmi57Check> compileResolved(
-            final OvalCheckCompileContext context,
-            final ParsedOvalTest test,
-            final List<ParsedOvalState> states,
-            final ObjectCompilationResult objectResult) {
-
-        final CompiledWmi57Check check = new CompiledWmi57Check();
-        check.setTestId(test.getId());
-        return Optional.of(check);
     }
 }
 

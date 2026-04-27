@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 class XccdfBenchmarkIndexBuilderTest {
-    private final XccdfBenchmarkIndexBuilder indexBuilder = new XccdfBenchmarkIndexBuilder();
+    private final XccdfIndexBuilder indexBuilder = new XccdfIndexBuilder();
 
     @Test
     void build_shouldIndexTopLevelGroupsById() {
@@ -21,7 +21,7 @@ class XccdfBenchmarkIndexBuilderTest {
         benchmark.getGroups().add(group1);
         benchmark.getGroups().add(group2);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(2, index.getGroupsById().size());
         assertSame(group1, index.getGroupsById().get("group-1"));
@@ -40,7 +40,7 @@ class XccdfBenchmarkIndexBuilderTest {
         group.getRules().add(rule2);
         benchmark.getGroups().add(group);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(2, index.getRulesById().size());
         assertSame(rule1, index.getRulesById().get("rule-1"));
@@ -57,7 +57,7 @@ class XccdfBenchmarkIndexBuilderTest {
         benchmark.getRules().add(topLevelRule1);
         benchmark.getRules().add(topLevelRule2);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(2, index.getRulesById().size());
         assertSame(topLevelRule1, index.getRulesById().get("rule-1"));
@@ -76,7 +76,7 @@ class XccdfBenchmarkIndexBuilderTest {
         benchmark.getGroups().add(group);
         benchmark.getRules().add(topLevelRule);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(1, index.getGroupsById().size());
         assertEquals(2, index.getRulesById().size());
@@ -99,7 +99,7 @@ class XccdfBenchmarkIndexBuilderTest {
         benchmark.getGroups().add(group);
         benchmark.getRules().add(topLevelRule);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(1, index.getRulesById().size());
         assertSame(topLevelRule, index.getRulesById().get("duplicate-rule"));
@@ -118,7 +118,7 @@ class XccdfBenchmarkIndexBuilderTest {
         parentGroup.getGroups().add(childGroup);
         benchmark.getGroups().add(parentGroup);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(3, index.getGroupsById().size());
         assertSame(parentGroup, index.getGroupsById().get("parent-group"));
@@ -144,7 +144,7 @@ class XccdfBenchmarkIndexBuilderTest {
         parentGroup.getGroups().add(childGroup);
         benchmark.getGroups().add(parentGroup);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(2, index.getRulesById().size());
         assertSame(childRule, index.getRulesById().get("child-rule"));
@@ -174,7 +174,7 @@ class XccdfBenchmarkIndexBuilderTest {
         benchmark.getGroups().add(parentGroup);
         benchmark.getRules().add(topLevelRule);
 
-        XccdfBenchmarkIndex index = indexBuilder.build(benchmark);
+        XccdfIndex index = indexBuilder.build(benchmark);
 
         assertEquals(3, index.getGroupsById().size());
         assertEquals(4, index.getRulesById().size());

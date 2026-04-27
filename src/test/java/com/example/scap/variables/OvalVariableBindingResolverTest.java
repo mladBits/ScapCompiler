@@ -1,7 +1,7 @@
 package com.example.scap.variables;
 
 import com.example.scap.index.OvalIndex;
-import com.example.scap.index.XccdfBenchmarkIndex;
+import com.example.scap.index.XccdfIndex;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalConstantVariable;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalExternalVariable;
 import com.example.scap.model.parsed.xccdf.ParsedXccdfBenchmark;
@@ -37,7 +37,7 @@ class OvalVariableBindingResolverTest {
          */
         ParsedXccdfBenchmark benchmark = new ParsedXccdfBenchmark();
         ResolvedProfile resolvedProfile = profile(rule("rule-1"));
-        XccdfBenchmarkIndex xccdfIndex = new XccdfBenchmarkIndex();
+        XccdfIndex xccdfIndex = new XccdfIndex();
         OvalIndex ovalIndex = new OvalIndex();
 
         ParsedOvalConstantVariable constantVariable = constantVariable("oval:const:1", "Alpha", "Beta");
@@ -85,7 +85,7 @@ class OvalVariableBindingResolverTest {
          * variables["oval:cis:var:1"] = ["16"]
          */
         ParsedXccdfBenchmark benchmark = new ParsedXccdfBenchmark();
-        XccdfBenchmarkIndex xccdfIndex = new XccdfBenchmarkIndex();
+        XccdfIndex xccdfIndex = new XccdfIndex();
         OvalIndex ovalIndex = new OvalIndex();
 
         ParsedXccdfValue xccdfValue = xccdfValue("xccdf_org.cisecurity_value_min_pass_len", "14");
@@ -128,7 +128,7 @@ class OvalVariableBindingResolverTest {
          *   oval:cis:var:1 -> ["14"] from XCCDF_DEFAULT
          */
         ParsedXccdfBenchmark benchmark = new ParsedXccdfBenchmark();
-        XccdfBenchmarkIndex xccdfIndex = new XccdfBenchmarkIndex();
+        XccdfIndex xccdfIndex = new XccdfIndex();
         OvalIndex ovalIndex = new OvalIndex();
 
         ParsedXccdfValue xccdfValue = xccdfValue("xccdf_org.cisecurity_value_min_pass_len", "14");
@@ -171,7 +171,7 @@ class OvalVariableBindingResolverTest {
          * because the OVAL index has no such variable.
          */
         ParsedXccdfBenchmark benchmark = new ParsedXccdfBenchmark();
-        XccdfBenchmarkIndex xccdfIndex = new XccdfBenchmarkIndex();
+        XccdfIndex xccdfIndex = new XccdfIndex();
         OvalIndex ovalIndex = new OvalIndex();
 
         ParsedXccdfValue xccdfValue = xccdfValue("xccdf_value_1", "abc");
@@ -213,7 +213,7 @@ class OvalVariableBindingResolverTest {
          * The constant binding should remain.
          */
         ParsedXccdfBenchmark benchmark = new ParsedXccdfBenchmark();
-        XccdfBenchmarkIndex xccdfIndex = new XccdfBenchmarkIndex();
+        XccdfIndex xccdfIndex = new XccdfIndex();
         OvalIndex ovalIndex = new OvalIndex();
 
         ParsedXccdfValue xccdfValue = xccdfValue("xccdf_value_1", "override");
@@ -255,7 +255,7 @@ class OvalVariableBindingResolverTest {
          * var:2 should be reported as unresolved.
          */
         ParsedXccdfBenchmark benchmark = new ParsedXccdfBenchmark();
-        XccdfBenchmarkIndex xccdfIndex = new XccdfBenchmarkIndex();
+        XccdfIndex xccdfIndex = new XccdfIndex();
         OvalIndex ovalIndex = new OvalIndex();
 
         ParsedXccdfValue xccdfValue = xccdfValue("xccdf_value_1", "enabled");

@@ -1,6 +1,7 @@
 package com.example.scap.oval;
 
 import com.example.scap.index.OvalIndex;
+import com.example.scap.model.compiled.CompiledState;
 import com.example.scap.model.compiled.variables.LocalVariableCompilationResult;
 import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import com.example.scap.variables.ResolvedVariableBindings;
@@ -17,5 +18,6 @@ public class OvalCheckCompileContext {
     private final ResolvedVariableBindings variableBindings;
     private final LocalVariableCompilationResult localVariables;
     private final Map<String, CompiledObjectPlan> objects;
+    private final Map<String, CompiledState> states;
 
 }

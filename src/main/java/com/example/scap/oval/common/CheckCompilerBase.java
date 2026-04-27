@@ -1,26 +1,27 @@
 package com.example.scap.oval.common;
 
 import com.example.scap.index.OvalIndex;
+import com.example.scap.model.compiled.CompiledState;
 import com.example.scap.model.parsed.oval.*;
-import com.example.scap.oval.*;
+import com.example.scap.oval.CompiledObjectPlan;
+import com.example.scap.oval.ObjectCompilationResult;
+import com.example.scap.oval.OvalCheckCompileContext;
+import com.example.scap.oval.OvalCheckCompiler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
-public abstract class CheckCompilerBase<T extends CompiledOvalCheck> implements OvalCheckCompiler<T> {
+public abstract class CheckCompilerBase implements OvalCheckCompiler {
     protected abstract String supportedTestType();
 
     protected abstract ObjectCompilationResult compileSimpleObject(
             OvalCheckCompileContext context,
             ParsedOvalObject object);
-
-    protected abstract Optional<T> compileResolved(
-            OvalCheckCompileContext context,
-            ParsedOvalTest test,
-            List<ParsedOvalState> states,
-            ObjectCompilationResult objectResult
-    );
 
     @Override
     public final boolean supports(final ParsedOvalTest test) {
@@ -28,25 +29,37 @@ public abstract class CheckCompilerBase<T extends CompiledOvalCheck> implements 
     }
 
     @Override
-    public final Optional<T> compile(
+    public final Optional<CompiledOvalCheckBase> compile(
             final OvalCheckCompileContext context,
             final ParsedOvalTest test) {
+
         if (!supports(test)) {
             return Optional.empty();
         }
 
         final ParsedOvalObjectBase object = requireObject(context.getOvalIndex(), test.getObjectRef());
-        final List<ParsedOvalState> states = test.getStateRef().stream()
-                .map(stateRef -> requireState(context.getOvalIndex(), stateRef))
-                .toList();
-
-        final ObjectCompilationResult objectResult = compileObject(
+        final ObjectCompilationResult result = compileObject(
                 context,
                 object,
                 new HashSet<>());
 
-        context.getObjects().putAll(objectResult.getObjectsById());
-        return compileResolved(context, test, states, objectResult);
+        for (final String stateRef : test.getStateRef()) {
+            final ParsedOvalState parsedState =
+                    requireState(context.getOvalIndex(), stateRef);
+
+            final CompiledState compiledState = compileState(parsedState);
+            context.getStates().put(compiledState.getStateId(), compiledState);
+        }
+
+        context.getObjects().putAll(result.getObjectsById());
+
+        return Optional.of(new CompiledOvalCheckBase(
+                test.getId(),
+                test.getObjectRef(),
+                test.getStateRef(),
+                test.getCheck(),
+                test.getCheckExistence()
+        ));
     }
 
     private ObjectCompilationResult compileObject (
@@ -72,6 +85,18 @@ public abstract class CheckCompilerBase<T extends CompiledOvalCheck> implements 
         } finally {
             visitedObjectIds.remove(object.getObjectId());
         }
+    }
+
+    protected CompiledState compileState(final ParsedOvalState state) {
+        final CompiledState compiledState = new CompiledState();
+        compiledState.setStateId(state.getStateId());
+        compiledState.setStateType(state.getStateType());
+
+        for (final ParsedOvalEntity entity : state.getEntities()) {
+            compiledState.getAssertions().add(entity.resolve());
+        }
+
+        return compiledState;
     }
 
     private ObjectCompilationResult compileSetObject(
