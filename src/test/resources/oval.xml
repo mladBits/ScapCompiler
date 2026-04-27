@@ -6786,7 +6786,7 @@
         </registry_object>
         <registry_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:obj:25338600" version="1">
             <hive datatype="string">HKEY_LOCAL_MACHINE</hive>
-            <key datatype="string">SOFTWARE\Policies\Microsoft\Windows\Explorer</key>
+            <key datatype="string" var_ref="oval:mil.disa.stig.win:var:25334001"/> <!-- SOFTWARE\Policies\Microsoft\Windows\Explorer</key> -->
             <name datatype="string">NoAutoplayfornonVolume</name>
         </registry_object>
         <registry_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:obj:25338700" version="1">
@@ -8157,68 +8157,4 @@
             </concat>
         </local_variable>
     </variables>
-</oval_definitions>
-        </component>
-<component id="scap_mil.disa.stig_comp_U_MS_Windows_11_V2R8_STIG_SCAP_1-3_Benchmark-cpe-oval.xml" timestamp="2026-03-23T19:18:14.895-04:00">
-<oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">
-    <generator>
-        <oval:product_name>Security Content Tool 1.8.0</oval:product_name>
-        <oval:schema_version>5.11</oval:schema_version>
-        <oval:timestamp>2026-03-23T07:18:14</oval:timestamp>
-    </generator>
-    <definitions>
-        <definition id="oval:mil.disa.stig.windows11:def:1" version="2" class="inventory">
-            <metadata>
-                <title>Microsoft Windows 11</title>
-                <affected family="windows">
-                    <platform>Microsoft Windows 11</platform>
-                </affected>
-                <reference source="CPE" ref_id="cpe:/o:microsoft:windows_11:-:-:~-~-~-~-~" />
-                <description>Microsoft Windows 11 is the installed operating system</description>
-            </metadata>
-            <criteria>
-                <criterion test_ref="oval:mil.disa.stig.ind:tst:10000000" comment="The installed operating system belongs to the Microsoft Windows family" />
-                <criterion test_ref="oval:mil.disa.stig.win:tst:10000000" comment="The installed operating system is Microsoft Windows 10 or 11" />
-                <criterion test_ref="oval:mil.disa.stig.win:tst:10000001" comment="The current build number is 22000 or greater.  This indicates Windows 11 is the operating system." />
-            </criteria>
-        </definition>
-    </definitions>
-    <tests>
-        <family_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mil.disa.stig.ind:tst:10000000" version="1" check="all" comment="The installed operating system belongs to the Microsoft Windows family">
-            <object object_ref="oval:mil.disa.stig.ind:obj:10000000" />
-            <state state_ref="oval:mil.disa.stig.ind:ste:10000000" />
-        </family_test>
-        <registry_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:tst:10000000" version="2" check="all" comment="The installed operating system is Windows 10 or 11">
-            <object object_ref="oval:mil.disa.stig.win:obj:10000000" />
-            <state state_ref="oval:mil.disa.stig.win:ste:10000000" />
-        </registry_test>
-        <registry_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:tst:10000001" version="2" check="all" comment="The current build number is 22000 or greater.">
-            <object object_ref="oval:mil.disa.stig.win:obj:10000001" />
-            <state state_ref="oval:mil.disa.stig.win:ste:10000001" />
-        </registry_test>
-    </tests>
-    <objects>
-        <family_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mil.disa.stig.ind:obj:10000000" version="1" comment="OS family" />
-        <registry_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:obj:10000000" version="1" comment="ProductName registry entry">
-            <hive>HKEY_LOCAL_MACHINE</hive>
-            <key>SOFTWARE\Microsoft\Windows NT\CurrentVersion</key>
-            <name>ProductName</name>
-        </registry_object>
-        <registry_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:obj:10000001" version="1" comment="CurrentBuildNumber registry entry">
-            <hive>HKEY_LOCAL_MACHINE</hive>
-            <key>SOFTWARE\Microsoft\Windows NT\CurrentVersion</key>
-            <name>CurrentBuildNumber</name>
-        </registry_object>
-    </objects>
-    <states>
-        <family_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mil.disa.stig.ind:ste:10000000" version="1" comment="Microsoft Windows family">
-            <family>windows</family>
-        </family_state>
-        <registry_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:ste:10000000" version="2" comment="Windows 10 or Windows 11">
-            <value operation="pattern match">^[Ww][Ii][Nn][Dd][Oo][Ww][Ss] 1[01].*$</value>
-        </registry_state>
-        <registry_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" id="oval:mil.disa.stig.win:ste:10000001" version="1">
-            <value datatype="int" operation="greater than or equal">22000</value>
-        </registry_state>
-    </states>
 </oval_definitions>

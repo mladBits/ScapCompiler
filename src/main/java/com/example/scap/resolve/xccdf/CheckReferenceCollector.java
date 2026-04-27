@@ -3,6 +3,7 @@ package com.example.scap.resolve.xccdf;
 import com.example.scap.model.parsed.xccdf.ParsedCheckNode;
 import com.example.scap.model.parsed.xccdf.ParsedCheckReference;
 import com.example.scap.model.parsed.xccdf.ParsedComplexCheck;
+import com.example.scap.model.resolved.xccdf.ResolveCheckExport;
 import com.example.scap.model.resolved.xccdf.ResolvedCheckReference;
 import org.springframework.stereotype.Component;
 
@@ -28,10 +29,16 @@ public class CheckReferenceCollector {
     private void collectInto(final ParsedCheckNode node,
                              final Set<ResolvedCheckReference> collected) {
         if (node instanceof ParsedCheckReference parsedCheckReference) {
+            final List<ResolveCheckExport> parsedCheckExports =
+                    parsedCheckReference.getCheckExports().stream()
+                            .map(parsed -> new ResolveCheckExport(parsed.getExportName(), parsed.getValueId()))
+                            .toList();
+
             final ResolvedCheckReference resolved = new ResolvedCheckReference(
                     nullSafe(parsedCheckReference.getSystem()),
                     nullSafe(parsedCheckReference.getHref()),
-                    nullSafe(parsedCheckReference.getName()));
+                    nullSafe(parsedCheckReference.getName()),
+                    parsedCheckExports);
 
             collected.add(resolved);
 

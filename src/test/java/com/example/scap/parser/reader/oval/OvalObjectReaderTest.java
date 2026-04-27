@@ -2,6 +2,7 @@ package com.example.scap.parser.reader.oval;
 
 import com.example.scap.model.parsed.oval.ParsedOvalEntity;
 import com.example.scap.model.parsed.oval.ParsedOvalObject;
+import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OvalObjectReaderTest {
     private static final XMLInputFactory2 FACTORY = (XMLInputFactory2) XMLInputFactory2.newInstance();
-    private final OvalObjectReader objectReader = new OvalObjectReader(new OvalEntityReader());
+    private static final OvalFilterReader filterReader = new OvalFilterReader();
+    private final OvalObjectReader objectReader = new OvalObjectReader(
+            new OvalEntityReader(),
+            new OvalSetReader(filterReader),
+            filterReader);
 
     @Test
     void readObject_shouldParseSingleObjectWithEntities() throws Exception {
@@ -36,24 +41,24 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertEquals(1, objects.size());
 
-        ParsedOvalObject object = objects.getFirst();
+        ParsedOvalObjectBase object = objects.getFirst();
         assertEquals("oval:obj:1", object.getObjectId());
         assertEquals("registry_object", object.getObjectType());
         assertEquals("http://oval.mitre.org/XMLSchema/oval-definitions-5#windows", object.getNamespace());
 
-        assertEquals(3, object.getEntities().size());
+        assertEquals(3, ((ParsedOvalObject)object).getEntities().size());
 
-        assertEntity(object.getEntities().get(0), "hive", "HKEY_LOCAL_MACHINE");
-        assertEntity(object.getEntities().get(1), "key", "Software\\Microsoft\\Windows");
-        assertEntity(object.getEntities().get(2), "name", "DisplayName");
+        assertEntity( ((ParsedOvalObject)object).getEntities().get(0), "hive", "HKEY_LOCAL_MACHINE");
+        assertEntity( ((ParsedOvalObject)object).getEntities().get(1), "key", "Software\\Microsoft\\Windows");
+        assertEntity( ((ParsedOvalObject)object).getEntities().get(2), "name", "DisplayName");
 
-        assertEquals("string", object.getEntities().get(0).getAttributes().get("datatype"));
-        assertEquals("string", object.getEntities().get(1).getAttributes().get("datatype"));
-        assertEquals("string", object.getEntities().get(2).getAttributes().get("datatype"));
+        assertEquals("string",  ((ParsedOvalObject)object).getEntities().get(0).getAttributes().get("datatype"));
+        assertEquals("string",  ((ParsedOvalObject)object).getEntities().get(1).getAttributes().get("datatype"));
+        assertEquals("string",  ((ParsedOvalObject)object).getEntities().get(2).getAttributes().get("datatype"));
     }
 
     @Test
@@ -72,7 +77,7 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertEquals(3, objects.size());
 
@@ -84,7 +89,7 @@ class OvalObjectReaderTest {
 
         assertEquals("oval:obj:3", objects.get(2).getObjectId());
         assertEquals("family_object", objects.get(2).getObjectType());
-        assertTrue(objects.get(2).getEntities().isEmpty());
+        assertTrue(((ParsedOvalObject)objects.get(2)).getEntities().isEmpty());
     }
 
     @Test
@@ -102,7 +107,7 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertEquals(1, objects.size());
         assertEquals("oval:obj:1", objects.getFirst().getObjectId());
@@ -118,11 +123,11 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertEquals(1, objects.size());
 
-        ParsedOvalObject object = objects.getFirst();
+        ParsedOvalObject object = (ParsedOvalObject)objects.getFirst();
         assertEquals("oval:obj:1", object.getObjectId());
         assertEquals("family_object", object.getObjectType());
         assertTrue(object.getEntities().isEmpty());
@@ -140,9 +145,9 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
-        ParsedOvalEntity entity = objects.getFirst().getEntities().getFirst();
+        ParsedOvalEntity entity = ((ParsedOvalObject)objects.getFirst()).getEntities().getFirst();
 
         assertEquals("key", entity.getName());
         assertEquals("Software\\\\.*", entity.getValue());
@@ -165,12 +170,12 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertEquals(1, objects.size());
-        assertEquals(1, objects.getFirst().getEntities().size());
+        assertEquals(1, ((ParsedOvalObject)objects.getFirst()).getEntities().size());
 
-        ParsedOvalEntity setEntity = objects.getFirst().getEntities().getFirst();
+        ParsedOvalEntity setEntity = ((ParsedOvalObject)objects.getFirst()).getEntities().getFirst();
         assertEquals("set", setEntity.getName());
         assertEquals("UNION", setEntity.getAttributes().get("set_operator"));
         assertNull(setEntity.getValue());
@@ -184,7 +189,7 @@ class OvalObjectReaderTest {
 
         XMLStreamReader2 reader = moveToStart(xml, "objects");
 
-        List<ParsedOvalObject> objects = objectReader.readObject(reader);
+        List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertNotNull(objects);
         assertTrue(objects.isEmpty());

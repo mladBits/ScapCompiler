@@ -1,7 +1,7 @@
 package com.example.scap.resolve.oval;
 
 import com.example.scap.index.OvalIndex;
-import com.example.scap.model.parsed.oval.ParsedOvalObject;
+import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
 import com.example.scap.model.parsed.oval.ParsedOvalState;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
 
@@ -11,5 +11,5 @@ import java.util.List;
 public interface OvalTestDependencyResolver {
     Result resolve(OvalIndex ovalIndex, Collection<ParsedOvalTest> tests);
 
-    record Result(List<ParsedOvalObject> objects, List<ParsedOvalState> states){}
+    record Result(List<ParsedOvalObjectBase> objects, List<ParsedOvalState> states){}
 }

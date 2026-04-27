@@ -1,7 +1,7 @@
 package com.example.scap.resolve.oval;
 
 import com.example.scap.index.OvalIndex;
-import com.example.scap.model.parsed.oval.ParsedOvalObject;
+import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
 import com.example.scap.model.parsed.oval.ParsedOvalState;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class OvalTestDependencyResolverImplTest {
     void resolve_shouldResolveSingleObjectAndSingleState() {
         OvalIndex index = new OvalIndex();
 
-        ParsedOvalObject object = object("oval:obj:1");
+        ParsedOvalObjectBase object = object("oval:obj:1");
         ParsedOvalState state = state("oval:ste:1");
 
         index.getObjectById().put(object.getObjectId(), object);
@@ -31,7 +31,7 @@ class OvalTestDependencyResolverImplTest {
         OvalTestDependencyResolver.Result result = resolver.resolve(index, List.of(test));
 
         assertEquals(List.of("oval:obj:1"),
-                result.objects().stream().map(ParsedOvalObject::getObjectId).toList());
+                result.objects().stream().map(ParsedOvalObjectBase::getObjectId).toList());
 
         assertEquals(List.of("oval:ste:1"),
                 result.states().stream().map(ParsedOvalState::getStateId).toList());
@@ -41,7 +41,7 @@ class OvalTestDependencyResolverImplTest {
     void resolve_shouldResolveOneObjectAndMultipleStates() {
         OvalIndex index = new OvalIndex();
 
-        ParsedOvalObject object = object("oval:obj:1");
+        ParsedOvalObjectBase object = object("oval:obj:1");
         ParsedOvalState state1 = state("oval:ste:1");
         ParsedOvalState state2 = state("oval:ste:2");
 
@@ -56,7 +56,7 @@ class OvalTestDependencyResolverImplTest {
         OvalTestDependencyResolver.Result result = resolver.resolve(index, List.of(test));
 
         assertEquals(List.of("oval:obj:1"),
-                result.objects().stream().map(ParsedOvalObject::getObjectId).toList());
+                result.objects().stream().map(ParsedOvalObjectBase::getObjectId).toList());
 
         assertEquals(List.of("oval:ste:1", "oval:ste:2"),
                 result.states().stream().map(ParsedOvalState::getStateId).toList());
@@ -66,8 +66,8 @@ class OvalTestDependencyResolverImplTest {
     void resolve_shouldDeduplicateObjectsAndStatesPreservingFirstEncounterOrder() {
         OvalIndex index = new OvalIndex();
 
-        ParsedOvalObject object1 = object("oval:obj:1");
-        ParsedOvalObject object2 = object("oval:obj:2");
+        ParsedOvalObjectBase object1 = object("oval:obj:1");
+        ParsedOvalObjectBase object2 = object("oval:obj:2");
 
         ParsedOvalState state1 = state("oval:ste:1");
         ParsedOvalState state2 = state("oval:ste:2");
@@ -87,7 +87,7 @@ class OvalTestDependencyResolverImplTest {
         OvalTestDependencyResolver.Result result = resolver.resolve(index, List.of(test1, test2, test3));
 
         assertEquals(List.of("oval:obj:2", "oval:obj:1"),
-                result.objects().stream().map(ParsedOvalObject::getObjectId).toList());
+                result.objects().stream().map(ParsedOvalObjectBase::getObjectId).toList());
 
         assertEquals(List.of("oval:ste:1", "oval:ste:2"),
                 result.states().stream().map(ParsedOvalState::getStateId).toList());
@@ -97,7 +97,7 @@ class OvalTestDependencyResolverImplTest {
     void resolve_shouldIgnoreNullAndBlankObjectRefsAndStateRefs() {
         OvalIndex index = new OvalIndex();
 
-        ParsedOvalObject object = object("oval:obj:1");
+        ParsedOvalObjectBase object = object("oval:obj:1");
         ParsedOvalState state = state("oval:ste:1");
 
         index.getObjectById().put(object.getObjectId(), object);
@@ -112,7 +112,7 @@ class OvalTestDependencyResolverImplTest {
         OvalTestDependencyResolver.Result result = resolver.resolve(index, List.of(test1, test2, test3));
 
         assertEquals(List.of("oval:obj:1"),
-                result.objects().stream().map(ParsedOvalObject::getObjectId).toList());
+                result.objects().stream().map(ParsedOvalObjectBase::getObjectId).toList());
 
         assertEquals(List.of("oval:ste:1"),
                 result.states().stream().map(ParsedOvalState::getStateId).toList());
@@ -138,7 +138,7 @@ class OvalTestDependencyResolverImplTest {
     void resolve_shouldThrowWhenStateIsMissing() {
         OvalIndex index = new OvalIndex();
 
-        ParsedOvalObject object = object("oval:obj:1");
+        ParsedOvalObjectBase object = object("oval:obj:1");
         index.getObjectById().put(object.getObjectId(), object);
 
         ParsedOvalTest test = test("oval:tst:1", "oval:obj:1", "oval:ste:missing");
@@ -175,8 +175,8 @@ class OvalTestDependencyResolverImplTest {
         return test;
     }
 
-    private ParsedOvalObject object(String objectId) {
-        ParsedOvalObject object = new ParsedOvalObject();
+    private ParsedOvalObjectBase object(String objectId) {
+        ParsedOvalObjectBase object = new ParsedOvalObjectBase();
         object.setObjectId(objectId);
         return object;
     }

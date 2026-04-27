@@ -11,6 +11,8 @@ public class XccdfBenchmarkIndexBuilder {
 
         benchmark.getGroups().forEach(group -> indexGroup(group, index));
         benchmark.getRules().forEach(rule -> index.getRulesById().put(rule.getRuleId(), rule));
+        benchmark.getValues()
+                .forEach(var -> index.getValuesById().put(var.getId(), var));
 
         return index;
     }

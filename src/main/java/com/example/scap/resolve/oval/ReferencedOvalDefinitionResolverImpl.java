@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class ReferencedOvalDefinitionResolverImpl implements ReferencedOvalDefinitionResolver {
-    private final OvalDefinitionClosureResolver closureResolver;
+    private final OvalEvaluationSliceResolver ovalEvaluationSliceResolver;
 
     @Override
     public ResolvedOvalEvaluationSlice resolve(final OvalIndex ovalIndex, final List<ResolvedRuleOvalRefs> ruleRefs) {
@@ -24,6 +24,6 @@ public class ReferencedOvalDefinitionResolverImpl implements ReferencedOvalDefin
                 .filter(name -> name != null && !name.isBlank())
                 .collect(Collectors.toUnmodifiableSet());
 
-        return closureResolver.resolve(ovalIndex, startingDefinitionIds);
+        return ovalEvaluationSliceResolver.resolve(ovalIndex, startingDefinitionIds);
     }
 }

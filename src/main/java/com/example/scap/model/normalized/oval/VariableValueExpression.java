@@ -1,6 +1,10 @@
 package com.example.scap.model.normalized.oval;
 
-public record VariableValueExpression(
-        String variableId
-) implements OvalValueExpression {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public final class VariableValueExpression implements OvalValueExpression {
+    private String variableId;
 }

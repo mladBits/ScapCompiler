@@ -100,8 +100,8 @@ class RuleOvalReferenceResolverImplTest {
         assertEquals(1, result.size());
         assertEquals(3, result.getFirst().getReferences().size());
 
-        assertResolved(result.getFirst().getReferences().get(0), "system-1", "oval-1.xml", "def-1");
-        assertResolved(result.getFirst().getReferences().get(1), "system-2", "oval-2.xml", "def-2");
+        assertResolved(result.getFirst().getReferences().get(1), "system-1", "oval-1.xml", "def-1");
+        assertResolved(result.getFirst().getReferences().get(0), "system-2", "oval-2.xml", "def-2");
         assertResolved(result.getFirst().getReferences().get(2), "system-3", "oval-3.xml", "def-3");
     }
 
@@ -122,8 +122,8 @@ class RuleOvalReferenceResolverImplTest {
         assertEquals(1, result.size());
         assertEquals(2, result.getFirst().getReferences().size());
 
-        assertResolved(result.getFirst().getReferences().get(0), "system-1", "oval.xml", "def-1");
-        assertResolved(result.getFirst().getReferences().get(1), "system-2", "oval-2.xml", "def-2");
+        assertResolved(result.getFirst().getReferences().get(1), "system-1", "oval.xml", "def-1");
+        assertResolved(result.getFirst().getReferences().get(0), "system-2", "oval-2.xml", "def-2");
     }
 
     @Test

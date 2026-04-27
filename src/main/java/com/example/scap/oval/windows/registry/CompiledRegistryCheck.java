@@ -1,14 +1,19 @@
 package com.example.scap.oval.windows.registry;
 
 import com.example.scap.oval.CompiledOvalCheck;
+import lombok.Setter;
 
-import java.util.List;
+@Setter
+public class CompiledRegistryCheck implements CompiledOvalCheck {
+    private String testId;
+    private String objectId;
+    private String check;
+    private String checkExistence;
 
-public record CompiledRegistryCheck(
-        String testId,
-        RegistryObjectPlan objectPlan,
-        List<RegistryStatePlan> statePlans
-) implements CompiledOvalCheck {
+    @Override
+    public String testId() {
+        return testId;
+    }
 
     @Override
     public String family() {

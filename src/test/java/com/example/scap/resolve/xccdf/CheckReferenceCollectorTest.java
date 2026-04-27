@@ -47,8 +47,8 @@ class CheckReferenceCollectorTest {
         assertEquals(3, result.size());
 
         assertResolved(result.get(0), "system-1", "file-1.xml", "def-1");
-        assertResolved(result.get(1), "system-2", "file-2.xml", "def-2");
-        assertResolved(result.get(2), "system-3", "file-3.xml", "def-3");
+        assertResolved(result.get(2), "system-2", "file-2.xml", "def-2");
+        assertResolved(result.get(1), "system-3", "file-3.xml", "def-3");
     }
 
     @Test

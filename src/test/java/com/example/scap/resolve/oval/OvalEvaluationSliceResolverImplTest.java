@@ -2,7 +2,7 @@ package com.example.scap.resolve.oval;
 
 import com.example.scap.index.OvalIndex;
 import com.example.scap.model.parsed.oval.ParsedOvalDefinition;
-import com.example.scap.model.parsed.oval.ParsedOvalObject;
+import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
 import com.example.scap.model.parsed.oval.ParsedOvalState;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
 import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
@@ -21,7 +21,7 @@ class OvalEvaluationSliceResolverImplTest {
 
         ParsedOvalDefinition definition = definition("oval:def:1");
         ParsedOvalTest test = test("oval:tst:1");
-        ParsedOvalObject object = object("oval:obj:1");
+        ParsedOvalObjectBase object = object("oval:obj:1");
         ParsedOvalState state = state("oval:ste:1");
 
         StubDefinitionClosureResolver definitionClosureResolver =
@@ -54,7 +54,7 @@ class OvalEvaluationSliceResolverImplTest {
                 result.getTests().stream().map(ParsedOvalTest::getId).toList());
 
         assertEquals(List.of("oval:obj:1"),
-                result.getObjects().stream().map(ParsedOvalObject::getObjectId).toList());
+                result.getObjects().stream().map(ParsedOvalObjectBase::getObjectId).toList());
 
         assertEquals(List.of("oval:ste:1"),
                 result.getStates().stream().map(ParsedOvalState::getStateId).toList());
@@ -164,8 +164,8 @@ class OvalEvaluationSliceResolverImplTest {
         return test;
     }
 
-    private ParsedOvalObject object(String objectId) {
-        ParsedOvalObject object = new ParsedOvalObject();
+    private ParsedOvalObjectBase object(String objectId) {
+        ParsedOvalObjectBase object = new ParsedOvalObjectBase();
         object.setObjectId(objectId);
         return object;
     }

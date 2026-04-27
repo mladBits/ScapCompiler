@@ -1,7 +1,7 @@
 package com.example.scap.resolve.oval;
 
 import com.example.scap.index.OvalIndex;
-import com.example.scap.model.parsed.oval.ParsedOvalObject;
+import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
 import com.example.scap.model.parsed.oval.ParsedOvalState;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +39,8 @@ public class OvalTestDependencyResolverImpl implements OvalTestDependencyResolve
         );
     }
 
-    private ParsedOvalObject requireObject(final OvalIndex ovalIndex, final String objectId) {
-        final ParsedOvalObject object = ovalIndex.getObjectById().get(objectId);
+    private ParsedOvalObjectBase requireObject(final OvalIndex ovalIndex, final String objectId) {
+        final ParsedOvalObjectBase object = ovalIndex.getObjectById().get(objectId);
         if (object == null) {
             throw new IllegalArgumentException("OVAL object not found: " + objectId);
         }

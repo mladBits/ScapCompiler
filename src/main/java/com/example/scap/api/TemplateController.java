@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
+
 @RestController
 @RequestMapping("/api/templates")
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class TemplateController {
     //private final VariableCatalogService variableCatalogService;
 
     @PostMapping("/compile")
-    public ResponseEntity<CompileTemplateResponse> compile(@Valid @RequestBody CompileTemplateRequest request) {
+    public ResponseEntity<CompileTemplateResponse> compile(@Valid @RequestBody CompileTemplateRequest request) throws FileNotFoundException {
         return ResponseEntity.ok(templateCompileService.compile(request));
     }
 }

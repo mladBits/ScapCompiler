@@ -19,6 +19,7 @@ public class OvalCriteriaReader {
         final ParsedOvalCriteria parsedOvalCriteria = new ParsedOvalCriteria();
         final String operator = reader.getAttributeValue(null, "operator");
         parsedOvalCriteria.setOperator(operator == null ? "AND" : operator);
+        parsedOvalCriteria.setIsNegated(Boolean.parseBoolean(reader.getAttributeValue(null, "negate")));
 
         while (reader.hasNext()) {
             final int event = reader.next();

@@ -1,65 +1,72 @@
 package com.example.scap.oval.windows.registry;
 
-import com.example.scap.index.OvalIndex;
 import com.example.scap.model.parsed.oval.ParsedOvalObject;
 import com.example.scap.model.parsed.oval.ParsedOvalState;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
+import com.example.scap.oval.CompiledObjectPlan;
+import com.example.scap.oval.EntitySelector;
+import com.example.scap.oval.ObjectCompilationResult;
 import com.example.scap.oval.OvalCheckCompileContext;
-import com.example.scap.oval.OvalCheckCompiler;
+import com.example.scap.oval.common.CheckCompilerBase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class RegistryCheckCompiler implements OvalCheckCompiler<CompiledRegistryCheck> {
-    private final RegistryObjectPlanMapper objectMapper;
-    private final RegistryStatePlanMapper stateMapper;
+public class RegistryCheckCompiler extends CheckCompilerBase<CompiledRegistryCheck> {
 
     @Override
-    public boolean supports(ParsedOvalTest test) {
-        return "registry_test".equals(test.getTestType());
+    protected String supportedTestType() {
+        return "registry_test";
     }
 
     @Override
-    public Optional<CompiledRegistryCheck> compile(OvalCheckCompileContext context, ParsedOvalTest test) {
-        if (!supports(test)) {
-            return Optional.empty();
-        }
+    protected ObjectCompilationResult compileSimpleObject(
+            final OvalCheckCompileContext context,
+            final ParsedOvalObject object) {
+        final EntitySelector hive = object.findEntity("hive")
+                .orElseThrow(() -> new IllegalArgumentException("Missing hive"))
+                .resolve();
 
-        ParsedOvalObject object = requireObject(context.getOvalIndex(), test.getObjectRef());
+        final EntitySelector key = object.findEntity("key")
+                .orElseThrow(() -> new IllegalArgumentException("Missing key"))
+                .resolve();
 
-        List<RegistryStatePlan> states = test.getStateRef().stream()
-                .map(stateRef -> requireState(context.getOvalIndex(), stateRef))
-                .map(stateMapper::map)
-                .toList();
+        final EntitySelector name = object.findEntity("name")
+                .orElseThrow(() -> new IllegalArgumentException("Missing name"))
+                .resolve();
 
-        return Optional.of(new CompiledRegistryCheck(
-                test.getId(),
-                objectMapper.map(object),
-                states
-        ));
+        final RegistryCollectionTask task = new RegistryCollectionTask();
+        task.addSelector(hive);
+        task.addSelector(key);
+        task.addSelector(name);
+
+        return new ObjectCompilationResult(
+                object.getObjectId(),
+                CompiledObjectPlan.builder()
+                        .objectId(object.getObjectId())
+                        .objectType(object.getObjectType())
+                        .tasks(new ArrayList<>(List.of(task)))
+                        .build());
     }
 
-    private ParsedOvalObject requireObject(final OvalIndex ovalIndex, final String objectRef) {
-        ParsedOvalObject object = ovalIndex.getObjectById().get(objectRef);
+    @Override
+    protected Optional<CompiledRegistryCheck> compileResolved(
+            final OvalCheckCompileContext context,
+            final ParsedOvalTest test,
+            final List<ParsedOvalState> states,
+            final ObjectCompilationResult objectResult) {
 
-        if (object == null) {
-            throw new IllegalArgumentException("OVAL object not found: " + objectRef);
-        }
+        final CompiledRegistryCheck check = new CompiledRegistryCheck();
+        check.setTestId(test.getId());
+        check.setObjectId(test.getObjectRef());
+        check.setCheck(test.getCheck());
+        check.setCheckExistence(test.getCheckExistence());
 
-        return object;
-    }
-
-    private ParsedOvalState requireState(final OvalIndex ovalIndex, final String stateRef) {
-        ParsedOvalState state = ovalIndex.getStateById().get(stateRef);
-
-        if (state == null) {
-            throw new IllegalArgumentException("OVAL state not found: " + stateRef);
-        }
-
-        return state;
+        return Optional.of(check);
     }
 }

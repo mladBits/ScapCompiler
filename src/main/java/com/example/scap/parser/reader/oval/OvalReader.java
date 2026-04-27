@@ -15,6 +15,7 @@ public class OvalReader {
     private final OvalTestReader ovalTestReader;
     private final OvalObjectReader ovalObjectReader;
     private final OvalStateReader ovalStateReader;
+    private final OvalVariableReader ovalVariableReader;
 
     public ParsedOval readOval(final XMLStreamReader2 reader)
             throws XMLStreamException {
@@ -29,6 +30,7 @@ public class OvalReader {
                     case "tests" -> parsedOval.setTests(ovalTestReader.readTest(reader));
                     case "objects" -> parsedOval.setObjects(ovalObjectReader.readObject(reader));
                     case "states" -> parsedOval.setStates(ovalStateReader.readState(reader));
+                    case "variables" -> parsedOval.setVariables(ovalVariableReader.readVariables(reader));
                 }
             } else if (event == XMLStreamConstants.END_ELEMENT && reader.getLocalName().equals("oval_definitions")) {
                 return parsedOval;
@@ -36,6 +38,5 @@ public class OvalReader {
         }
 
         throw new XMLStreamException("Unexpected end of document while reading Oval");
-
     }
 }
