@@ -8,10 +8,10 @@
 		<version>4.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>scap</artifactId>
+	<groupId>com.touchstone</groupId>
+	<artifactId>touchstone-compiler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
+	<name>touchstone-compiler</name>
 	<description/>
 	<url/>
 	<licenses>

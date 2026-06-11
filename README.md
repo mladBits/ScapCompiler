@@ -1,16 +1,16 @@
-# ScapCompiler
+# Touchstone Compiler
 
 [![CI](https://github.com/mladBits/ScapCompiler/actions/workflows/ci.yml/badge.svg)](https://github.com/mladBits/ScapCompiler/actions/workflows/ci.yml)
 
 **A Spring Boot service that compiles SCAP security content (XCCDF + OVAL XML) into flattened, execution-ready JSON templates for a distributed fleet of endpoint agents.**
 
-This is the compiler component of a larger cloud-based, agent-based SCAP 1.2 compliance-evaluation platform I'm building, designed to scale to tens of thousands of agents. Instead of shipping heavyweight XML parsers and cross-reference resolution logic to every endpoint, all of that work happens **once, server-side** — agents receive a small, self-contained JSON artifact that tells them exactly what to collect and how to evaluate it.
+This is the compiler component of **Touchstone**, a cloud-based, agent-based SCAP 1.2 compliance-evaluation platform I'm building, designed to scale to tens of thousands of agents. Instead of shipping heavyweight XML parsers and cross-reference resolution logic to every endpoint, all of that work happens **once, server-side** — agents receive a small, self-contained JSON artifact that tells them exactly what to collect and how to evaluate it.
 
 ## The problem
 
 SCAP benchmarks (DISA STIGs, CIS Benchmarks) are dense, heavily cross-referenced XML: an XCCDF benchmark selects rules per profile, rules reference OVAL definitions, definitions reference tests, tests reference objects and states, and any of those can reference variables — which may themselves be computed from *other collected objects* at scan time. Traditional scanners re-parse and re-resolve all of this on every host, on every scan.
 
-ScapCompiler does the resolution once and emits an **ExecutionTemplate**: a versioned JSON contract consumed by a lightweight agent (a Go implementation is the next component of the platform). The agent never sees XML.
+The compiler does the resolution once and emits an **ExecutionTemplate**: a versioned JSON contract consumed by a lightweight agent (a Go implementation is the next component of the platform). The agent never sees XML.
 
 ```
 XCCDF + OVAL XML ──► parse ──► index ──► resolve ──► compile ──► ExecutionTemplate (JSON)
@@ -91,10 +91,10 @@ The repo includes a real Windows STIG XCCDF/OVAL fixture under `src/test/resourc
 
 ## The bigger picture
 
-ScapCompiler is component one of four. The platform design (pull-based agent check-in with presigned S3 URLs, agent-side OVAL evaluation with server-side XCCDF scoring, Postgres for fleet/results, SQS-driven result processing):
+The compiler is component one of four. The Touchstone platform design (pull-based agent check-in with presigned S3 URLs, agent-side OVAL evaluation with server-side XCCDF scoring, Postgres for fleet/results, SQS-driven result processing):
 
 ```
-content XML ──► ScapCompiler ──► template in S3
+content XML ──► touchstone-compiler ──► template in S3
                                       │ presigned GET
         Go agent (Windows service) ◄──┤  collect → evaluate OVAL → partial ARF
                                       │ presigned PUT

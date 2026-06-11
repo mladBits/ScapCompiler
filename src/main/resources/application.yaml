@@ -1,6 +1,7 @@
 spring:
+
   application:
-    name: scap-compiler
+    name: touchstone-compiler
 
 server:
   port: 8080
@@ -17,6 +18,6 @@ app:
     endpoint: http://localhost:4566
     access-key: test
     secret-key: test
-    raw-content-bucket: scap-raw-content
-    compiled-template-bucket: scap-compiled-templates
-    compile-queue-url: http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/scap-compile-jobs
+    raw-content-bucket: touchstone-raw-content
+    compiled-template-bucket: touchstone-compiled-templates
+    compile-queue-url: http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/touchstone-compile-jobs
