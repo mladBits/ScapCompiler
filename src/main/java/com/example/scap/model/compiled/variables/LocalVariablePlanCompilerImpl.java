@@ -4,12 +4,15 @@ import com.example.scap.index.OvalIndex;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalLocalVariable;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalVariable;
 import com.example.scap.model.parsed.oval.variables.ParsedOvalVariableComponent;
+import com.example.scap.model.parsed.oval.variables.ParsedUnsupportedComponent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class LocalVariablePlanCompilerImpl implements LocalVariablePlanCompiler {
@@ -31,12 +34,17 @@ public class LocalVariablePlanCompilerImpl implements LocalVariablePlanCompiler 
                 continue;
             }
 
-            final CompiledLocalVariableExpression compiled = new CompiledLocalVariableExpression();
-            compiled.setVariableId(localVariable.getId());
-            compiled.setDatatype(localVariable.getDatatype());
-            compiled.setExpression(compileComponent(context, localVariable.getExpression()));
+            try {
+                final CompiledLocalVariableExpression compiled = new CompiledLocalVariableExpression();
+                compiled.setVariableId(localVariable.getId());
+                compiled.setDatatype(localVariable.getDatatype());
+                compiled.setExpression(compileComponent(context, localVariable.getExpression()));
 
-            result.getLocalVariablesById().put(compiled.getVariableId(), compiled);
+                result.getLocalVariablesById().put(compiled.getVariableId(), compiled);
+            } catch (final Exception e) {
+                log.warn("Failed to compile local variable {}: {}", variableId, e.getMessage());
+                result.getUnsupportedVariableReasons().put(variableId, e.getMessage());
+            }
         }
 
         return result;
@@ -45,6 +53,11 @@ public class LocalVariablePlanCompilerImpl implements LocalVariablePlanCompiler 
     private CompiledVariableExpression compileComponent(
             final LocalVariableCompileContext context,
             final ParsedOvalVariableComponent component) {
+        if (component instanceof ParsedUnsupportedComponent unsupported) {
+            throw new IllegalArgumentException(
+                    "unsupported variable function '" + unsupported.getFunctionName() + "'");
+        }
+
         for (final VariableFunctionCompiler<?> compiler : functionCompilers) {
             if (compiler.supports(component)) {
                 @SuppressWarnings("unchecked")

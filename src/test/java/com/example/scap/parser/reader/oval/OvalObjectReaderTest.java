@@ -3,6 +3,7 @@ package com.example.scap.parser.reader.oval;
 import com.example.scap.model.parsed.oval.ParsedOvalEntity;
 import com.example.scap.model.parsed.oval.ParsedOvalObject;
 import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
+import com.example.scap.model.parsed.oval.ParsedOvalObjectSet;
 import org.codehaus.stax2.XMLInputFactory2;
 import org.codehaus.stax2.XMLStreamReader2;
 import org.junit.jupiter.api.Test;
@@ -156,7 +157,7 @@ class OvalObjectReaderTest {
     }
 
     @Test
-    void readObject_shouldSkipNestedEntityStructure() throws Exception {
+    void readObject_shouldParseSetObjects() throws Exception {
         String xml = """
                 <objects xmlns:win="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows">
                     <win:registry_object id="oval:obj:1">
@@ -173,12 +174,11 @@ class OvalObjectReaderTest {
         List<ParsedOvalObjectBase> objects = objectReader.readObject(reader);
 
         assertEquals(1, objects.size());
-        assertEquals(1, ((ParsedOvalObject)objects.getFirst()).getEntities().size());
 
-        ParsedOvalEntity setEntity = ((ParsedOvalObject)objects.getFirst()).getEntities().getFirst();
-        assertEquals("set", setEntity.getName());
-        assertEquals("UNION", setEntity.getAttributes().get("set_operator"));
-        assertNull(setEntity.getValue());
+        ParsedOvalObjectSet setObject = (ParsedOvalObjectSet) objects.getFirst();
+        assertEquals("oval:obj:1", setObject.getObjectId());
+        assertEquals("UNION", setObject.getSet().getOperator());
+        assertEquals(List.of("oval:obj:2", "oval:obj:3"), setObject.getSet().getObjectRefs());
     }
 
     @Test

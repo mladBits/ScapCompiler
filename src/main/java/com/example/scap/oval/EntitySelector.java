@@ -1,5 +1,6 @@
 package com.example.scap.oval;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,6 +9,15 @@ public class EntitySelector {
     private String field;
     private String operation;
     private String datatype;
+
+    /**
+     * How a multi-valued variable folds against an item value
+     * (all / at least one / none satisfy / only one).
+     * Only present when the expression references a variable.
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String varCheck;
+
     private Expression expression;
 
     public void setValue(final String type, final String value) {

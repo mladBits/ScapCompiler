@@ -1,0 +1,32 @@
+name: CI
+
+# When to run: every push to main and every pull request targeting main.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    # GitHub-hosted virtual machine the job runs on.
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clone the repository into the runner.
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      # Install a JDK and cache the local Maven repository (~/.m2) between
+      # runs, keyed on pom.xml, so dependencies aren't re-downloaded every time.
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      # Compile and run the full test suite. A non-zero exit fails the job,
+      # which marks the commit/PR with a red X and turns the badge red.
+      - name: Build and test
+        run: mvn --batch-mode --no-transfer-progress test

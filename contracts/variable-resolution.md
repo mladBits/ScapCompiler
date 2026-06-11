@@ -1,0 +1,140 @@
+# ExecutionTemplate contract: variable resolution
+
+How an agent must resolve variables in an `ExecutionTemplate`. Semantics follow OVAL 5.11.
+Audience: the OVAL engine/evaluator implementation (Go agent). The compiler guarantees the
+invariants marked **Guarantee**; the agent implements everything marked **Agent**.
+
+## Where variables appear
+
+Entity selectors (in `objectsById[*].tasks[*].selectors`, `statesById[*].assertions`, and
+filter `predicates`) carry an expression that is either a literal or a variable reference:
+
+```json
+{
+  "field": "value",
+  "operation": "equals",
+  "datatype": "int",
+  "varCheck": "at least one",
+  "expression": { "type": "variable", "value": "oval:example:var:1" }
+}
+```
+
+- `expression.type` is one of `literal`, `variable`, `nil`.
+- `varCheck` is present **only** when `expression.type == "variable"` (defaults to `all` in
+  source content; the compiler always materializes it).
+
+## The variable table: `variablesById`
+
+One entry per referenced variable:
+
+```json
+"oval:example:var:1": {
+  "variableId": "oval:example:var:1",
+  "datatype": "string",
+  "kind": "LITERAL" | "PLAN" | "UNRESOLVED",
+  "values": ["..."],          // LITERAL only
+  "expression": { ... }        // PLAN only
+}
+```
+
+| kind | meaning | agent behavior |
+|---|---|---|
+| `LITERAL` | external/constant variable, values resolved at compile time | use `values` as-is |
+| `PLAN` | local variable | evaluate `expression` at runtime (below) |
+| `UNRESOLVED` | could not be resolved/compiled (no XCCDF binding, unsupported function, cycle, uncollectable object) | resolving it is an **error** |
+
+**Guarantee:** every variable id referenced by any selector, assertion, predicate, or nested
+`variable` expression has an entry in `variablesById`.
+
+## Resolution algorithm (Agent)
+
+```
+resolve(varId) -> ([]string, error)    // memoize per scan
+  entry = variablesById[varId]         // missing entry: treat as error (defensive)
+  LITERAL    -> entry.values
+  UNRESOLVED -> error
+  PLAN       -> eval(entry.expression)
+```
+
+A variable always resolves to an **ordered list of zero or more string values**. Datatype
+conversion happens at comparison time using the *selector's* `datatype`, not at resolution
+time.
+
+### Expression evaluation: `eval(expr) -> []string`
+
+Expressions are discriminated by `function`:
+
+**`literal`** `{ "function": "literal", "value": "abc" }`
+→ `["abc"]`.
+
+**`variable`** `{ "function": "variable", "variableId": "oval:...:var:2" }`
+→ `resolve(variableId)` (recursive; propagate error).
+**Guarantee:** no cycles — the compiler rejects cyclic references as UNRESOLVED. Guard anyway.
+
+**`object`** `{ "function": "object", "objectRef": "oval:...:obj:9", "itemField": "value" }`
+→ Collect (or reuse the memoized collection of) `objectsById[objectRef]`, then take the value
+of `itemField` from **every** collected item, in collection order.
+- **Guarantee:** `objectRef` always has a collection plan in `objectsById`.
+- Object collection flag `error` / `not collected` → variable error.
+- Object exists but zero items (`does not exist`) → empty list (not an error).
+- An item lacking the field entirely → skip that item; multi-valued fields contribute each value.
+
+**`concat`** `{ "function": "concat", "components": [e1, e2, ...] }`
+→ The **ordered cartesian product** of the component value lists, joining each combination
+left-to-right. Example: `["a","b"] × ["1","2"]` → `["a1","a2","b1","b2"]`.
+- Any component error → error.
+- Any component empty → empty result.
+
+**`regex_capture`** `{ "function": "regex_capture", "pattern": "^%.*%(.*)$", "component": e }`
+→ For each value of `eval(component)`: apply `pattern`; emit the **first capture group** of
+the first match; if the pattern does not match, emit the **empty string** for that value.
+- Pattern dialect is Perl/PCRE-flavored (OVAL spec). RE2-only engines are insufficient —
+  use a PCRE-compatible library (Go: `dlclark/regexp2`).
+
+### Empty and error propagation
+
+- A variable that evaluates to an **error** makes every test whose object/state references it
+  evaluate to `error`.
+- An **object selector** whose variable resolves to an empty list → the object collection is
+  flagged `does not exist` for that dimension (no values to enumerate).
+- A **state assertion** whose variable resolves to an empty list → that assertion evaluates
+  to `error` (OVAL: a var_ref with no values cannot be checked).
+
+## Applying a variable at comparison time (Agent)
+
+For a selector/assertion with `expression.type == "variable"`:
+
+1. `values = resolve(variableId)`.
+2. Convert each value and the item's field value into the selector's `datatype` domain
+   (`string`, `int`, `boolean`, `version` — segment-wise numeric, `binary`).
+3. Compare the **item value against each variable value** using `operation`
+   (equals, not equal, case insensitive equals/not equal, greater than (or equal),
+   less than (or equal), bitwise and/or, pattern match).
+4. Fold the per-value boolean results with `varCheck`:
+
+| varCheck | result is true when |
+|---|---|
+| `all` | every comparison is true |
+| `at least one` | one or more comparisons are true |
+| `none satisfy` | no comparison is true |
+| `only one` | exactly one comparison is true |
+
+This per-entity result then feeds the state's entity folding and the test's `check` /
+`checkExistence` quantifiers (documented separately in eval-semantics).
+
+## Object selectors with variables (Agent)
+
+When a **collection task selector** (not a state) references a variable — e.g. a registry
+`name` with `var_ref` — the agent enumerates/collects using **each** resolved value, i.e. the
+object describes the union of items matched by any value, before filters run. `varCheck` does
+not apply to collection; it only folds comparisons in states/filters.
+
+## Compile-time provenance (informative)
+
+- External variables: bound from XCCDF `Value` elements via the rule's check-exports, or
+  overridden per compile request. Unbound external variables are emitted `UNRESOLVED`.
+- Constant variables: emitted `LITERAL`.
+- Local variables: emitted `PLAN`. Supported functions today: `literal`, `concat`, `object`,
+  `regex_capture`, `variable`. Any other OVAL function (split, substring, arithmetic, count,
+  unique, time_difference, begin, end, escape_regex) compiles to `UNRESOLVED` with a warning
+  in `warnings[]` until implemented on **both** sides of this contract.

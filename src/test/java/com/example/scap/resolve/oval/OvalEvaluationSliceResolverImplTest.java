@@ -1,10 +1,7 @@
 package com.example.scap.resolve.oval;
 
 import com.example.scap.index.OvalIndex;
-import com.example.scap.model.parsed.oval.ParsedOvalDefinition;
-import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
-import com.example.scap.model.parsed.oval.ParsedOvalState;
-import com.example.scap.model.parsed.oval.ParsedOvalTest;
+import com.example.scap.model.parsed.oval.*;
 import com.example.scap.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import org.junit.jupiter.api.Test;
 
@@ -165,9 +162,10 @@ class OvalEvaluationSliceResolverImplTest {
     }
 
     private ParsedOvalObjectBase object(String objectId) {
-        ParsedOvalObjectBase object = new ParsedOvalObjectBase();
+        ParsedOvalObjectBase object = new ParsedOvalObject();
         object.setObjectId(objectId);
         return object;
+
     }
 
     private ParsedOvalState state(String stateId) {

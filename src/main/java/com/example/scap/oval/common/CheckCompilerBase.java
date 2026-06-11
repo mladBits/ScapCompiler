@@ -28,6 +28,32 @@ public abstract class CheckCompilerBase implements OvalCheckCompiler {
         return test != null && supportedTestType().equals(test.getTestType());
     }
 
+    /**
+     * The OVAL object type this compiler can collect, derived from the test
+     * type by convention (registry_test -> registry_object). Override when a
+     * probe's element names do not follow the convention.
+     */
+    protected String supportedObjectType() {
+        final String testType = supportedTestType();
+        return testType.endsWith("_test")
+                ? testType.substring(0, testType.length() - "_test".length()) + "_object"
+                : testType + "_object";
+    }
+
+    @Override
+    public final boolean supportsObject(final ParsedOvalObjectBase object) {
+        return object != null && supportedObjectType().equals(object.getObjectType());
+    }
+
+    @Override
+    public final ObjectCompilationResult compileObjectPlan(
+            final OvalCheckCompileContext context,
+            final ParsedOvalObjectBase object) {
+        final ObjectCompilationResult result = compileObject(context, object, new HashSet<>());
+        context.getObjects().putAll(result.getObjectsById());
+        return result;
+    }
+
     @Override
     public final Optional<CompiledOvalCheckBase> compile(
             final OvalCheckCompileContext context,
@@ -111,21 +137,30 @@ public abstract class CheckCompilerBase implements OvalCheckCompiler {
                         .build();
 
         final ObjectCompilationResult result = new ObjectCompilationResult(parsedOvalObjectSet.getObjectId());
-        final List<String> inputTaskIds = new ArrayList<>();
+        final List<String> inputObjectIds  = new ArrayList<>();
 
         for (final String objectRef: parsedOvalObjectSet.getSet().getObjectRefs()) {
             final ParsedOvalObjectBase childObject = requireObject(context.getOvalIndex(), objectRef);
             final ObjectCompilationResult childResult = compileObject(context, childObject, visitedObjectIds);
 
             result.merge(childResult);
-            inputTaskIds.add(childResult.getRootObjectId());
+            inputObjectIds.add(childResult.getRootObjectId());
         }
 
         final OvalSetTask setTask = new OvalSetTask();
         setTask.setObjectId(parsedOvalObjectSet.getObjectId());
         setTask.setOperator(parsedOvalObjectSet.getSet().getOperator());
-        setTask.getInputs().addAll(inputTaskIds);
+        setTask.getInputs().addAll(inputObjectIds);
 
+        for (final ParsedOvalFilter filter: parsedOvalObjectSet.getSet().getFilters()) {
+            final ParsedOvalState state = requireState(context.getOvalIndex(), filter.getStateRef());
+            final OvalFilterTask filterTask = new OvalFilterTask();
+            filterTask.setAction(filter.getAction());
+            filterTask.setStateRef(filter.getStateRef());
+
+            state.getEntities().forEach(entity -> filterTask.getPredicates().add(entity.resolve()));
+            setTask.getFilters().add(filterTask);
+        }
         setPlan.getTasks().add(setTask);
 
         result.addObject(setPlan);

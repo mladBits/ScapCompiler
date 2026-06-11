@@ -21,7 +21,7 @@ public class TemplateController {
     //private final VariableCatalogService variableCatalogService;
 
     @PostMapping("/compile")
-    public ResponseEntity<CompileTemplateResponse> compile(@Valid @RequestBody CompileTemplateRequest request) throws FileNotFoundException {
+    public ResponseEntity<CompileTemplateResponse> compile(@Valid @RequestBody CompileTemplateRequest request) throws Exception {
         return ResponseEntity.ok(templateCompileService.compile(request));
     }
 }

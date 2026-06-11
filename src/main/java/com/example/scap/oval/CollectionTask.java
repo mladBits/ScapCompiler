@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface CollectionTask {
     String getFamily();
-    List<OvalFilterTask> getFilters();
 }

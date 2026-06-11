@@ -18,12 +18,13 @@ public class ParsedOvalEntity {
         final EntitySelector entitySelector = new EntitySelector();
         entitySelector.setField(name);
         entitySelector.setDatatype(attributes.getOrDefault("datatype", "string"));
-        entitySelector.setOperation(attributes.getOrDefault("operator", "equals"));
+        entitySelector.setOperation(attributes.getOrDefault("operation", "equals"));
 
         if (attributes.getOrDefault("nil", "false").equals("true")) {
             entitySelector.setValue("nil", null);
         } else if (attributes.containsKey("var_ref")) {
             entitySelector.setValue("variable", attributes.get("var_ref"));
+            entitySelector.setVarCheck(attributes.getOrDefault("var_check", "all"));
         } else {
             entitySelector.setValue("literal", value);
         }

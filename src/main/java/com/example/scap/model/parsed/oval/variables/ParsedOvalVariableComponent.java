@@ -4,5 +4,7 @@ public sealed interface ParsedOvalVariableComponent
         permits ParsedLiteralComponent,
         ParsedObjectComponent,
         ParsedConcatComponent,
-        ParsedRegexCaptureComponent {
+        ParsedRegexCaptureComponent,
+        ParsedVariableComponent,
+        ParsedUnsupportedComponent {
 }

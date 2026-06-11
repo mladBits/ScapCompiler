@@ -10,5 +10,5 @@ import java.util.Map;
 @Data
 public class ResolvedVariableBindings {
     private final Map<String, VariableBinding> bindingsById = new HashMap<>();
-    private final List<String> UnresolvedVariableIds = new ArrayList<>();
+    private final List<String> unresolvedVariableIds = new ArrayList<>();
 }

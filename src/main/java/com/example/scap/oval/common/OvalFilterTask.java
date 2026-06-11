@@ -17,9 +17,4 @@ public class OvalFilterTask implements CollectionTask {
     public String getFamily() {
         return "oval.filter";
     }
-
-    @Override
-    public List<OvalFilterTask> getFilters() {
-        return List.of();
-    }
 }

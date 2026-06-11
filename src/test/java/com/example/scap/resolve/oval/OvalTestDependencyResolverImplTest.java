@@ -1,6 +1,7 @@
 package com.example.scap.resolve.oval;
 
 import com.example.scap.index.OvalIndex;
+import com.example.scap.model.parsed.oval.ParsedOvalObject;
 import com.example.scap.model.parsed.oval.ParsedOvalObjectBase;
 import com.example.scap.model.parsed.oval.ParsedOvalState;
 import com.example.scap.model.parsed.oval.ParsedOvalTest;
@@ -176,7 +177,7 @@ class OvalTestDependencyResolverImplTest {
     }
 
     private ParsedOvalObjectBase object(String objectId) {
-        ParsedOvalObjectBase object = new ParsedOvalObjectBase();
+        ParsedOvalObjectBase object = new ParsedOvalObject();
         object.setObjectId(objectId);
         return object;
     }
