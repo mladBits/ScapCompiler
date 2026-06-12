@@ -1,8 +1,8 @@
 package com.touchstone.compiler.resolve.oval;
 
 import com.touchstone.compiler.index.OvalIndex;
-import com.touchstone.compiler.model.resolved.oval.ResolvedOvalVariableClosure;
 import com.touchstone.compiler.model.resolved.oval.ResolvedOvalEvaluationSlice;
+import com.touchstone.compiler.model.resolved.oval.ResolvedOvalVariableClosure;
 
 public interface OvalVariableClosureResolver {
 

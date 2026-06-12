@@ -1,11 +1,10 @@
 package com.touchstone.compiler.model.compiled;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.touchstone.compiler.model.compiled.variables.CompiledVariable;
 import com.touchstone.compiler.oval.CompiledObjectPlan;
 import com.touchstone.compiler.oval.CompiledOvalCheck;
 import com.touchstone.compiler.oval.definition.CompiledOvalDefinitionPlan;
-import com.touchstone.compiler.variables.ResolvedVariableBindings;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.Instant;

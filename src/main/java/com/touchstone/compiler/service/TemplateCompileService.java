@@ -10,11 +10,7 @@ import com.touchstone.compiler.index.XccdfIndex;
 import com.touchstone.compiler.index.XccdfIndexBuilder;
 import com.touchstone.compiler.model.compiled.CompiledTemplateRule;
 import com.touchstone.compiler.model.compiled.ExecutionTemplate;
-import com.touchstone.compiler.model.compiled.variables.CompiledLocalVariableExpression;
-import com.touchstone.compiler.model.compiled.variables.CompiledVariable;
-import com.touchstone.compiler.model.compiled.variables.CompiledVariableKind;
-import com.touchstone.compiler.model.compiled.variables.LocalVariableCompilationResult;
-import com.touchstone.compiler.model.compiled.variables.LocalVariablePlanCompiler;
+import com.touchstone.compiler.model.compiled.variables.*;
 import com.touchstone.compiler.model.parsed.oval.ParsedOval;
 import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalVariable;
 import com.touchstone.compiler.model.parsed.xccdf.ParsedXccdfBenchmark;
@@ -45,11 +41,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor

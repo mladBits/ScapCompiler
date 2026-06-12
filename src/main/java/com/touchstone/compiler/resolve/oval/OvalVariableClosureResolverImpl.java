@@ -1,22 +1,8 @@
 package com.touchstone.compiler.resolve.oval;
 
 import com.touchstone.compiler.index.OvalIndex;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalEntity;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalFilter;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalObject;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalObjectBase;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalObjectSet;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalSet;
-import com.touchstone.compiler.model.parsed.oval.ParsedOvalState;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedConcatComponent;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedLiteralComponent;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedObjectComponent;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalLocalVariable;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalVariable;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalVariableComponent;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedRegexCaptureComponent;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedUnsupportedComponent;
-import com.touchstone.compiler.model.parsed.oval.variables.ParsedVariableComponent;
+import com.touchstone.compiler.model.parsed.oval.*;
+import com.touchstone.compiler.model.parsed.oval.variables.*;
 import com.touchstone.compiler.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import com.touchstone.compiler.model.resolved.oval.ResolvedOvalVariableClosure;
 import lombok.RequiredArgsConstructor;
