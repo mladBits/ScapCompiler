@@ -129,6 +129,31 @@ When a **collection task selector** (not a state) references a variable — e.g.
 object describes the union of items matched by any value, before filters run. `varCheck` does
 not apply to collection; it only folds comparisons in states/filters.
 
+## Variable-backed objects: the `independent.variable` task (Agent)
+
+OVAL's independent-family `variable_test` compiles to an object plan whose task collects
+nothing from the host — it materializes the resolved variable as items:
+
+```json
+{
+  "objectId": "oval:example:obj:104",
+  "objectType": "variable_object",
+  "tasks": [
+    { "family": "independent.variable", "variableId": "oval:example:var:104" }
+  ]
+}
+```
+
+- **Agent**: execute by `values = resolve(variableId)`; emit **one item per value**, with a
+  single item field `value` holding that value. No OS probe is involved.
+- `resolve` error → the object collection errors (dependent tests → `error`).
+  Empty value list → zero items (existence result `does not exist`).
+- States of type `variable_state` assert against the item's `value` field using the standard
+  comparison rules above.
+- **Guarantee**: the referenced `variableId` is always present in `variablesById` — the
+  compiler follows the `var_ref` entity text of `variable_object`s when building the
+  variable closure.
+
 ## Compile-time provenance (informative)
 
 - External variables: bound from XCCDF `Value` elements via the rule's check-exports, or

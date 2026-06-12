@@ -56,6 +56,9 @@ public class OvalVariableClosureResolverImpl implements OvalVariableClosureResol
 
             if (object instanceof ParsedOvalObject simpleObject) {
                 scanEntities(simpleObject.getEntities());
+                if ("variable_object".equals(simpleObject.getObjectType())) {
+                    scanVariableObjectRef(simpleObject);
+                }
             } else if (object instanceof ParsedOvalObjectSet setObject && setObject.getSet() != null) {
                 scanSet(setObject.getSet());
             }
@@ -95,6 +98,18 @@ public class OvalVariableClosureResolverImpl implements OvalVariableClosureResol
                     visitVariable(varRef);
                 }
             }
+        }
+
+        /**
+         * The independent-family variable_object carries its variable
+         * reference as the var_ref entity's text, not as a var_ref attribute.
+         */
+        private void scanVariableObjectRef(final ParsedOvalObject object) {
+            object.getEntities().stream()
+                    .filter(entity -> "var_ref".equals(entity.getName()))
+                    .map(ParsedOvalEntity::getValue)
+                    .filter(value -> value != null && !value.isBlank())
+                    .forEach(this::visitVariable);
         }
 
         private void visitVariable(final String variableId) {

@@ -142,6 +142,32 @@ class OvalVariableClosureResolverImplTest {
     }
 
     @Test
+    void resolve_shouldCollectVariablesFromVariableObjectEntityText() {
+        // independent:variable_object holds the variable id as the var_ref
+        // entity's text value, not as a var_ref attribute.
+        ParsedOvalObject object = new ParsedOvalObject();
+        object.setObjectId("oval:t:obj:1");
+        object.setObjectType("variable_object");
+        ParsedOvalEntity varRef = new ParsedOvalEntity();
+        varRef.setName("var_ref");
+        varRef.setValue("oval:t:var:104");
+        object.getEntities().add(varRef);
+
+        OvalIndex index = new OvalIndex();
+        index.getVariableById().put("oval:t:var:104",
+                localVariable("oval:t:var:104", variableComponent("oval:t:var:105")));
+        index.getVariableById().put("oval:t:var:105",
+                localVariable("oval:t:var:105", objectComponent("oval:t:obj:99")));
+
+        ResolvedOvalVariableClosure closure =
+                resolver.resolve(index, slice(List.of(object), List.of()));
+
+        assertTrue(closure.getVariableIds().containsAll(Set.of("oval:t:var:104", "oval:t:var:105")));
+        assertTrue(closure.getObjectIds().contains("oval:t:obj:99"));
+        assertTrue(closure.getUnsupportedVariableReasons().isEmpty());
+    }
+
+    @Test
     void resolve_shouldCollectVariablesFromSliceStates() {
         OvalIndex index = new OvalIndex();
         index.getVariableById().put("oval:t:var:4",
