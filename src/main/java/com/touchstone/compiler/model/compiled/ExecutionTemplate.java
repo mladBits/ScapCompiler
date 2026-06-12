@@ -18,8 +18,14 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ExecutionTemplate {
     private String templateId;
-    private String contentPackageId;
-    private String contentVersion;
+
+    /**
+     * Content package key (directory name under packages/ in the raw-content
+     * bucket) this template was compiled from. Versions are embedded in
+     * package names.
+     */
+    private String packageId;
+
     private String benchmarkId;
     private String profileId;
     private String schemaVersion;

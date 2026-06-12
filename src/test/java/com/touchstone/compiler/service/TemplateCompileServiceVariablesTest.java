@@ -1,14 +1,21 @@
 package com.touchstone.compiler.service;
 
 import com.touchstone.compiler.api.dto.CompileTemplateRequest;
+import com.touchstone.compiler.content.ContentPackage;
+import com.touchstone.compiler.content.ContentPackageLoader;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 
-import java.nio.file.Path;
+import java.util.List;
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,24 +23,62 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Full-pipeline test over the DISA STIG fixtures: variables must be
  * materialized into the template so the agent can resolve them at runtime.
- * Uses the same hardcoded fixture paths as TemplateCompileService (to be
- * replaced by the content-package loader).
  */
-@SpringBootTest
+@SpringBootTest(properties = "app.compile-job-poller.enabled=false")
 class TemplateCompileServiceVariablesTest {
+
+    @TestConfiguration
+    static class FixtureContentConfig {
+        @Bean
+        @Primary
+        ContentPackageLoader fixtureContentPackageLoader() {
+            return packageId -> new ContentPackage(
+                    requireNonNull(getClass().getClassLoader().getResourceAsStream("xccdf.xml"),
+                            "fixture xccdf.xml not on test classpath"),
+                    requireNonNull(getClass().getClassLoader().getResourceAsStream("oval.xml"),
+                            "fixture oval.xml not on test classpath"));
+        }
+    }
 
     @Autowired
     private TemplateCompileService templateCompileService;
 
     @Test
+    void compile_withoutProfileIds_shouldCompileEveryProfileInThePackage() throws Exception {
+        CompileTemplateRequest request = new CompileTemplateRequest();
+        request.setPackageId("disa-windows-11-stig");
+
+        var templates = templateCompileService.compileTemplates(request);
+
+        // The DISA fixture defines 11 profiles (9 MAC levels + 2 extras).
+        assertEquals(11, templates.size());
+        assertEquals(11, templates.stream().map(t -> t.getProfileId()).distinct().count());
+    }
+
+    @Test
+    void compile_withProfileSubset_shouldCompileOnlyThoseProfiles() throws Exception {
+        CompileTemplateRequest request = new CompileTemplateRequest();
+        request.setPackageId("disa-windows-11-stig");
+        request.setProfileIds(List.of(
+                "xccdf_mil.disa.stig_profile_MAC-1_Sensitive",
+                "xccdf_mil.disa.stig_profile_MAC-3_Public"));
+
+        var templates = templateCompileService.compileTemplates(request);
+
+        assertEquals(
+                List.of("xccdf_mil.disa.stig_profile_MAC-1_Sensitive",
+                        "xccdf_mil.disa.stig_profile_MAC-3_Public"),
+                templates.stream().map(t -> t.getProfileId()).toList());
+    }
+
+    @Test
     void compile_shouldMaterializeVariablesIntoTemplate() throws Exception {
         CompileTemplateRequest request = new CompileTemplateRequest();
-        request.setBenchmarkId("benchmark");
-        request.setProfileId("xccdf_mil.disa.stig_profile_MAC-1_Sensitive");
+        request.setPackageId("disa-windows-11-stig");
+        request.setProfileIds(List.of("xccdf_mil.disa.stig_profile_MAC-1_Sensitive"));
 
-        templateCompileService.compile(request);
-
-        JsonNode template = new ObjectMapper().readTree(Path.of("./test.json").toFile());
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        JsonNode template = objectMapper.valueToTree(templateCompileService.compileTemplates(request).getFirst());
 
         JsonNode variables = template.get("variablesById");
         assertTrue(variables != null && variables.size() > 0, "variablesById must be populated");

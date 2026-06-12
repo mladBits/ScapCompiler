@@ -13,6 +13,10 @@ management:
         include: health,info,metrics
 
 app:
+  compile-job-poller:
+    enabled: true
+  compile-endpoint:
+    enabled: true # debug/coverage tool; turn off outside dev
   aws:
     region: us-east-1
     endpoint: http://localhost:4566

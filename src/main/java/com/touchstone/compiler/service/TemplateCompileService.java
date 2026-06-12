@@ -2,6 +2,7 @@ package com.touchstone.compiler.service;
 
 import com.touchstone.compiler.api.dto.CompileTemplateRequest;
 import com.touchstone.compiler.api.dto.CompileTemplateResponse;
+import com.touchstone.compiler.content.ContentPackage;
 import com.touchstone.compiler.content.ContentPackageLoader;
 import com.touchstone.compiler.index.OvalIndex;
 import com.touchstone.compiler.index.OvalIndexBuilder;
@@ -17,6 +18,7 @@ import com.touchstone.compiler.model.compiled.variables.LocalVariablePlanCompile
 import com.touchstone.compiler.model.parsed.oval.ParsedOval;
 import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalVariable;
 import com.touchstone.compiler.model.parsed.xccdf.ParsedXccdfBenchmark;
+import com.touchstone.compiler.model.parsed.xccdf.ParsedXccdfProfile;
 import com.touchstone.compiler.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import com.touchstone.compiler.model.resolved.oval.ResolvedOvalVariableClosure;
 import com.touchstone.compiler.model.resolved.xccdf.ResolvedCheckReference;
@@ -34,20 +36,16 @@ import com.touchstone.compiler.resolve.oval.OvalVariableClosureResolver;
 import com.touchstone.compiler.resolve.oval.ReferencedOvalDefinitionResolver;
 import com.touchstone.compiler.resolve.xccdf.ProfileResolver;
 import com.touchstone.compiler.resolve.xccdf.RuleOvalReferenceResolver;
+import com.touchstone.compiler.store.ExecutionTemplateStore;
 import com.touchstone.compiler.variables.OvalVariableBindingResolver;
 import com.touchstone.compiler.variables.ResolvedVariableBindings;
 import com.touchstone.compiler.variables.VariableBinding;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -76,24 +74,61 @@ public class TemplateCompileService {
     private final OvalCheckCompilationService ovalCheckCompilationService;
     private final OvalDefinitionPlanCompiler ovalDefinitionPlanCompiler;
 
-    //private final ExecutionTemplateStore executionTemplateStore;
+    private final ExecutionTemplateStore executionTemplateStore;
 
-    public CompileTemplateResponse compile(final CompileTemplateRequest request) throws Exception {
-        //final ContentPackage contentPackage = contentPackageLoader.load(request.getBenchmarkId(), request.getProfileId());
+    public List<CompileTemplateResponse> compile(final CompileTemplateRequest request) throws Exception {
+        final List<CompileTemplateResponse> responses = new ArrayList<>();
+        for (final ExecutionTemplate template : compileTemplates(request)) {
+            responses.add(toResponse(template, executionTemplateStore.store(template)));
+        }
+        return responses;
+    }
 
-        // Temporary until the content-package loader is wired in: fixture paths
-        // relative to the repo root so local runs and CI behave the same.
-        InputStream xccdf = new FileInputStream("src/test/resources/xccdf.xml");
-        InputStream oval = new FileInputStream("src/test/resources/oval.xml");
+    // Package-private: compile() (compile + store) is the supported entrypoint;
+    // this exists so the full-pipeline test can assert on templates directly.
+    List<ExecutionTemplate> compileTemplates(final CompileTemplateRequest request) throws Exception {
+        if (request.getPackageId() == null || request.getPackageId().isBlank()) {
+            throw new IllegalArgumentException("packageId is required");
+        }
 
-        final ParsedXccdfBenchmark benchmark = xccdfParser.parse(xccdf);
-        final ParsedOval ovalDefinitions = ovalParser.parse(oval);
+        final ContentPackage contentPackage = contentPackageLoader.load(request.getPackageId());
+
+        final ParsedXccdfBenchmark benchmark;
+        final ParsedOval ovalDefinitions;
+        try (InputStream xccdf = contentPackage.xccdfStream();
+             InputStream oval = contentPackage.ovalStream()) {
+            benchmark = xccdfParser.parse(xccdf);
+            ovalDefinitions = ovalParser.parse(oval);
+        }
 
         // Indexes are per content package, not singleton services.
         final XccdfIndex xccdfIndex = xccdfIndexBuilder.build(benchmark);
         final OvalIndex ovalIndex = ovalIndexBuilder.build(ovalDefinitions);
 
-        final ResolvedProfile resolvedProfile = profileResolver.resolve(benchmark, request.getProfileId());
+        // No profileIds means compile every profile in the package; either way
+        // the content is parsed and indexed exactly once.
+        final List<String> profileIds = request.getProfileIds() == null || request.getProfileIds().isEmpty()
+                ? benchmark.getProfiles().stream().map(ParsedXccdfProfile::getProfileId).toList()
+                : request.getProfileIds();
+        if (profileIds.isEmpty()) {
+            throw new IllegalArgumentException("Package contains no profiles: " + request.getPackageId());
+        }
+
+        final List<ExecutionTemplate> templates = new ArrayList<>();
+        for (final String profileId : profileIds) {
+            templates.add(compileProfile(request.getPackageId(), benchmark, xccdfIndex, ovalIndex, profileId));
+        }
+        return templates;
+    }
+
+    private ExecutionTemplate compileProfile(
+            final String packageId,
+            final ParsedXccdfBenchmark benchmark,
+            final XccdfIndex xccdfIndex,
+            final OvalIndex ovalIndex,
+            final String profileId
+    ) {
+        final ResolvedProfile resolvedProfile = profileResolver.resolve(benchmark, profileId);
         final List<ResolvedRuleOvalRefs> ruleOvalRefs = ruleOvalReferenceResolver.resolve(resolvedProfile);
         final ResolvedOvalEvaluationSlice ovalSlice = referencedOvalDefinitionResolver.resolve(ovalIndex, ruleOvalRefs);
 
@@ -130,26 +165,21 @@ public class TemplateCompileService {
                         checkCompilationResult
                 );
 
-        final ExecutionTemplate template =
-                assembleTemplate(
-                        request,
-                        resolvedProfile,
-                        ruleOvalRefs,
-                        checkCompilationResult,
-                        definitionPlans,
-                        ovalIndex,
-                        variableClosure,
-                        variableBindings,
-                        localVariables
-                );
-
-        // Later: persist to S3/LocalStack and return artifact location.
-        writeToDisk(template, Path.of("./test.json"));
-        return toResponse(template, "");
+        return assembleTemplate(
+                packageId,
+                resolvedProfile,
+                ruleOvalRefs,
+                checkCompilationResult,
+                definitionPlans,
+                ovalIndex,
+                variableClosure,
+                variableBindings,
+                localVariables
+        );
     }
 
     private ExecutionTemplate assembleTemplate(
-            final CompileTemplateRequest request,
+            final String packageId,
             final ResolvedProfile resolvedProfile,
             final List<ResolvedRuleOvalRefs> ruleOvalRefs,
             final OvalCheckCompilationResult checkCompilationResult,
@@ -162,6 +192,7 @@ public class TemplateCompileService {
         final ExecutionTemplate template = new ExecutionTemplate();
 
         template.setTemplateId(UUID.randomUUID().toString());
+        template.setPackageId(packageId);
         template.setBenchmarkId(resolvedProfile.getBenchmarkId());
         template.setProfileId(resolvedProfile.getProfileId());
         template.setGeneratedAt(Instant.now());
@@ -251,15 +282,6 @@ public class TemplateCompileService {
                 .findFirst()
                 .map(objectId -> "depends on uncompilable object " + objectId)
                 .orElse(null);
-    }
-
-    public static void writeToDisk(final ExecutionTemplate template, final Path outputPath) throws Exception {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-        objectMapper.writerWithDefaultPrettyPrinter()
-                .writeValue(outputPath.toFile(), template);
     }
 
     private CompiledTemplateRule toCompiledTemplateRule(
