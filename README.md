@@ -103,8 +103,8 @@ content XML ──► touchstone-compiler ──► template in S3
                                             React dashboard
 ```
 
-**Current focus:** hardening the compiler (S3 content loading, template schema versioning + published JSON Schema, golden-file contract tests) before starting the Go agent's evaluation engine.
+**Current focus:** the compiler is feature-complete for the Windows catalog — S3 content in (upload-triggered via S3→SQS events), versioned templates out (`schemaVersion` + [published JSON Schema](contracts/execution-template.schema.json)), golden-file contract test, 100% check-type coverage for the CIS Windows benchmarks. Next up: the Go agent's evaluation engine.
 
 ## Project status
 
-Active, early-stage personal project. Implemented today: the full compile pipeline, 10 Windows OVAL probe compilers, set/filter semantics, complete variable materialization, and graceful degradation for unsupported content. The S3 persistence path and the downstream platform components are in progress — see the roadmap above.
+Active personal project; the compiler component is wrapped for now. Implemented: the full compile pipeline, 12 OVAL probe compilers (every check type in the CIS Windows catalog), set/filter semantics, complete variable materialization, graceful degradation for unsupported content, SQS-driven compilation with S3 upload triggers, and a versioned, golden-file-tested template contract. The downstream platform components (Go agent next) are where the action moves — see the roadmap above.

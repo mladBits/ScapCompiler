@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://touchstone.dev/schemas/execution-template/1.0.0",
+  "title": "Touchstone ExecutionTemplate",
+  "description": "Compiled, agent-executable form of one SCAP benchmark profile. Contract version 1.0.0; agents must reject templates whose schemaVersion major version they do not support. Empty lists/maps and null fields are omitted from the JSON (NON_EMPTY serialization).",
+  "type": "object",
+  "required": ["templateId", "schemaVersion", "packageId", "benchmarkId", "profileId", "generatedAt"],
+  "properties": {
+    "templateId": { "type": "string", "description": "UUID, unique per compile" },
+    "schemaVersion": { "type": "string", "description": "Semver of this contract, e.g. 1.0.0" },
+    "packageId": { "type": "string", "description": "Content package key (directory under packages/ in the raw-content bucket); versions are embedded in package names" },
+    "benchmarkId": { "type": "string", "description": "XCCDF benchmark id from the source content" },
+    "profileId": { "type": "string", "description": "XCCDF profile id this template was compiled for" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rule" }
+    },
+    "variablesById": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/variable" }
+    },
+    "objectsById": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/objectPlan" }
+    },
+    "statesById": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/state" }
+    },
+    "checks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "definitionPlans": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/definitionPlan" }
+    },
+    "unsupportedCheckTypes": { "type": "array", "items": { "type": "string" } },
+    "unsupportedTestIds": { "type": "array", "items": { "type": "string" } },
+    "warnings": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["ruleId"],
+      "properties": {
+        "ruleId": { "type": "string" },
+        "title": { "type": "string" },
+        "ovalDefinitionIds": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "variable": {
+      "type": "object",
+      "required": ["variableId", "datatype", "kind"],
+      "properties": {
+        "variableId": { "type": "string" },
+        "datatype": { "type": "string" },
+        "kind": { "enum": ["LITERAL", "PLAN", "UNRESOLVED"] },
+        "values": { "type": "array", "items": { "type": "string" }, "description": "LITERAL only" },
+        "expression": { "$ref": "#/$defs/variableExpression", "description": "PLAN only" }
+      }
+    },
+    "variableExpression": {
+      "type": "object",
+      "required": ["function"],
+      "description": "Discriminated by 'function'. Evaluation semantics: contracts/variable-resolution.md",
+      "oneOf": [
+        {
+          "properties": { "function": { "const": "literal" }, "value": { "type": "string" } },
+          "required": ["function", "value"]
+        },
+        {
+          "properties": {
+            "function": { "const": "concat" },
+            "components": { "type": "array", "items": { "$ref": "#/$defs/variableExpression" } }
+          },
+          "required": ["function", "components"]
+        },
+        {
+          "properties": {
+            "function": { "const": "object" },
+            "objectRef": { "type": "string" },
+            "itemField": { "type": "string" }
+          },
+          "required": ["function", "objectRef", "itemField"]
+        },
+        {
+          "properties": {
+            "function": { "const": "regex_capture" },
+            "pattern": { "type": "string" },
+            "component": { "$ref": "#/$defs/variableExpression" }
+          },
+          "required": ["function", "pattern", "component"]
+        },
+        {
+          "properties": { "function": { "const": "variable" }, "variableId": { "type": "string" } },
+          "required": ["function", "variableId"]
+        }
+      ]
+    },
+    "objectPlan": {
+      "type": "object",
+      "required": ["objectId", "objectType", "tasks"],
+      "properties": {
+        "objectId": { "type": "string" },
+        "objectType": { "type": "string", "description": "OVAL object element name, e.g. registry_object" },
+        "tasks": { "type": "array", "items": { "$ref": "#/$defs/task" } }
+      }
+    },
+    "task": {
+      "type": "object",
+      "required": ["family"],
+      "description": "Discriminated by 'family'. Probe tasks (windows.*, independent.*) carry selectors; oval.set combines other objects; oval.filter post-filters collected items. A plan's tasks execute in order: collection first, then any filters.",
+      "properties": {
+        "family": { "type": "string" },
+        "selectors": { "type": "array", "items": { "$ref": "#/$defs/selector" }, "description": "Probe tasks: identifies what to collect" },
+        "filters": { "type": "array", "items": { "$ref": "#/$defs/filterTask" } },
+        "variableId": { "type": "string", "description": "independent.variable only: emit one item per resolved value" },
+        "objectId": { "type": "string", "description": "oval.set only" },
+        "operator": { "enum": ["UNION", "INTERSECTION", "COMPLEMENT"], "description": "oval.set only" },
+        "inputs": { "type": "array", "items": { "type": "string" }, "description": "oval.set only: input object ids" },
+        "action": { "type": "string", "description": "oval.filter only: include|exclude" },
+        "stateRef": { "type": "string", "description": "oval.filter only" },
+        "predicates": { "type": "array", "items": { "$ref": "#/$defs/selector" }, "description": "oval.filter only" }
+      }
+    },
+    "filterTask": {
+      "type": "object",
+      "required": ["action", "stateRef"],
+      "properties": {
+        "family": { "const": "oval.filter" },
+        "action": { "type": "string" },
+        "stateRef": { "type": "string" },
+        "predicates": { "type": "array", "items": { "$ref": "#/$defs/selector" } }
+      }
+    },
+    "selector": {
+      "type": "object",
+      "required": ["field", "operation", "datatype", "expression"],
+      "properties": {
+        "field": { "type": "string" },
+        "operation": { "type": "string", "description": "OVAL operation: equals, not equal, pattern match, greater than, ..." },
+        "datatype": { "type": "string", "description": "Comparison domain: string, int, boolean, version, binary" },
+        "varCheck": { "enum": ["all", "at least one", "none satisfy", "only one"], "description": "Present only when expression.type == variable" },
+        "expression": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["literal", "variable", "nil"] },
+            "value": { "type": ["string", "null"], "description": "Literal value, or the variable id when type == variable" }
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "required": ["stateId", "stateType"],
+      "properties": {
+        "stateId": { "type": "string" },
+        "stateType": { "type": "string" },
+        "assertions": { "type": "array", "items": { "$ref": "#/$defs/selector" } }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": ["testId", "objectId", "check", "checkExistence"],
+      "properties": {
+        "testId": { "type": "string" },
+        "objectId": { "type": "string", "description": "Key into objectsById" },
+        "stateIds": { "type": "array", "items": { "type": "string" }, "description": "Keys into statesById; absent for existence-only tests" },
+        "check": { "type": "string", "description": "OVAL check attribute: how items fold against states (all, at least one, ...)" },
+        "checkExistence": { "type": "string", "description": "OVAL check_existence: at_least_one_exists, none_exist, ..." }
+      }
+    },
+    "definitionPlan": {
+      "type": "object",
+      "required": ["id", "criteria"],
+      "properties": {
+        "id": { "type": "string", "description": "OVAL definition id" },
+        "defClass": { "type": "string", "description": "compliance, inventory, ..." },
+        "title": { "type": "string" },
+        "criteria": { "$ref": "#/$defs/criteriaNode" }
+      }
+    },
+    "criteriaNode": {
+      "type": "object",
+      "description": "Either a group (operator + children) or a leaf criterion (testId) or an extend-definition reference (definitionId)",
+      "properties": {
+        "operator": { "enum": ["AND", "OR", "ONE", "XOR"] },
+        "negate": { "type": "boolean" },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/criteriaNode" } },
+        "testId": { "type": "string", "description": "Leaf: evaluate the check with this testId" },
+        "definitionId": { "type": "string", "description": "Extend-definition leaf: evaluate another definition plan" },
+        "supported": { "type": "boolean", "description": "False when the referenced test could not be compiled; evaluates to error" }
+      }
+    }
+  }
+}

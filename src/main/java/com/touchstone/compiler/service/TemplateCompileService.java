@@ -21,6 +21,7 @@ import com.touchstone.compiler.model.resolved.xccdf.ResolvedCheckReference;
 import com.touchstone.compiler.model.resolved.xccdf.ResolvedProfile;
 import com.touchstone.compiler.model.resolved.xccdf.ResolvedRuleOvalRefs;
 import com.touchstone.compiler.model.resolved.xccdf.ResolvedXccdfRule;
+import com.touchstone.compiler.oval.CompiledOvalCheck;
 import com.touchstone.compiler.oval.OvalCheckCompilationResult;
 import com.touchstone.compiler.oval.OvalCheckCompilationService;
 import com.touchstone.compiler.oval.definition.CompiledOvalDefinitionPlan;
@@ -184,6 +185,7 @@ public class TemplateCompileService {
         final ExecutionTemplate template = new ExecutionTemplate();
 
         template.setTemplateId(UUID.randomUUID().toString());
+        template.setSchemaVersion(ExecutionTemplate.CURRENT_SCHEMA_VERSION);
         template.setPackageId(packageId);
         template.setBenchmarkId(resolvedProfile.getBenchmarkId());
         template.setProfileId(resolvedProfile.getProfileId());
@@ -193,12 +195,21 @@ public class TemplateCompileService {
             template.getRules().add(toCompiledTemplateRule(rule, ruleOvalRefs));
         }
 
-        template.getDefinitionPlans().addAll(definitionPlans);
-        template.getObjectsById().putAll(checkCompilationResult.getObjects());
-        template.getStatesById().putAll(checkCompilationResult.getStates());
-        template.getChecks().addAll(checkCompilationResult.getCompiledChecks());
-        template.getUnsupportedCheckTypes().addAll(checkCompilationResult.getUnsupportedCheckTypes());
-        template.getWarnings().addAll(checkCompilationResult.getWarnings());
+        // Sort by id throughout: upstream resolution iterates hash-ordered
+        // sets, and the template (a cross-language contract checked by a
+        // golden-file test) must serialize deterministically.
+        template.getDefinitionPlans().addAll(definitionPlans.stream()
+                .sorted(Comparator.comparing(CompiledOvalDefinitionPlan::getId))
+                .toList());
+        template.getObjectsById().putAll(new TreeMap<>(checkCompilationResult.getObjects()));
+        template.getStatesById().putAll(new TreeMap<>(checkCompilationResult.getStates()));
+        template.getChecks().addAll(checkCompilationResult.getCompiledChecks().stream()
+                .sorted(Comparator.comparing(CompiledOvalCheck::getTestId))
+                .toList());
+        template.getUnsupportedCheckTypes().addAll(
+                checkCompilationResult.getUnsupportedCheckTypes().stream().sorted().toList());
+        template.getWarnings().addAll(
+                checkCompilationResult.getWarnings().stream().sorted().toList());
 
         assembleVariables(template, ovalIndex, variableClosure, variableBindings, localVariables, checkCompilationResult);
 
@@ -219,7 +230,7 @@ public class TemplateCompileService {
             final LocalVariableCompilationResult localVariables,
             final OvalCheckCompilationResult checkCompilationResult
     ) {
-        for (final String variableId : variableClosure.getVariableIds()) {
+        for (final String variableId : variableClosure.getVariableIds().stream().sorted().toList()) {
             final ParsedOvalVariable parsedVariable = ovalIndex.getVariableById().get(variableId);
             final String datatype = parsedVariable != null && parsedVariable.getDatatype() != null
                     ? parsedVariable.getDatatype()

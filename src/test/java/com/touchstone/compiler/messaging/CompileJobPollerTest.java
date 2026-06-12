@@ -75,6 +75,52 @@ class CompileJobPollerTest {
     }
 
     @Test
+    void handle_shouldCompileAllProfilesFromS3UploadEvent() throws Exception {
+        when(templateCompileService.compile(any())).thenReturn(List.of(new CompileTemplateResponse()));
+        Message message = Message.builder()
+                .body("{\"Records\":[{\"eventSource\":\"aws:s3\",\"eventName\":\"ObjectCreated:Put\","
+                        + "\"s3\":{\"bucket\":{\"name\":\"touchstone-raw-content\"},"
+                        + "\"object\":{\"key\":\"packages/CIS_Test_Benchmark_v1.0.0/oval.xml\"}}}]}")
+                .receiptHandle("rh-s3")
+                .build();
+
+        poller.handle(message);
+
+        ArgumentCaptor<CompileTemplateRequest> request = ArgumentCaptor.forClass(CompileTemplateRequest.class);
+        verify(templateCompileService).compile(request.capture());
+        assertEquals("CIS_Test_Benchmark_v1.0.0", request.getValue().getPackageId());
+        assertEquals(null, request.getValue().getProfileIds());
+        verify(sqsClient).deleteMessage(any(DeleteMessageRequest.class));
+    }
+
+    @Test
+    void handle_shouldIgnoreNonTriggerKeysButStillAcknowledge() throws Exception {
+        Message message = Message.builder()
+                .body("{\"Records\":[{\"eventSource\":\"aws:s3\",\"eventName\":\"ObjectCreated:Put\","
+                        + "\"s3\":{\"object\":{\"key\":\"packages/CIS_Test_Benchmark_v1.0.0/xccdf.xml\"}}}]}")
+                .receiptHandle("rh-s3-other")
+                .build();
+
+        poller.handle(message);
+
+        verifyNoInteractions(templateCompileService);
+        verify(sqsClient).deleteMessage(any(DeleteMessageRequest.class));
+    }
+
+    @Test
+    void handle_shouldAcknowledgeS3TestEvent() {
+        Message message = Message.builder()
+                .body("{\"Event\":\"s3:TestEvent\",\"Bucket\":\"touchstone-raw-content\"}")
+                .receiptHandle("rh-test-event")
+                .build();
+
+        poller.handle(message);
+
+        verifyNoInteractions(templateCompileService);
+        verify(sqsClient).deleteMessage(any(DeleteMessageRequest.class));
+    }
+
+    @Test
     void handle_shouldNotDeleteOrCompileUnparseableMessage() {
         Message message = Message.builder()
                 .body("not json")

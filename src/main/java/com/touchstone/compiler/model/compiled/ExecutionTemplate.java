@@ -16,6 +16,15 @@ import java.util.Map;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ExecutionTemplate {
+
+    /**
+     * Contract version of this artifact, stamped on every template. Bump on
+     * any breaking change to the JSON shape; the agent refuses templates
+     * whose major version it does not know. Schema:
+     * contracts/execution-template.schema.json.
+     */
+    public static final String CURRENT_SCHEMA_VERSION = "1.0.0";
+
     private String templateId;
 
     /**

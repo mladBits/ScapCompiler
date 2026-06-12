@@ -18,7 +18,15 @@ Tests are JUnit 5 (`spring-boot-starter-test`). Most are plain unit tests over i
 
 ## What this service does
 
-A Spring Boot REST app that **compiles SCAP content** (an XCCDF benchmark + its OVAL definitions, both XML) into a flattened, execution-ready JSON artifact called an `ExecutionTemplate`. The single endpoint is `POST /api/templates/compile` (`TemplateController` → `TemplateCompileService`). The template tells a downstream agent exactly which OVAL objects to collect on a host, which states to assert, and how rules/definitions combine — with all XCCDF/OVAL cross-references and variables resolved ahead of time.
+A Spring Boot service that **compiles SCAP content** (an XCCDF benchmark + its OVAL definitions, both XML) into a flattened, execution-ready JSON artifact called an `ExecutionTemplate`. The template tells a downstream agent exactly which OVAL objects to collect on a host, which states to assert, and how rules/definitions combine — with all XCCDF/OVAL cross-references and variables resolved ahead of time.
+
+**Triggers and I/O** (all against LocalStack locally; see touchstone-infra for buckets/queue):
+- `messaging/CompileJobPoller` long-polls the `touchstone-compile-jobs` SQS queue. Messages are either a `CompileTemplateRequest` JSON (`{packageId, profileIds?}` — null/empty profileIds = all profiles) or a raw S3 event notification (the raw-content bucket notifies the queue when `packages/<id>/oval.xml` is uploaded → all-profiles compile). Failed jobs are left for redelivery and dead-letter after 3 attempts.
+- Content in: `content/S3ContentPackageLoader` reads `packages/<packageId>/{xccdf,oval}.xml` from `touchstone-raw-content`.
+- Templates out: `store/S3ExecutionTemplateStore` writes `templates/<packageId>/<profileId>.json` to `touchstone-compiled-templates` (deterministic key, latest wins).
+- `POST /api/templates/compile` (`TemplateController`) is a **debug/coverage tool** (synchronous; response surfaces `unsupportedCheckTypes`/warnings) gated by `app.compile-endpoint.enabled`; the poller is gated by `app.compile-job-poller.enabled`.
+
+**The template is a cross-language contract** with the future Go agent: `contracts/execution-template.schema.json` is the formal schema, `contracts/variable-resolution.md` the variable/collection semantics. `ExecutionTemplate.CURRENT_SCHEMA_VERSION` is stamped on every template — bump it on breaking shape changes. Template output is deliberately deterministic (sorted ids at assembly); `TemplateCompileServiceGoldenTest` compares the compiled DISA fixture against `src/test/resources/golden/` and fails on any contract drift (regenerate with `-Dgolden.update=true`).
 
 ## Compilation pipeline
 
@@ -45,7 +53,7 @@ This is the largest and most extension-heavy part of the code. Each OVAL **test 
 - Concrete compilers extend `oval/common/CheckCompilerBase`, implementing just two methods: `supportedTestType()` (the OVAL test-type string) and `compileSimpleObject(...)`. The base class handles the rest: object/state lookup via the index, **set objects** (`ParsedOvalObjectSet` → `OvalSetTask` with operator + child objects), **filters** (`OvalFilterTask`), circular-reference detection, and state compilation.
 - `compileSimpleObject` pulls the entities it needs off the `ParsedOvalObject` (e.g. `object.findEntity("hive").resolve()`), builds a probe-specific `*CollectionTask` (extends `CollectionTaskBase`/`SelectorCollectionTaskBase`), and wraps it in a `CompiledObjectPlan`.
 
-**To add support for a new OVAL test type:** create a new package under `oval/windows/<probe>/` with a `@Component` compiler extending `CheckCompilerBase` and a `*CollectionTask`. No wiring/registration is needed — the `List<OvalCheckCompiler>` injection picks it up. Tests whose type no compiler supports are recorded in `unsupportedCheckTypes` rather than failing the compile.
+**To add support for a new OVAL test type:** create a new package under `oval/windows/<probe>/` (or `oval/independent/<probe>/` for OVAL independent-family types — see `variable`) with a `@Component` compiler extending `CheckCompilerBase` and a `*CollectionTask`. No wiring/registration is needed — the `List<OvalCheckCompiler>` injection picks it up. Tests whose type no compiler supports are recorded in `unsupportedCheckTypes` rather than failing the compile. Every check type used by the seeded CIS Windows benchmarks is currently supported.
 
 ## Model layering
 
@@ -57,9 +65,10 @@ This is the largest and most extension-heavy part of the code. Each OVAL **test 
 
 ## Current state / gotchas
 
-This is an early, in-progress codebase. Several things are stubbed or hardcoded — do not treat them as the intended design:
-
-- `TemplateCompileService.compile()` **ignores the request's benchmark/profile content source** and reads `xccdf.xml`/`oval.xml` from hardcoded absolute paths under `src/test/resources/`, then writes the result to `./test.json` (see the root-level `test.json`). The `ContentPackageLoader`/S3 path is commented out.
-- AWS SDK (S3/SQS/STS via `config/AwsClientConfig`) and `ContentPackageLoader` exist for the intended "load content package from S3, persist artifact to S3" flow, but persistence is not yet wired in.
+- Local runs need LocalStack with the buckets/queue provisioned and content seeded — see the private **touchstone-infra** repo (`docker compose up -d`, `terraform -chdir=envs/local apply`, `scripts/seed-content.ps1`). LocalStack Community loses all state on container restart.
+- Spring Boot 4 does **not** auto-configure an `ObjectMapper` here; `config/JacksonConfig` defines the contract mapper (ISO-8601 dates). Don't remove it.
+- Rule severity/weight is **deliberately not** in the template (decided): the template is agent-facing execution instructions only; the future result service parses raw XCCDF for scoring metadata.
+- Variable tailoring/overrides: `compileProfile` passes an empty overrides map to `OvalVariableBindingResolver` — that's the seam where per-org tailoring will plug in. Unbound external variables compile to `UNRESOLVED` + warning (the CIS Controls Assessment Module "survey" profiles do this intentionally; the agent errors those tests).
 - `CpeParser` is a `StubCpeParser`.
 - Lombok is used throughout (`@RequiredArgsConstructor` for constructor injection, `@Slf4j`, `@Builder`, `@Data`/`@Getter`). New beans follow the constructor-injection-via-`@RequiredArgsConstructor` convention.
+- Singleton task lists in compilers use `new ArrayList<>(List.of(task))` on purpose: `CheckCompilerBase.applyFilter()` mutates the list when objects carry OVAL filters.
