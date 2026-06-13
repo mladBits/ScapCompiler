@@ -31,29 +31,35 @@ One entry per referenced variable:
 "oval:example:var:1": {
   "variableId": "oval:example:var:1",
   "datatype": "string",
-  "kind": "LITERAL" | "PLAN" | "UNRESOLVED",
-  "values": ["..."],          // LITERAL only
-  "expression": { ... }        // PLAN only
+  "kind": "constant" | "external" | "local",
+  "unresolved": true,              // present (true) only when unresolvable
+  "unresolvedReason": "...",       // diagnostic, with unresolved
+  "values": ["..."],               // constant / bound external
+  "expression": { ... }            // local only
 }
 ```
 
-| kind | meaning | agent behavior |
+`kind` is the OVAL variable **type** (origin). Whether the agent can resolve it is the
+separate `unresolved` flag:
+
+| field | meaning | agent behavior |
 |---|---|---|
-| `LITERAL` | external/constant variable, values resolved at compile time | use `values` as-is |
-| `PLAN` | local variable | evaluate `expression` at runtime (below) |
-| `UNRESOLVED` | could not be resolved/compiled (no XCCDF binding, unsupported function, cycle, uncollectable object) | resolving it is an **error** |
+| `kind: constant` | fixed values from the OVAL | use `values` |
+| `kind: external` | value bound from XCCDF | use `values` |
+| `kind: local` | computed at scan time | evaluate `expression` (below) |
+| `unresolved: true` | could not be resolved/compiled (unbound external, unsupported function, cycle, uncollectable object) | resolving it is an **error** (overrides the above) |
 
 **Guarantee:** every variable id referenced by any selector, assertion, predicate, or nested
-`variable` expression has an entry in `variablesById`.
+`variable_component` has an entry in `variablesById`.
 
 ## Resolution algorithm (Agent)
 
 ```
 resolve(varId) -> ([]string, error)    // memoize per scan
   entry = variablesById[varId]         // missing entry: treat as error (defensive)
-  LITERAL    -> entry.values
-  UNRESOLVED -> error
-  PLAN       -> eval(entry.expression)
+  entry.unresolved      -> error
+  kind constant/external -> entry.values
+  kind local            -> eval(entry.expression)
 ```
 
 A variable always resolves to an **ordered list of zero or more string values**. Datatype
@@ -62,16 +68,16 @@ time.
 
 ### Expression evaluation: `eval(expr) -> []string`
 
-Expressions are discriminated by `function`:
+Expressions are discriminated by `node` (OVAL component/function names):
 
-**`literal`** `{ "function": "literal", "value": "abc" }`
+**`literal_component`** `{ "node": "literal_component", "value": "abc" }`
 → `["abc"]`.
 
-**`variable`** `{ "function": "variable", "variableId": "oval:...:var:2" }`
+**`variable_component`** `{ "node": "variable_component", "variableId": "oval:...:var:2" }`
 → `resolve(variableId)` (recursive; propagate error).
-**Guarantee:** no cycles — the compiler rejects cyclic references as UNRESOLVED. Guard anyway.
+**Guarantee:** no cycles — the compiler rejects cyclic references as unresolved. Guard anyway.
 
-**`object`** `{ "function": "object", "objectRef": "oval:...:obj:9", "itemField": "value" }`
+**`object_component`** `{ "node": "object_component", "objectRef": "oval:...:obj:9", "itemField": "value" }`
 → Collect (or reuse the memoized collection of) `objectsById[objectRef]`, then take the value
 of `itemField` from **every** collected item, in collection order.
 - **Guarantee:** `objectRef` always has a collection plan in `objectsById`.
@@ -79,13 +85,13 @@ of `itemField` from **every** collected item, in collection order.
 - Object exists but zero items (`does not exist`) → empty list (not an error).
 - An item lacking the field entirely → skip that item; multi-valued fields contribute each value.
 
-**`concat`** `{ "function": "concat", "components": [e1, e2, ...] }`
+**`concat`** `{ "node": "concat", "components": [e1, e2, ...] }`
 → The **ordered cartesian product** of the component value lists, joining each combination
 left-to-right. Example: `["a","b"] × ["1","2"]` → `["a1","a2","b1","b2"]`.
 - Any component error → error.
 - Any component empty → empty result.
 
-**`regex_capture`** `{ "function": "regex_capture", "pattern": "^%.*%(.*)$", "component": e }`
+**`regex_capture`** `{ "node": "regex_capture", "pattern": "^%.*%(.*)$", "component": e }`
 → For each value of `eval(component)`: apply `pattern`; emit the **first capture group** of
 the first match; if the pattern does not match, emit the **empty string** for that value.
 - Pattern dialect is Perl/PCRE-flavored (OVAL spec). RE2-only engines are insufficient —
@@ -156,10 +162,11 @@ nothing from the host — it materializes the resolved variable as items:
 
 ## Compile-time provenance (informative)
 
-- External variables: bound from XCCDF `Value` elements via the rule's check-exports, or
-  overridden per compile request. Unbound external variables are emitted `UNRESOLVED`.
-- Constant variables: emitted `LITERAL`.
-- Local variables: emitted `PLAN`. Supported functions today: `literal`, `concat`, `object`,
-  `regex_capture`, `variable`. Any other OVAL function (split, substring, arithmetic, count,
-  unique, time_difference, begin, end, escape_regex) compiles to `UNRESOLVED` with a warning
-  in `warnings[]` until implemented on **both** sides of this contract.
+- External variables: `kind: external`, bound from XCCDF `Value` elements via the rule's
+  check-exports or overridden per compile request. Unbound ones are emitted `unresolved: true`.
+- Constant variables: `kind: constant` with `values`.
+- Local variables: `kind: local` with an `expression`. Supported nodes today:
+  `literal_component`, `concat`, `object_component`, `regex_capture`, `variable_component`.
+  Any other OVAL function (split, substring, arithmetic, count, unique, time_difference, begin,
+  end, escape_regex) is emitted `unresolved: true` with a warning in `warnings[]` until
+  implemented on **both** sides of this contract.

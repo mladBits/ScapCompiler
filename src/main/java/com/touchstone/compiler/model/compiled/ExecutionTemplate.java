@@ -23,7 +23,7 @@ public class ExecutionTemplate {
      * whose major version it does not know. Schema:
      * contracts/execution-template.schema.json.
      */
-    public static final String CURRENT_SCHEMA_VERSION = "1.1.0";
+    public static final String CURRENT_SCHEMA_VERSION = "1.2.0";
 
     private String templateId;
 

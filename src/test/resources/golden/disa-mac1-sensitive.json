@@ -3,7 +3,7 @@
   "packageId" : "disa-windows-11-stig",
   "benchmarkId" : "xccdf_mil.disa.stig_benchmark_Microsoft_Windows_11_STIG",
   "profileId" : "xccdf_mil.disa.stig_profile_MAC-1_Sensitive",
-  "schemaVersion" : "1.1.0",
+  "schemaVersion" : "1.2.0",
   "generatedAt" : "1970-01-01T00:00:00Z",
   "rules" : [ {
     "ruleId" : "xccdf_mil.disa.stig_rule_SV-253254r991589_rule",
@@ -902,18 +902,18 @@
     "oval:mil.disa.stig.win:var:25334001" : {
       "variableId" : "oval:mil.disa.stig.win:var:25334001",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "concat",
+        "node" : "concat",
         "components" : [ {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:20000015",
           "itemField" : "value"
         }, {
-          "function" : "regex_capture",
+          "node" : "regex_capture",
           "pattern" : "^%.*%(.*)$",
           "component" : {
-            "function" : "object",
+            "node" : "object_component",
             "objectRef" : "oval:mil.disa.stig.win:obj:25334002",
             "itemField" : "value"
           }
@@ -923,12 +923,12 @@
     "oval:mil.disa.stig.win:var:25334002" : {
       "variableId" : "oval:mil.disa.stig.win:var:25334002",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "regex_capture",
+        "node" : "regex_capture",
         "pattern" : "^(.*)$",
         "component" : {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:25334002",
           "itemField" : "value"
         }
@@ -937,18 +937,18 @@
     "oval:mil.disa.stig.win:var:25334101" : {
       "variableId" : "oval:mil.disa.stig.win:var:25334101",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "concat",
+        "node" : "concat",
         "components" : [ {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:20000015",
           "itemField" : "value"
         }, {
-          "function" : "regex_capture",
+          "node" : "regex_capture",
           "pattern" : "^%.*%(.*)$",
           "component" : {
-            "function" : "object",
+            "node" : "object_component",
             "objectRef" : "oval:mil.disa.stig.win:obj:25334102",
             "itemField" : "value"
           }
@@ -958,12 +958,12 @@
     "oval:mil.disa.stig.win:var:25334102" : {
       "variableId" : "oval:mil.disa.stig.win:var:25334102",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "regex_capture",
+        "node" : "regex_capture",
         "pattern" : "^(.*)$",
         "component" : {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:25334102",
           "itemField" : "value"
         }
@@ -972,18 +972,18 @@
     "oval:mil.disa.stig.win:var:25334201" : {
       "variableId" : "oval:mil.disa.stig.win:var:25334201",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "concat",
+        "node" : "concat",
         "components" : [ {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:20000015",
           "itemField" : "value"
         }, {
-          "function" : "regex_capture",
+          "node" : "regex_capture",
           "pattern" : "^%.*%(.*)$",
           "component" : {
-            "function" : "object",
+            "node" : "object_component",
             "objectRef" : "oval:mil.disa.stig.win:obj:25334202",
             "itemField" : "value"
           }
@@ -993,12 +993,12 @@
     "oval:mil.disa.stig.win:var:25334202" : {
       "variableId" : "oval:mil.disa.stig.win:var:25334202",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "regex_capture",
+        "node" : "regex_capture",
         "pattern" : "^(.*)$",
         "component" : {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:25334202",
           "itemField" : "value"
         }
@@ -1007,9 +1007,9 @@
     "oval:mil.disa.stig.win:var:25343300" : {
       "variableId" : "oval:mil.disa.stig.win:var:25343300",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "object",
+        "node" : "object_component",
         "objectRef" : "oval:mil.disa.stig.win:obj:20000016",
         "itemField" : "trustee_sid"
       }
@@ -1017,15 +1017,15 @@
     "oval:mil.disa.stig.win:var:25343501" : {
       "variableId" : "oval:mil.disa.stig.win:var:25343501",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "concat",
+        "node" : "concat",
         "components" : [ {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:25343500",
           "itemField" : "trustee_domain"
         }, {
-          "function" : "literal",
+          "node" : "literal_component",
           "value" : "\\Administrator"
         } ]
       }
@@ -1033,15 +1033,15 @@
     "oval:mil.disa.stig.win:var:25343600" : {
       "variableId" : "oval:mil.disa.stig.win:var:25343600",
       "datatype" : "string",
-      "kind" : "PLAN",
+      "kind" : "local",
       "expression" : {
-        "function" : "concat",
+        "node" : "concat",
         "components" : [ {
-          "function" : "object",
+          "node" : "object_component",
           "objectRef" : "oval:mil.disa.stig.win:obj:25343600",
           "itemField" : "trustee_domain"
         }, {
-          "function" : "literal",
+          "node" : "literal_component",
           "value" : "\\Guest"
         } ]
       }

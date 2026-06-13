@@ -20,15 +20,24 @@ import java.util.List;
 public class CompiledVariable {
     private String variableId;
     private String datatype;
+
+    /** OVAL variable type (constant / external / local). */
     private CompiledVariableKind kind;
 
     /**
-     * Resolved values, present only when kind == LITERAL.
+     * When true the agent cannot resolve this variable (unbound external,
+     * unsupported local function, or cycle); dependent tests evaluate to error.
+     * Omitted (false) otherwise.
      */
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private boolean unresolved;
+
+    /** Why the variable is unresolved (diagnostic); present only when unresolved. */
+    private String unresolvedReason;
+
+    /** Resolved values: present for constant variables and bound externals. */
     private List<String> values;
 
-    /**
-     * Runtime evaluation plan, present only when kind == PLAN.
-     */
+    /** Runtime evaluation tree: present only for local variables. */
     private CompiledVariableExpression expression;
 }

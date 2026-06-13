@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://touchstone.dev/schemas/execution-template/1.1.0",
+  "$id": "https://touchstone.dev/schemas/execution-template/1.2.0",
   "title": "Touchstone ExecutionTemplate",
-  "description": "Compiled, agent-executable form of one SCAP benchmark profile. Contract version 1.1.0 (adds record-field assertions and check stateOperator); agents must reject templates whose schemaVersion major version they do not support. Empty lists/maps and null fields are omitted from the JSON (NON_EMPTY serialization).",
+  "description": "Compiled, agent-executable form of one SCAP benchmark profile. Contract version 1.2.0 (variable kind = OVAL type constant/external/local with an unresolved flag; expression nodes named per OVAL). Agents must reject templates whose schemaVersion major version they do not support. Empty lists/maps and null fields are omitted from the JSON (NON_EMPTY serialization).",
   "type": "object",
   "required": ["templateId", "schemaVersion", "packageId", "benchmarkId", "profileId", "generatedAt"],
   "properties": {
@@ -56,46 +56,48 @@
       "properties": {
         "variableId": { "type": "string" },
         "datatype": { "type": "string" },
-        "kind": { "enum": ["LITERAL", "PLAN", "UNRESOLVED"] },
-        "values": { "type": "array", "items": { "type": "string" }, "description": "LITERAL only" },
-        "expression": { "$ref": "#/$defs/variableExpression", "description": "PLAN only" }
+        "kind": { "enum": ["constant", "external", "local"], "description": "OVAL variable type" },
+        "unresolved": { "type": "boolean", "description": "When true the agent cannot resolve this variable (unbound external, unsupported local function, or cycle); dependent tests evaluate to error. Omitted when false." },
+        "unresolvedReason": { "type": "string", "description": "Diagnostic; present only when unresolved" },
+        "values": { "type": "array", "items": { "type": "string" }, "description": "constant variables and bound externals" },
+        "expression": { "$ref": "#/$defs/variableExpression", "description": "local variables only" }
       }
     },
     "variableExpression": {
       "type": "object",
-      "required": ["function"],
-      "description": "Discriminated by 'function'. Evaluation semantics: contracts/variable-resolution.md",
+      "required": ["node"],
+      "description": "One node of a local variable's tree, discriminated by 'node' (OVAL component/function names). Evaluation semantics: contracts/variable-resolution.md",
       "oneOf": [
         {
-          "properties": { "function": { "const": "literal" }, "value": { "type": "string" } },
-          "required": ["function", "value"]
+          "properties": { "node": { "const": "literal_component" }, "value": { "type": "string" } },
+          "required": ["node", "value"]
         },
         {
           "properties": {
-            "function": { "const": "concat" },
+            "node": { "const": "concat" },
             "components": { "type": "array", "items": { "$ref": "#/$defs/variableExpression" } }
           },
-          "required": ["function", "components"]
+          "required": ["node", "components"]
         },
         {
           "properties": {
-            "function": { "const": "object" },
+            "node": { "const": "object_component" },
             "objectRef": { "type": "string" },
             "itemField": { "type": "string" }
           },
-          "required": ["function", "objectRef", "itemField"]
+          "required": ["node", "objectRef", "itemField"]
         },
         {
           "properties": {
-            "function": { "const": "regex_capture" },
+            "node": { "const": "regex_capture" },
             "pattern": { "type": "string" },
             "component": { "$ref": "#/$defs/variableExpression" }
           },
-          "required": ["function", "pattern", "component"]
+          "required": ["node", "pattern", "component"]
         },
         {
-          "properties": { "function": { "const": "variable" }, "variableId": { "type": "string" } },
-          "required": ["function", "variableId"]
+          "properties": { "node": { "const": "variable_component" }, "variableId": { "type": "string" } },
+          "required": ["node", "variableId"]
         }
       ]
     },

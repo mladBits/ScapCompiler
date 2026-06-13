@@ -12,6 +12,9 @@ import com.touchstone.compiler.model.compiled.CompiledTemplateRule;
 import com.touchstone.compiler.model.compiled.ExecutionTemplate;
 import com.touchstone.compiler.model.compiled.variables.*;
 import com.touchstone.compiler.model.parsed.oval.ParsedOval;
+import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalConstantVariable;
+import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalExternalVariable;
+import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalLocalVariable;
 import com.touchstone.compiler.model.parsed.oval.variables.ParsedOvalVariable;
 import com.touchstone.compiler.model.parsed.xccdf.ParsedXccdfBenchmark;
 import com.touchstone.compiler.model.parsed.xccdf.ParsedXccdfProfile;
@@ -217,10 +220,10 @@ public class TemplateCompileService {
     }
 
     /**
-     * Emits one entry per referenced variable: LITERAL when values were
-     * resolved at compile time (external/constant), PLAN for local variables
-     * the agent evaluates at runtime, UNRESOLVED otherwise. UNRESOLVED
-     * variables make dependent tests evaluate to error on the agent.
+     * Emits one entry per referenced variable. {@code kind} is the OVAL type
+     * (constant / external / local); a separate {@code unresolved} flag marks
+     * variables the agent cannot resolve (unbound external, unsupported local
+     * function, or cycle), which make dependent tests evaluate to error.
      */
     private void assembleVariables(
             final ExecutionTemplate template,
@@ -238,7 +241,8 @@ public class TemplateCompileService {
 
             final CompiledVariable.CompiledVariableBuilder variable = CompiledVariable.builder()
                     .variableId(variableId)
-                    .datatype(datatype);
+                    .datatype(datatype)
+                    .kind(ovalKind(parsedVariable));
 
             final String unresolvedReason = findUnresolvedReason(
                     variableId, variableClosure, localVariables, checkCompilationResult);
@@ -246,20 +250,33 @@ public class TemplateCompileService {
             final CompiledLocalVariableExpression plan = localVariables.getLocalVariablesById().get(variableId);
 
             if (unresolvedReason != null) {
-                variable.kind(CompiledVariableKind.UNRESOLVED);
+                variable.unresolved(true).unresolvedReason(unresolvedReason);
                 template.getWarnings().add("Variable " + variableId + " unresolved: " + unresolvedReason);
             } else if (plan != null) {
-                variable.kind(CompiledVariableKind.PLAN).expression(plan.getExpression());
+                variable.expression(plan.getExpression());
             } else if (binding != null) {
-                variable.kind(CompiledVariableKind.LITERAL).values(binding.getValues());
+                variable.values(binding.getValues());
             } else {
-                variable.kind(CompiledVariableKind.UNRESOLVED);
-                template.getWarnings().add("Variable " + variableId
-                        + " unresolved: no XCCDF value or override bound to external variable");
+                final String reason = "no XCCDF value or override bound to external variable";
+                variable.unresolved(true).unresolvedReason(reason);
+                template.getWarnings().add("Variable " + variableId + " unresolved: " + reason);
             }
 
             template.getVariablesById().put(variableId, variable.build());
         }
+    }
+
+    /**
+     * The OVAL variable type. A dangling reference (variable not in the index)
+     * defaults to external; its {@code unresolved} flag dominates regardless.
+     */
+    private static CompiledVariableKind ovalKind(final ParsedOvalVariable parsed) {
+        return switch (parsed) {
+            case ParsedOvalConstantVariable ignored -> CompiledVariableKind.CONSTANT;
+            case ParsedOvalLocalVariable ignored -> CompiledVariableKind.LOCAL;
+            case ParsedOvalExternalVariable ignored -> CompiledVariableKind.EXTERNAL;
+            case null -> CompiledVariableKind.EXTERNAL;
+        };
     }
 
     private String findUnresolvedReason(

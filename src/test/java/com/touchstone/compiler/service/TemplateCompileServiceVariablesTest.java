@@ -83,11 +83,11 @@ class TemplateCompileServiceVariablesTest {
         JsonNode variables = template.get("variablesById");
         assertTrue(variables != null && variables.size() > 0, "variablesById must be populated");
 
-        // The fixture defines 9 local variables; every referenced one is a PLAN.
+        // The fixture defines 9 local variables.
         JsonNode pathVariable = variables.get("oval:mil.disa.stig.win:var:25334001");
-        assertEquals("PLAN", pathVariable.get("kind").asText());
+        assertEquals("local", pathVariable.get("kind").asText());
         assertEquals("string", pathVariable.get("datatype").asText());
-        assertEquals("concat", pathVariable.get("expression").get("function").asText());
+        assertEquals("concat", pathVariable.get("expression").get("node").asText());
 
         // Objects referenced only by variable object components need collection plans.
         assertTrue(template.get("objectsById").has("oval:mil.disa.stig.win:obj:20000015"),
@@ -108,8 +108,8 @@ class TemplateCompileServiceVariablesTest {
         // No silent failures: every referenced variable resolved (fixture has no
         // external variables and all functions are supported).
         for (JsonNode variable : variables) {
-            assertFalse("UNRESOLVED".equals(variable.get("kind").asText()),
-                    "unexpected UNRESOLVED variable: " + variable.get("variableId").asText());
+            assertFalse(variable.path("unresolved").asBoolean(false),
+                    "unexpected unresolved variable: " + variable.get("variableId").asText());
         }
     }
 }
