@@ -67,11 +67,13 @@ A parse failure (e.g. non-numeric `int`) → comparison error → the test resul
 is `error`.
 
 **`pattern match`**: the state value is a regular expression and the item
-value is tested against it. **Dialect: PCRE (Perl), not RE2** — observed DISA
-content uses negative lookahead `(?!…)`, which RE2 rejects. The agent uses a
-PCRE engine (Go: `dlclark/regexp2`) with a match timeout to bound catastrophic
-backtracking. A `TestGoldenPatternsCompile` contract test compiles every
-pattern in the golden template to keep this honest.
+value is tested against it. **The OVAL spec mandates PCRE (Perl 5 Compatible
+Regular Expressions)** for pattern match — Go's stdlib RE2 is insufficient (it
+rejects constructs the spec allows, e.g. the negative lookahead `(?!…)` that
+appears in DISA content). The agent uses a PCRE engine (Go: `dlclark/regexp2`)
+with a match timeout to bound catastrophic backtracking. A
+`TestGoldenPatternsCompile` contract test compiles every pattern in the golden
+template as a content-sanity check.
 
 ## var_check folding
 
@@ -104,10 +106,11 @@ For one scalar assertion:
 - A comparison error makes the assertion (and the state) `error`.
 
 **Record assertions** (`datatype: record`, since schema 1.1.0): the selector
-carries nested `fields` instead of an `expression`. Each nested field selector
-asserts on a record sub-field, evaluated against the item field of the same
-name, AND-combined. *(Provisional: finalized in agent milestone M7 with the WMI
-probe, which fixes how a collected record maps to item fields.)*
+carries nested `fields` instead of an `expression`. The intended semantics are
+that each nested field selector asserts on a record sub-field, AND-combined.
+How a collected record maps to item fields is finalized with the WMI probe
+(agent milestone M7); **until then the agent fails closed**, evaluating any
+record assertion to `error` rather than guessing the mapping.
 
 ## Test evaluation (one OVAL test)
 
