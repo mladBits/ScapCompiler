@@ -41,7 +41,7 @@ public class OvalTestReader {
         parsedOvalTest.setId(id);
         parsedOvalTest.setCheck(check);
         parsedOvalTest.setCheckExistence(checkExistence == null ? "at_least_one_exists" : checkExistence);
-        parsedOvalTest.setState_operator(stateOperator == null ? "AND" : stateOperator);
+        parsedOvalTest.setStateOperator(stateOperator == null ? "AND" : stateOperator);
         parsedOvalTest.setTestType(name);
 
         while (reader.hasNext()) {

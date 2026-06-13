@@ -3,7 +3,7 @@
   "packageId" : "disa-windows-11-stig",
   "benchmarkId" : "xccdf_mil.disa.stig_benchmark_Microsoft_Windows_11_STIG",
   "profileId" : "xccdf_mil.disa.stig_profile_MAC-1_Sensitive",
-  "schemaVersion" : "1.0.0",
+  "schemaVersion" : "1.1.0",
   "generatedAt" : "1970-01-01T00:00:00Z",
   "rules" : [ {
     "ruleId" : "xccdf_mil.disa.stig_rule_SV-253254r991589_rule",
@@ -8187,10 +8187,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "domainrole",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:10000200" : {
@@ -8200,10 +8205,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "domainrole",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "1"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:10000300" : {
@@ -8213,10 +8223,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "domainrole",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:10000400" : {
@@ -8226,10 +8241,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "domainrole",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "3"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:20000000" : {
@@ -8391,10 +8411,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "installstate",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:20000022" : {
@@ -8467,10 +8492,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "protectionstatus",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "1"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25326100" : {
@@ -8543,10 +8573,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "installstate",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25327800" : {
@@ -8556,10 +8591,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "installstate",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25327900" : {
@@ -8569,10 +8609,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "installstate",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25328500" : {
@@ -8582,10 +8627,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "installstate",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25328600" : {
@@ -8595,10 +8645,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "installstate",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25328900" : {
@@ -8608,10 +8663,15 @@
         "field" : "result",
         "operation" : "equals",
         "datatype" : "record",
-        "expression" : {
-          "type" : "literal",
-          "value" : null
-        }
+        "fields" : [ {
+          "field" : "startmode",
+          "operation" : "equals",
+          "datatype" : "string",
+          "expression" : {
+            "type" : "literal",
+            "value" : "Disabled"
+          }
+        } ]
       } ]
     },
     "oval:mil.disa.stig.win:ste:25329700" : {
@@ -10764,1771 +10824,2066 @@
     "objectId" : "oval:mil.disa.stig.edge:obj:102",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.edge:tst:101",
     "objectId" : "oval:mil.disa.stig.edge:obj:103",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:10000100",
     "objectId" : "oval:mil.disa.stig.win:obj:10000100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:10000100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:10000200",
     "objectId" : "oval:mil.disa.stig.win:obj:10000100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:10000200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:22070601",
     "objectId" : "oval:mil.disa.stig.win:obj:20000017",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000018" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25325400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000017",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25325400", "oval:mil.disa.stig.win:ste:20000018" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25325900",
     "objectId" : "oval:mil.disa.stig.win:obj:25325900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25325900" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326000",
     "objectId" : "oval:mil.disa.stig.win:obj:25326000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326001",
     "objectId" : "oval:mil.disa.stig.win:obj:25326001",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326002",
     "objectId" : "oval:mil.disa.stig.win:obj:25326002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326003",
     "objectId" : "oval:mil.disa.stig.win:obj:25326003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326004",
     "objectId" : "oval:mil.disa.stig.win:obj:25326002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326005",
     "objectId" : "oval:mil.disa.stig.win:obj:25326003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326100",
     "objectId" : "oval:mil.disa.stig.win:obj:25326100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25326100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326300",
     "objectId" : "oval:mil.disa.stig.win:obj:25326300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25326300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326301",
     "objectId" : "oval:mil.disa.stig.win:obj:25326301",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25326301" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25326500",
     "objectId" : "oval:mil.disa.stig.win:obj:25326500",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25327500",
     "objectId" : "oval:mil.disa.stig.win:obj:25327500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25327500" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25327501",
     "objectId" : "oval:mil.disa.stig.win:obj:25327501",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25327500" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25327700",
     "objectId" : "oval:mil.disa.stig.win:obj:25327700",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25327800",
     "objectId" : "oval:mil.disa.stig.win:obj:25327800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25327800" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25327900",
     "objectId" : "oval:mil.disa.stig.win:obj:25327900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25327900" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328400",
     "objectId" : "oval:mil.disa.stig.win:obj:25328400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328500",
     "objectId" : "oval:mil.disa.stig.win:obj:25328500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25328500" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328501",
     "objectId" : "oval:mil.disa.stig.win:obj:25328501",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25328500" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328600",
     "objectId" : "oval:mil.disa.stig.win:obj:25328600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25328600" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328700",
     "objectId" : "oval:mil.disa.stig.win:obj:25328700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328800",
     "objectId" : "oval:mil.disa.stig.win:obj:25328800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000004" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25328900",
     "objectId" : "oval:mil.disa.stig.win:obj:25328900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25328900" ],
     "check" : "at least one",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25329700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000001",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25329700", "oval:mil.disa.stig.win:ste:25329701" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25329701",
     "objectId" : "oval:mil.disa.stig.win:obj:20000001",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25329702" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25329800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000001",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25329800" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25329801",
     "objectId" : "oval:mil.disa.stig.win:obj:20000001",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25329801" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25329900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000001",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25329900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330100", "oval:mil.disa.stig.win:ste:25330101" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330600" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330701",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330701" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330800", "oval:mil.disa.stig.win:ste:25330801" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25330900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25330900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331001",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331101",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331101" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331201",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331201" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331401",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331501",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331501" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331600" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331601",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331601" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331800" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331801",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331801" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25331901",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331901" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332000", "oval:mil.disa.stig.win:ste:25331901" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332101",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332101" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332401",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332501",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332501" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332600", "oval:mil.disa.stig.win:ste:25332601" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332701",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332701" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332800", "oval:mil.disa.stig.win:ste:25332801" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25332900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25332900", "oval:mil.disa.stig.win:ste:25332901" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333001",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333100", "oval:mil.disa.stig.win:ste:25333101" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333200", "oval:mil.disa.stig.win:ste:25333201" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333301",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333301" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333401",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333501",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333501" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333600", "oval:mil.disa.stig.win:ste:25333601" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333700",
     "objectId" : "oval:mil.disa.stig.win:obj:25333700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333800",
     "objectId" : "oval:mil.disa.stig.win:obj:25333800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333800" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25333900",
     "objectId" : "oval:mil.disa.stig.win:obj:25333900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25333700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334000",
     "objectId" : "oval:mil.disa.stig.win:obj:25334000",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334001",
     "objectId" : "oval:mil.disa.stig.win:obj:25334003",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334002",
     "objectId" : "oval:mil.disa.stig.win:obj:25334002",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000016" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334100",
     "objectId" : "oval:mil.disa.stig.win:obj:25334100",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334101",
     "objectId" : "oval:mil.disa.stig.win:obj:25334103",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334102",
     "objectId" : "oval:mil.disa.stig.win:obj:25334102",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000016" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334200",
     "objectId" : "oval:mil.disa.stig.win:obj:25334200",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334201",
     "objectId" : "oval:mil.disa.stig.win:obj:25334203",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "none_exist"
+    "checkExistence" : "none_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334202",
     "objectId" : "oval:mil.disa.stig.win:obj:25334202",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000016" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25334400", "oval:mil.disa.stig.win:ste:25334401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25334500", "oval:mil.disa.stig.win:ste:25334501" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25334600", "oval:mil.disa.stig.win:ste:25334601" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25334700", "oval:mil.disa.stig.win:ste:25334701" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25334800", "oval:mil.disa.stig.win:ste:25334801" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25334900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25334900", "oval:mil.disa.stig.win:ste:25334901" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335200",
     "objectId" : "oval:mil.disa.stig.win:obj:25335200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335300",
     "objectId" : "oval:mil.disa.stig.win:obj:25335300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335400",
     "objectId" : "oval:mil.disa.stig.win:obj:25335400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335500",
     "objectId" : "oval:mil.disa.stig.win:obj:25335500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335600",
     "objectId" : "oval:mil.disa.stig.win:obj:25335600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335700",
     "objectId" : "oval:mil.disa.stig.win:obj:25335700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25335700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335800",
     "objectId" : "oval:mil.disa.stig.win:obj:25335800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335900",
     "objectId" : "oval:mil.disa.stig.win:obj:25335900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25335900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335901",
     "objectId" : "oval:mil.disa.stig.win:obj:25335901",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25335900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335902",
     "objectId" : "oval:mil.disa.stig.win:obj:25335902",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25335900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25335903",
     "objectId" : "oval:mil.disa.stig.win:obj:25335903",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25335900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336000",
     "objectId" : "oval:mil.disa.stig.win:obj:25336000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336100",
     "objectId" : "oval:mil.disa.stig.win:obj:25336100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336200",
     "objectId" : "oval:mil.disa.stig.win:obj:25336200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25336200", "oval:mil.disa.stig.win:ste:25336201", "oval:mil.disa.stig.win:ste:25336202", "oval:mil.disa.stig.win:ste:25336203" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336201",
     "objectId" : "oval:mil.disa.stig.win:obj:25336201",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25336200", "oval:mil.disa.stig.win:ste:25336201", "oval:mil.disa.stig.win:ste:25336202", "oval:mil.disa.stig.win:ste:25336203" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336400",
     "objectId" : "oval:mil.disa.stig.win:obj:25336400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000003" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336500",
     "objectId" : "oval:mil.disa.stig.win:obj:25336500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336600",
     "objectId" : "oval:mil.disa.stig.win:obj:25336600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336700",
     "objectId" : "oval:mil.disa.stig.win:obj:25336700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25336800",
     "objectId" : "oval:mil.disa.stig.win:obj:25336800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337200",
     "objectId" : "oval:mil.disa.stig.win:obj:25337200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001", "oval:mil.disa.stig.win:ste:20000003", "oval:mil.disa.stig.win:ste:25337200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337300",
     "objectId" : "oval:mil.disa.stig.win:obj:25337300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337400",
     "objectId" : "oval:mil.disa.stig.win:obj:25337400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337500",
     "objectId" : "oval:mil.disa.stig.win:obj:25337500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337600",
     "objectId" : "oval:mil.disa.stig.win:obj:25337600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337700",
     "objectId" : "oval:mil.disa.stig.win:obj:25337700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337800",
     "objectId" : "oval:mil.disa.stig.win:obj:25337800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25337900",
     "objectId" : "oval:mil.disa.stig.win:obj:25337900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338000",
     "objectId" : "oval:mil.disa.stig.win:obj:25338000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338100",
     "objectId" : "oval:mil.disa.stig.win:obj:25338100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338200",
     "objectId" : "oval:mil.disa.stig.win:obj:25338200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338300",
     "objectId" : "oval:mil.disa.stig.win:obj:25338300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338400",
     "objectId" : "oval:mil.disa.stig.win:obj:25338400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338500",
     "objectId" : "oval:mil.disa.stig.win:obj:25338500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338600",
     "objectId" : "oval:mil.disa.stig.win:obj:25338600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338700",
     "objectId" : "oval:mil.disa.stig.win:obj:25338700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338800",
     "objectId" : "oval:mil.disa.stig.win:obj:25338800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25338800" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25338900",
     "objectId" : "oval:mil.disa.stig.win:obj:25338900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339000",
     "objectId" : "oval:mil.disa.stig.win:obj:25339000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339100",
     "objectId" : "oval:mil.disa.stig.win:obj:25339100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339300",
     "objectId" : "oval:mil.disa.stig.win:obj:25339300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000", "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339401",
     "objectId" : "oval:mil.disa.stig.win:obj:25339400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000", "oval:mil.disa.stig.win:ste:20000001", "oval:mil.disa.stig.win:ste:20000002", "oval:mil.disa.stig.win:ste:25339400", "oval:mil.disa.stig.win:ste:25339401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339402",
     "objectId" : "oval:mil.disa.stig.win:obj:10000100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:10000100", "oval:mil.disa.stig.win:ste:10000300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339403",
     "objectId" : "oval:mil.disa.stig.win:obj:25339401",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000", "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339500",
     "objectId" : "oval:mil.disa.stig.win:obj:25339500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339600",
     "objectId" : "oval:mil.disa.stig.win:obj:25339600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339700",
     "objectId" : "oval:mil.disa.stig.win:obj:25339700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339800",
     "objectId" : "oval:mil.disa.stig.win:obj:25339800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25339900",
     "objectId" : "oval:mil.disa.stig.win:obj:25339900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340000",
     "objectId" : "oval:mil.disa.stig.win:obj:25340000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340100",
     "objectId" : "oval:mil.disa.stig.win:obj:25340100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25340100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340200",
     "objectId" : "oval:mil.disa.stig.win:obj:25340200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340300",
     "objectId" : "oval:mil.disa.stig.win:obj:25340300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340400",
     "objectId" : "oval:mil.disa.stig.win:obj:25340400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340500",
     "objectId" : "oval:mil.disa.stig.win:obj:25340500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340600",
     "objectId" : "oval:mil.disa.stig.win:obj:25340600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000003" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340700",
     "objectId" : "oval:mil.disa.stig.win:obj:25340700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340800",
     "objectId" : "oval:mil.disa.stig.win:obj:25340800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25340900",
     "objectId" : "oval:mil.disa.stig.win:obj:25340900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341000",
     "objectId" : "oval:mil.disa.stig.win:obj:25341000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341100",
     "objectId" : "oval:mil.disa.stig.win:obj:25341100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341200",
     "objectId" : "oval:mil.disa.stig.win:obj:25341200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341300",
     "objectId" : "oval:mil.disa.stig.win:obj:25341300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341400",
     "objectId" : "oval:mil.disa.stig.win:obj:25341400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341500",
     "objectId" : "oval:mil.disa.stig.win:obj:25341500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341600",
     "objectId" : "oval:mil.disa.stig.win:obj:25341600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341700",
     "objectId" : "oval:mil.disa.stig.win:obj:25341700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25341800",
     "objectId" : "oval:mil.disa.stig.win:obj:25341800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342000",
     "objectId" : "oval:mil.disa.stig.win:obj:25342000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342100",
     "objectId" : "oval:mil.disa.stig.win:obj:25342100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342200",
     "objectId" : "oval:mil.disa.stig.win:obj:25342200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342201",
     "objectId" : "oval:mil.disa.stig.win:obj:25342201",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342300",
     "objectId" : "oval:mil.disa.stig.win:obj:25342300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342400",
     "objectId" : "oval:mil.disa.stig.win:obj:25342400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342500",
     "objectId" : "oval:mil.disa.stig.win:obj:25342500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000022" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342501",
     "objectId" : "oval:mil.disa.stig.win:obj:25342501",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342600",
     "objectId" : "oval:mil.disa.stig.win:obj:25342600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342700",
     "objectId" : "oval:mil.disa.stig.win:obj:25342700",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342701",
     "objectId" : "oval:mil.disa.stig.win:obj:25342705",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342702",
     "objectId" : "oval:mil.disa.stig.win:obj:25342710",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342703",
     "objectId" : "oval:mil.disa.stig.win:obj:25342715",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342800",
     "objectId" : "oval:mil.disa.stig.win:obj:25342800",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25342900",
     "objectId" : "oval:mil.disa.stig.win:obj:25342900",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343000",
     "objectId" : "oval:mil.disa.stig.win:obj:25343000",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343001",
     "objectId" : "oval:mil.disa.stig.win:obj:25343005",
     "stateIds" : [ ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343300",
     "objectId" : "oval:mil.disa.stig.win:obj:25343300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000017" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343400",
     "objectId" : "oval:mil.disa.stig.win:obj:25343400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343500",
     "objectId" : "oval:mil.disa.stig.win:obj:25343500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25343500", "oval:mil.disa.stig.win:ste:25343501" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343600",
     "objectId" : "oval:mil.disa.stig.win:obj:25343600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25343600", "oval:mil.disa.stig.win:ste:25343601" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343700",
     "objectId" : "oval:mil.disa.stig.win:obj:25343700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343800",
     "objectId" : "oval:mil.disa.stig.win:obj:25343800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25343900",
     "objectId" : "oval:mil.disa.stig.win:obj:25343900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344000",
     "objectId" : "oval:mil.disa.stig.win:obj:25344000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344100",
     "objectId" : "oval:mil.disa.stig.win:obj:25344100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344200",
     "objectId" : "oval:mil.disa.stig.win:obj:25344200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25344200", "oval:mil.disa.stig.win:ste:25344201" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344300",
     "objectId" : "oval:mil.disa.stig.win:obj:25344300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344700",
     "objectId" : "oval:mil.disa.stig.win:obj:25344700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25344700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344800",
     "objectId" : "oval:mil.disa.stig.win:obj:25344800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25445900", "oval:mil.disa.stig.win:ste:25445901" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25344900",
     "objectId" : "oval:mil.disa.stig.win:obj:25344900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345000",
     "objectId" : "oval:mil.disa.stig.win:obj:25345000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345100",
     "objectId" : "oval:mil.disa.stig.win:obj:25345100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345300",
     "objectId" : "oval:mil.disa.stig.win:obj:25345300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345400",
     "objectId" : "oval:mil.disa.stig.win:obj:25345400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345500",
     "objectId" : "oval:mil.disa.stig.win:obj:25345500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345600",
     "objectId" : "oval:mil.disa.stig.win:obj:25345600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345800",
     "objectId" : "oval:mil.disa.stig.win:obj:25345800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25345900",
     "objectId" : "oval:mil.disa.stig.win:obj:25345900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346000",
     "objectId" : "oval:mil.disa.stig.win:obj:25346000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25346000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346100",
     "objectId" : "oval:mil.disa.stig.win:obj:25346100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346200",
     "objectId" : "oval:mil.disa.stig.win:obj:25346200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25346200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346300",
     "objectId" : "oval:mil.disa.stig.win:obj:25346300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001", "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346400",
     "objectId" : "oval:mil.disa.stig.win:obj:25346400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25346500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346500",
     "objectId" : "oval:mil.disa.stig.win:obj:25346500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25346500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346600",
     "objectId" : "oval:mil.disa.stig.win:obj:25346600",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346700",
     "objectId" : "oval:mil.disa.stig.win:obj:25346700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346800",
     "objectId" : "oval:mil.disa.stig.win:obj:25346800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25346900",
     "objectId" : "oval:mil.disa.stig.win:obj:25346900",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347000",
     "objectId" : "oval:mil.disa.stig.win:obj:25347000",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347001",
     "objectId" : "oval:mil.disa.stig.win:obj:25347001",
     "stateIds" : [ ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347100",
     "objectId" : "oval:mil.disa.stig.win:obj:25347100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347200",
     "objectId" : "oval:mil.disa.stig.win:obj:25347200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347300",
     "objectId" : "oval:mil.disa.stig.win:obj:25347300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347400",
     "objectId" : "oval:mil.disa.stig.win:obj:25347400",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347500",
     "objectId" : "oval:mil.disa.stig.win:obj:25347500",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347700",
     "objectId" : "oval:mil.disa.stig.win:obj:25347700",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000022" ],
     "check" : "all",
-    "checkExistence" : "all_exist"
+    "checkExistence" : "all_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347701",
     "objectId" : "oval:mil.disa.stig.win:obj:25347701",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347800",
     "objectId" : "oval:mil.disa.stig.win:obj:25347800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000023" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347801",
     "objectId" : "oval:mil.disa.stig.win:obj:25347801",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25347900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000008",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25347900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000010",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000008",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000011",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000012",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000008",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348600" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000013",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000008",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348800" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25348900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25348900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000006",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349101",
     "objectId" : "oval:mil.disa.stig.win:obj:20000003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349100" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349102",
     "objectId" : "oval:mil.disa.stig.win:obj:20000004",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349100" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349103",
     "objectId" : "oval:mil.disa.stig.win:obj:20000007",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349201",
     "objectId" : "oval:mil.disa.stig.win:obj:20000004",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349300" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349301",
     "objectId" : "oval:mil.disa.stig.win:obj:20000004",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349300" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000006",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349401",
     "objectId" : "oval:mil.disa.stig.win:obj:10000100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:10000100", "oval:mil.disa.stig.win:ste:10000300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349402",
     "objectId" : "oval:mil.disa.stig.win:obj:20000003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349400" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349403",
     "objectId" : "oval:mil.disa.stig.win:obj:20000004",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349400" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000006",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349501",
     "objectId" : "oval:mil.disa.stig.win:obj:20000003",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349500" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349502",
     "objectId" : "oval:mil.disa.stig.win:obj:20000004",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349500" ],
     "check" : "at least one",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349503",
     "objectId" : "oval:mil.disa.stig.win:obj:20000007",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349504",
     "objectId" : "oval:mil.disa.stig.win:obj:10000100",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:10000200", "oval:mil.disa.stig.win:ste:10000400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349505",
     "objectId" : "oval:mil.disa.stig.win:obj:20000005",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000008",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349600" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349800",
     "objectId" : "oval:mil.disa.stig.win:obj:25349800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349800" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25349900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25349900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000008",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350100",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350100" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25350600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000009",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25350600" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25438200",
     "objectId" : "oval:mil.disa.stig.win:obj:25438200",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25689300",
     "objectId" : "oval:mil.disa.stig.win:obj:25689300",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000020" ],
     "check" : "all",
-    "checkExistence" : "any_exist"
+    "checkExistence" : "any_exist",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25689301",
     "objectId" : "oval:mil.disa.stig.win:obj:25689301",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000000", "oval:mil.disa.stig.win:ste:20000001", "oval:mil.disa.stig.win:ste:20000002" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "OR"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:25777000",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25777000" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894200",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894200" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894201",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894201" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894400",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894400" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894401",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894500",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894500" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894600",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894600" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894601",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894601" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894700",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894800",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894800" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894801",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894801" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27894900",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:27894900" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.win:tst:27968800",
     "objectId" : "oval:mil.disa.stig.win:obj:27968800",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:20000001" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.windows:tst:25331300",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331300" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.windows:tst:25331301",
     "objectId" : "oval:mil.disa.stig.win:obj:20000000",
     "stateIds" : [ "oval:mil.disa.stig.win:ste:25331301" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.windows:tst:25344400",
     "objectId" : "oval:mil.disa.stig.windows:obj:25344400",
     "stateIds" : [ "oval:mil.disa.stig.windows:ste:25344400", "oval:mil.disa.stig.windows:ste:25344401" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   }, {
     "testId" : "oval:mil.disa.stig.windows:tst:25345700",
     "objectId" : "oval:mil.disa.stig.windows:obj:25345700",
     "stateIds" : [ "oval:mil.disa.stig.windows:ste:25345700" ],
     "check" : "all",
-    "checkExistence" : "at_least_one_exists"
+    "checkExistence" : "at_least_one_exists",
+    "stateOperator" : "AND"
   } ],
   "definitionPlans" : [ {
     "id" : "oval:mil.disa.stig.defs:def:253254",

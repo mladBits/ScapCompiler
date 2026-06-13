@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://touchstone.dev/schemas/execution-template/1.0.0",
+  "$id": "https://touchstone.dev/schemas/execution-template/1.1.0",
   "title": "Touchstone ExecutionTemplate",
-  "description": "Compiled, agent-executable form of one SCAP benchmark profile. Contract version 1.0.0; agents must reject templates whose schemaVersion major version they do not support. Empty lists/maps and null fields are omitted from the JSON (NON_EMPTY serialization).",
+  "description": "Compiled, agent-executable form of one SCAP benchmark profile. Contract version 1.1.0 (adds record-field assertions and check stateOperator); agents must reject templates whose schemaVersion major version they do not support. Empty lists/maps and null fields are omitted from the JSON (NON_EMPTY serialization).",
   "type": "object",
   "required": ["templateId", "schemaVersion", "packageId", "benchmarkId", "profileId", "generatedAt"],
   "properties": {
@@ -137,11 +137,15 @@
     },
     "selector": {
       "type": "object",
-      "required": ["field", "operation", "datatype", "expression"],
+      "required": ["field", "operation", "datatype"],
+      "oneOf": [
+        { "required": ["expression"] },
+        { "required": ["fields"] }
+      ],
       "properties": {
         "field": { "type": "string" },
         "operation": { "type": "string", "description": "OVAL operation: equals, not equal, pattern match, greater than, ..." },
-        "datatype": { "type": "string", "description": "Comparison domain: string, int, boolean, version, binary" },
+        "datatype": { "type": "string", "description": "Comparison domain: string, int, boolean, version, record, binary" },
         "varCheck": { "enum": ["all", "at least one", "none satisfy", "only one"], "description": "Present only when expression.type == variable" },
         "expression": {
           "type": "object",
@@ -150,6 +154,11 @@
             "type": { "enum": ["literal", "variable", "nil"] },
             "value": { "type": ["string", "null"], "description": "Literal value, or the variable id when type == variable" }
           }
+        },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/selector" },
+          "description": "Record-datatype entities only (since 1.1.0): named sub-assertions evaluated against the record's fields; 'field' is the record field name. Mutually exclusive with expression."
         }
       }
     },
@@ -164,13 +173,14 @@
     },
     "check": {
       "type": "object",
-      "required": ["testId", "objectId", "check", "checkExistence"],
+      "required": ["testId", "objectId", "check", "checkExistence", "stateOperator"],
       "properties": {
         "testId": { "type": "string" },
         "objectId": { "type": "string", "description": "Key into objectsById" },
         "stateIds": { "type": "array", "items": { "type": "string" }, "description": "Keys into statesById; absent for existence-only tests" },
         "check": { "type": "string", "description": "OVAL check attribute: how items fold against states (all, at least one, ...)" },
-        "checkExistence": { "type": "string", "description": "OVAL check_existence: at_least_one_exists, none_exist, ..." }
+        "checkExistence": { "type": "string", "description": "OVAL check_existence: at_least_one_exists, none_exist, ..." },
+        "stateOperator": { "enum": ["AND", "OR", "ONE", "XOR"], "description": "Since 1.1.0: how one item's results across multiple states fold (OVAL state_operator); AND when the source omits it" }
       }
     },
     "definitionPlan": {

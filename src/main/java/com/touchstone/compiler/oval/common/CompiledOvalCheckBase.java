@@ -14,4 +14,10 @@ public class CompiledOvalCheckBase implements CompiledOvalCheck  {
     private List<String> stateIds;
     private String check;
     private String checkExistence;
+
+    /**
+     * How results of multiple states fold for one item (OVAL state_operator):
+     * AND, OR, ONE, XOR. Always present; AND when the source omits it.
+     */
+    private String stateOperator;
 }

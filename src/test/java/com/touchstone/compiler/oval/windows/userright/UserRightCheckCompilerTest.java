@@ -8,6 +8,7 @@ import com.touchstone.compiler.model.parsed.oval.ParsedOvalState;
 import com.touchstone.compiler.model.parsed.oval.ParsedOvalTest;
 import com.touchstone.compiler.model.resolved.oval.ResolvedOvalEvaluationSlice;
 import com.touchstone.compiler.oval.CompiledObjectPlan;
+import com.touchstone.compiler.oval.common.CompiledOvalCheckBase;
 import com.touchstone.compiler.oval.EntitySelector;
 import com.touchstone.compiler.oval.OvalCheckCompilationResult;
 import com.touchstone.compiler.oval.OvalCheckCompilationServiceImpl;
@@ -51,6 +52,7 @@ class UserRightCheckCompilerTest {
         test.getStateRef().add("oval:t:ste:1");
         test.setCheck("all");
         test.setCheckExistence("at_least_one_exists");
+        test.setStateOperator("OR");
 
         OvalIndex index = new OvalIndex();
         index.getObjectById().put(object.getObjectId(), object);
@@ -65,6 +67,9 @@ class UserRightCheckCompilerTest {
 
         assertTrue(result.getUnsupportedCheckTypes().isEmpty());
         assertEquals(1, result.getCompiledChecks().size());
+
+        CompiledOvalCheckBase check = (CompiledOvalCheckBase) result.getCompiledChecks().getFirst();
+        assertEquals("OR", check.getStateOperator());
 
         CompiledObjectPlan plan = result.getObjects().get("oval:t:obj:1");
         UserRightCollectionTask task = (UserRightCollectionTask) plan.getTasks().getFirst();

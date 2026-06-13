@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParsedOvalEntityTest {
 
@@ -40,5 +41,29 @@ class ParsedOvalEntityTest {
         EntitySelector selector = entity.resolve();
 
         assertNull(selector.getVarCheck());
+    }
+
+    @Test
+    void resolve_shouldEmitNestedFieldSelectorsForRecordEntities() {
+        ParsedOvalEntity domainRole = new ParsedOvalEntity();
+        domainRole.setName("domainrole");
+        domainRole.setValue("0");
+        domainRole.getAttributes().put("datatype", "int");
+
+        ParsedOvalEntity record = new ParsedOvalEntity();
+        record.setName("result");
+        record.getAttributes().put("datatype", "record");
+        record.getFields().add(domainRole);
+
+        EntitySelector selector = record.resolve();
+
+        // Record entities carry nested field selectors, not a scalar expression.
+        assertNull(selector.getExpression());
+        assertEquals(1, selector.getFields().size());
+
+        EntitySelector field = selector.getFields().getFirst();
+        assertEquals("domainrole", field.getField());
+        assertEquals("int", field.getDatatype());
+        assertTrue(String.valueOf((Object) field.getExpression()).contains("0"));
     }
 }

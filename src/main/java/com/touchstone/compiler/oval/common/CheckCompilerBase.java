@@ -80,7 +80,8 @@ public abstract class CheckCompilerBase implements OvalCheckCompiler {
                 test.getObjectRef(),
                 test.getStateRef(),
                 test.getCheck(),
-                test.getCheckExistence()
+                test.getCheckExistence(),
+                test.getStateOperator()
         ));
     }
 

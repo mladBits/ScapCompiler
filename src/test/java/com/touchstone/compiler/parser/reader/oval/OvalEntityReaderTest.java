@@ -38,6 +38,33 @@ class OvalEntityReaderTest {
     }
 
     @Test
+    void readEntity_shouldParseRecordFields() throws Exception {
+        String xml = """
+                <result datatype="record" operation="equals">
+                    <field name="domainrole" datatype="int" operation="equals">0</field>
+                    <field name="producttype">1</field>
+                </result>
+                """;
+
+        XMLStreamReader2 reader = moveToStart(xml, "result");
+
+        ParsedOvalEntity entity = entityReader.readEntity(reader);
+
+        assertEquals("result", entity.getName());
+        assertNull(entity.getValue());
+        assertEquals(2, entity.getFields().size());
+
+        ParsedOvalEntity domainRole = entity.getFields().get(0);
+        assertEquals("domainrole", domainRole.getName());
+        assertEquals("0", domainRole.getValue());
+        assertEquals("int", domainRole.getAttributes().get("datatype"));
+
+        ParsedOvalEntity productType = entity.getFields().get(1);
+        assertEquals("producttype", productType.getName());
+        assertEquals("1", productType.getValue());
+    }
+
+    @Test
     void readEntity_shouldTrimTextValue() throws Exception {
         String xml = """
                 <key>

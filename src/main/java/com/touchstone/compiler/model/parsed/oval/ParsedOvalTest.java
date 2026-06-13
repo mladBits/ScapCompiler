@@ -11,7 +11,7 @@ public class ParsedOvalTest {
     private String id;
     private String checkExistence;
     private String check;
-    private String state_operator;
+    private String stateOperator = "AND"; // OVAL default; reader overrides when state_operator is present
     private String objectRef;
     private List<String> stateRef = new ArrayList<>();
 }
