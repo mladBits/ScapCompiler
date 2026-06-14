@@ -8,7 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -20,15 +21,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
- * Golden-file contract test: the compiled output of the DISA STIG fixture is
- * compared byte-for-byte (as JSON trees) against a checked-in expectation.
- * The ExecutionTemplate is a cross-language contract with the Go agent — any
- * unintended change to its shape must fail CI here.
+ * Golden-file contract test: the compiled output of each fixture is compared
+ * (as JSON trees) against a checked-in expectation. The ExecutionTemplate is a
+ * cross-language contract with the Go agent — any unintended change to its
+ * shape must fail CI here. Two fixtures are covered so different content shapes
+ * are exercised: DISA (local variables, regex_capture) and CIS Intune (heavy
+ * external variables, concat/object_component chains).
  *
  * Intentional contract changes: regenerate with
  *   mvn test -Dtest=TemplateCompileServiceGoldenTest -Dgolden.update=true
@@ -38,27 +42,48 @@ import static org.junit.jupiter.api.Assertions.fail;
 @SpringBootTest(properties = "app.compile-job-poller.enabled=false")
 class TemplateCompileServiceGoldenTest {
 
-    private static final Path GOLDEN_PATH = Path.of("src/test/resources/golden/disa-mac1-sensitive.json");
+    /** A fixture content package: which XML to load and which golden it produces. */
+    record Fixture(String packageId, String xccdf, String oval, String profileId, String golden) {
+    }
+
+    private static final List<Fixture> FIXTURES = List.of(
+            new Fixture("disa-windows-11-stig", "xccdf.xml", "oval.xml",
+                    "xccdf_mil.disa.stig_profile_MAC-1_Sensitive", "disa-mac1-sensitive.json"),
+            new Fixture("cis-intune-win11", "cis-intune-win11-xccdf.xml", "cis-intune-win11-oval.xml",
+                    "xccdf_org.cisecurity.benchmarks_profile_Level_1_L1", "cis-intune-win11-l1.json")
+    );
+
+    static Stream<Fixture> fixtures() {
+        return FIXTURES.stream();
+    }
 
     @TestConfiguration
     static class FixtureContentConfig {
         @Bean
         @Primary
         ContentPackageLoader fixtureContentPackageLoader() {
-            return packageId -> new ContentPackage(
-                    requireNonNull(getClass().getClassLoader().getResourceAsStream("xccdf.xml")),
-                    requireNonNull(getClass().getClassLoader().getResourceAsStream("oval.xml")));
+            return packageId -> FIXTURES.stream()
+                    .filter(f -> f.packageId().equals(packageId))
+                    .findFirst()
+                    .map(f -> new ContentPackage(resource(f.xccdf()), resource(f.oval())))
+                    .orElseThrow(() -> new IllegalArgumentException("no fixture for " + packageId));
+        }
+
+        private static InputStream resource(String name) {
+            return requireNonNull(FixtureContentConfig.class.getClassLoader().getResourceAsStream(name),
+                    "missing test resource: " + name);
         }
     }
 
     @Autowired
     private TemplateCompileService templateCompileService;
 
-    @Test
-    void compiledTemplate_shouldMatchGoldenFile() throws Exception {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("fixtures")
+    void compiledTemplate_shouldMatchGoldenFile(Fixture fixture) throws Exception {
         CompileTemplateRequest request = new CompileTemplateRequest();
-        request.setPackageId("disa-windows-11-stig");
-        request.setProfileIds(List.of("xccdf_mil.disa.stig_profile_MAC-1_Sensitive"));
+        request.setPackageId(fixture.packageId());
+        request.setProfileIds(List.of(fixture.profileId()));
 
         ExecutionTemplate template = templateCompileService.compileTemplates(request).getFirst();
         // Neutralize the two volatile fields; everything else must be stable.
@@ -71,26 +96,26 @@ class TemplateCompileServiceGoldenTest {
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         JsonNode actual = mapper.valueToTree(template);
 
+        Path goldenPath = Path.of("src/test/resources/golden", fixture.golden());
         if (Boolean.getBoolean("golden.update")) {
-            Files.createDirectories(GOLDEN_PATH.getParent());
-            mapper.writerWithDefaultPrettyPrinter().writeValue(GOLDEN_PATH.toFile(), actual);
+            Files.createDirectories(goldenPath.getParent());
+            mapper.writerWithDefaultPrettyPrinter().writeValue(goldenPath.toFile(), actual);
             return;
         }
 
         JsonNode expected;
         try (InputStream golden = getClass().getClassLoader()
-                .getResourceAsStream("golden/disa-mac1-sensitive.json")) {
+                .getResourceAsStream("golden/" + fixture.golden())) {
             expected = mapper.readTree(requireNonNull(golden,
                     "Golden file missing; generate it with -Dgolden.update=true"));
         }
 
         if (!expected.equals(actual)) {
-            Path actualDump = Path.of("target/golden-actual.json");
+            Path actualDump = Path.of("target/golden-actual-" + fixture.golden());
             mapper.writerWithDefaultPrettyPrinter().writeValue(actualDump.toFile(), actual);
-            fail("Compiled template no longer matches the golden file — the agent contract drifted. "
-                    + "Actual output written to " + actualDump + " for diffing against " + GOLDEN_PATH
-                    + ". If the change is intentional, regenerate with -Dgolden.update=true and "
-                    + "bump ExecutionTemplate.CURRENT_SCHEMA_VERSION if it is breaking.");
+            fail("Compiled template no longer matches " + fixture.golden() + " — the agent contract drifted. "
+                    + "Actual output written to " + actualDump + ". If the change is intentional, regenerate "
+                    + "with -Dgolden.update=true and bump ExecutionTemplate.CURRENT_SCHEMA_VERSION if breaking.");
         }
     }
 }
